@@ -221,7 +221,7 @@ export const EARNING_CARDS: EarningCardConfig[] = [
     maxRewardText: "Streak Multipliers",
     maxRewardKes: 50,
     tag: "Multipliers",
-    description: "Claim your daily bonus and maintain your active streak for multiplier payout multipliers.",
+    description: "Claim your daily bonus and maintain your active streak for multiplier rewards.",
     iconName: "Flame",
     cardTheme: {
       bgGradient: "from-[#2C180A] via-[#3B200E] to-[#201107]",

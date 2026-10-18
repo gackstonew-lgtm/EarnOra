@@ -11,18 +11,36 @@ export default function HomePage() {
   const { user } = useAuth();
   const [filterQuery, setFilterQuery] = useState("");
 
-  const categoryEarnings: Record<string, number> = {
-    hotels_restaurants: 450.0,
-    apps_websites: 300.0,
-    local_services: 0.0,
-    telco_fintech: 0.0,
-    public_services: 0.0,
-    paid_surveys: 0.0,
-    product_testing: 0.0,
-    watch_answer: 0.0,
-    daily_checkin: 25.0,
-    refer_earn: 150.0,
-  };
+  const isMockAllowed = process.env.NEXT_PUBLIC_USE_MOCK_DATA === "true";
+
+  // Use dynamic user category breakdown if available, or zero for new users
+  const categoryEarnings: Record<string, number> = isMockAllowed && user?.id === "usr_demo_ke_01"
+    ? {
+        hotels_restaurants: 450.0,
+        apps_websites: 300.0,
+        local_services: 0.0,
+        telco_fintech: 0.0,
+        public_services: 0.0,
+        paid_surveys: 0.0,
+        product_testing: 0.0,
+        watch_answer: 0.0,
+        daily_checkin: 25.0,
+        refer_earn: 150.0,
+      }
+    : {
+        hotels_restaurants: 0.0,
+        apps_websites: 0.0,
+        local_services: 0.0,
+        telco_fintech: 0.0,
+        public_services: 0.0,
+        paid_surveys: 0.0,
+        product_testing: 0.0,
+        watch_answer: 0.0,
+        daily_checkin: 0.0,
+        refer_earn: 0.0,
+      };
+
+  const isDarajaProduction = process.env.NEXT_PUBLIC_DARAJA_ENV === "production" || process.env.DARAJA_ENV === "production";
 
   const filteredCards = EARNING_CARDS.filter(
     (card) =>
@@ -62,7 +80,7 @@ export default function HomePage() {
                   <span>Available</span>
                 </div>
                 <p className="text-sm sm:text-base font-extrabold text-white mt-0.5 numeral-bold">
-                  KES {user.availableBalance.toLocaleString()}
+                  KES {(user.availableBalance ?? 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                 </p>
               </div>
 
@@ -72,7 +90,7 @@ export default function HomePage() {
                   <span>Pending</span>
                 </div>
                 <p className="text-sm sm:text-base font-extrabold text-amber-300 mt-0.5 numeral-bold">
-                  KES {user.pendingBalance.toLocaleString()}
+                  KES {(user.pendingBalance ?? 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                 </p>
               </div>
 
@@ -82,7 +100,7 @@ export default function HomePage() {
                   <span>Streak</span>
                 </div>
                 <p className="text-sm sm:text-base font-extrabold text-orange-300 mt-0.5">
-                  {user.streakDays} Days
+                  {user.streakDays ?? 0} Days
                 </p>
               </div>
             </div>
@@ -94,7 +112,11 @@ export default function HomePage() {
       <div className="flex items-center justify-between px-2 text-xs text-[#6B7A99]">
         <div className="flex items-center gap-2">
           <ShieldCheck className="w-4 h-4 text-[#16A34A]" />
-          <span>Safaricom Daraja B2C Verified Payouts</span>
+          <span>
+            {isDarajaProduction
+              ? "Safaricom Daraja B2C Verified Payouts"
+              : "Payouts enabled via Safaricom M-Pesa"}
+          </span>
         </div>
         <Link
           href="/earn"

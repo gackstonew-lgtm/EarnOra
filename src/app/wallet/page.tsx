@@ -24,13 +24,18 @@ export default function WalletPage() {
   const [isProcessing, setIsProcessing] = useState(false);
   const [successMsg, setSuccessMsg] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
-  const [transactions, setTransactions] = useState<WalletTransaction[]>(INITIAL_TRANSACTIONS);
+  const isMockAllowed = process.env.NEXT_PUBLIC_USE_MOCK_DATA === "true";
+  const isDemoUser = isMockAllowed && user?.id === "usr_demo_ke_01";
 
-  const availableBalance = user?.availableBalance ?? 850;
-  const pendingBalance = user?.pendingBalance ?? 600;
-  const totalEarned = user?.totalEarned ?? 1450;
+  const [transactions, setTransactions] = useState<WalletTransaction[]>(() => {
+    return isDemoUser ? INITIAL_TRANSACTIONS : [];
+  });
+
+  const availableBalance = user?.availableBalance ?? (isDemoUser ? 850 : 0);
+  const pendingBalance = user?.pendingBalance ?? (isDemoUser ? 600 : 0);
+  const totalEarned = user?.totalEarned ?? (isDemoUser ? 1450 : 0);
   const totalWithdrawn = user?.totalWithdrawn ?? 0;
-  const mpesaNumber = user?.phoneNumber ?? "+254712345678";
+  const mpesaNumber = user?.phoneNumber ?? "";
 
   const handleWithdrawal = async (e: React.FormEvent) => {
     e.preventDefault();

@@ -20,32 +20,37 @@ export const AppHeader: React.FC = () => {
   const [showNotifications, setShowNotifications] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
 
-  const [notifications, setNotifications] = useState<NotificationItem[]>([
-    {
-      id: "notif-1",
-      title: "Review Approved!",
-      message: "KES 450 credited to your available balance for Java House review.",
-      timestamp: "10 mins ago",
-      isRead: false,
-      type: "earning",
-    },
-    {
-      id: "notif-2",
-      title: "Daily Streak Bonus",
-      message: "Day 4 streak multiplier claimed. Current bonus: +15%.",
-      timestamp: "Today, 08:30 AM",
-      isRead: false,
-      type: "streak",
-    },
-    {
-      id: "notif-3",
-      title: "New Sponsored Task",
-      message: "Mount Kenya Organics is looking for product testers in Kenya.",
-      timestamp: "Yesterday",
-      isRead: true,
-      type: "system",
-    },
-  ]);
+  const [notifications, setNotifications] = useState<NotificationItem[]>(() => {
+    if (typeof window !== "undefined" && process.env.NEXT_PUBLIC_USE_MOCK_DATA === "true") {
+      return [
+        {
+          id: "notif-1",
+          title: "Review Approved!",
+          message: "KES 450 credited to your available balance for Java House review.",
+          timestamp: "10 mins ago",
+          isRead: false,
+          type: "earning",
+        },
+        {
+          id: "notif-2",
+          title: "Daily Streak Bonus",
+          message: "Day 4 streak multiplier claimed. Current bonus: +15%.",
+          timestamp: "Today, 08:30 AM",
+          isRead: false,
+          type: "streak",
+        },
+        {
+          id: "notif-3",
+          title: "New Sponsored Task",
+          message: "Mount Kenya Organics is looking for product testers in Kenya.",
+          timestamp: "Yesterday",
+          isRead: true,
+          type: "system",
+        },
+      ];
+    }
+    return [];
+  });
 
   const notifRef = useRef<HTMLDivElement>(null);
   const userRef = useRef<HTMLDivElement>(null);
