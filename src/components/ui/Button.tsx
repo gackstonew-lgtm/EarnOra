@@ -40,13 +40,13 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 
     const variantStyles = {
       primary:
-        "bg-gradient-to-r from-[#1E6FD9] to-[#0B4FB3] text-white shadow-blue-btn hover:brightness-105 hover:shadow-[0_6px_20px_0_rgba(11,79,179,0.35)]",
+        "bg-[var(--brand-blue)] text-white hover:opacity-95 transition-opacity shadow-xs",
       gradient:
-        "bg-gradient-to-r from-[#1E6FD9] to-[#0B4FB3] text-white shadow-blue-btn hover:brightness-105 hover:shadow-[0_6px_20px_0_rgba(11,79,179,0.35)]",
+        "bg-[var(--brand-blue)] text-white hover:opacity-95 transition-opacity shadow-xs",
       secondary:
-        "bg-[#EAF3FF] text-[#0A3D91] hover:bg-[#D9E9FF] active:bg-[#C9E0FF]",
+        "bg-[var(--bg-card-elevated)] text-[var(--text-primary)] border border-[var(--border-subtle)] hover:bg-[var(--bg-card)]",
       outline:
-        "border border-[#1E6FD9] text-[#1E6FD9] bg-white hover:bg-[#EAF3FF]",
+        "border border-[var(--brand-blue)] text-[var(--brand-blue)] bg-transparent hover:bg-[var(--brand-blue)]/10",
       ghost:
         "text-[#6B7A99] hover:text-[#0F1F3D] hover:bg-[#EEF3FF] bg-transparent",
       success:

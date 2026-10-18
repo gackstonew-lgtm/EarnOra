@@ -59,7 +59,7 @@ export const PwaInstallBanner: React.FC = () => {
 
   return (
     <>
-      <aside aria-label="Install App" className="w-full bg-gradient-to-r from-emerald-950/80 via-[#0B1E38]/90 to-emerald-950/80 border-b border-emerald-500/30 px-4 py-2.5 backdrop-blur-md">
+      <aside aria-label="Install App" className="w-full bg-[var(--bg-card)] border-b border-[var(--border-subtle)] px-4 py-2.5">
         <div className="max-w-4xl mx-auto flex items-center justify-between gap-3">
           <div className="flex items-center gap-2.5">
             <div className="w-8 h-8 rounded-xl bg-slate-900 border border-emerald-500/40 flex items-center justify-center p-1 shrink-0">

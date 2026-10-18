@@ -66,13 +66,13 @@ export default function ActivityPage() {
       </div>
 
       {/* Tabs */}
-      <div className="flex rounded-[14px] bg-[#EEF3FF] p-1 border border-blue-100 text-xs font-bold">
+      <div className="flex rounded-[14px] bg-[var(--bg-card)] p-1 border border-[var(--border-subtle)] text-xs font-bold">
         <button
           onClick={() => setActiveTab("referrals")}
           className={`flex-1 py-2.5 rounded-[10px] transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
             activeTab === "referrals"
-              ? "bg-gradient-to-r from-[#1E6FD9] to-[#0B4FB3] text-white shadow-blue-btn"
-              : "text-[#6B7A99] hover:text-[#0F1F3D]"
+              ? "bg-[var(--brand-blue)] text-white shadow-xs"
+              : "text-[var(--text-muted)] hover:text-[var(--text-primary)]"
           }`}
         >
           <Users className="w-3.5 h-3.5" />
@@ -82,8 +82,8 @@ export default function ActivityPage() {
           onClick={() => setActiveTab("streak")}
           className={`flex-1 py-2.5 rounded-[10px] transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
             activeTab === "streak"
-              ? "bg-gradient-to-r from-[#1E6FD9] to-[#0B4FB3] text-white shadow-blue-btn"
-              : "text-[#6B7A99] hover:text-[#0F1F3D]"
+              ? "bg-[var(--brand-blue)] text-white shadow-xs"
+              : "text-[var(--text-muted)] hover:text-[var(--text-primary)]"
           }`}
         >
           <Flame className="w-3.5 h-3.5" />
@@ -93,8 +93,8 @@ export default function ActivityPage() {
           onClick={() => setActiveTab("leaderboard")}
           className={`flex-1 py-2.5 rounded-[10px] transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
             activeTab === "leaderboard"
-              ? "bg-gradient-to-r from-[#1E6FD9] to-[#0B4FB3] text-white shadow-blue-btn"
-              : "text-[#6B7A99] hover:text-[#0F1F3D]"
+              ? "bg-[var(--brand-blue)] text-white shadow-xs"
+              : "text-[var(--text-muted)] hover:text-[var(--text-primary)]"
           }`}
         >
           <Award className="w-3.5 h-3.5" />
@@ -105,23 +105,23 @@ export default function ActivityPage() {
       {/* Tab 1: Referrals */}
       {activeTab === "referrals" && (
         <div className="space-y-4">
-          <div className="rounded-[24px] bg-gradient-to-br from-[#1E6FD9] via-[#165FC4] to-[#0B4FB3] p-6 sm:p-8 text-white shadow-[0_12px_36px_rgba(11,79,179,0.22)] relative overflow-hidden">
+          <div className="rounded-[24px] bg-[var(--bg-card)] border border-[var(--border-subtle)] p-6 sm:p-8 text-[var(--text-primary)] shadow-sm relative overflow-hidden">
             <div className="flex items-center gap-2 mb-2">
-              <Gift className="w-5 h-5 text-sky-200" />
-              <span className="text-xs uppercase font-bold tracking-wider text-white">
+              <Gift className="w-5 h-5 text-[var(--accent-gold)]" />
+              <span className="text-xs uppercase font-bold tracking-wider text-[var(--accent-gold)]">
                 1-Level Referral Program
               </span>
             </div>
-            <h2 className="text-xl sm:text-2xl font-black">Earn KES 150 for each friend</h2>
-            <p className="text-xs sm:text-sm text-blue-100 mt-1 leading-relaxed max-w-xl">
+            <h2 className="text-xl sm:text-2xl font-black font-display">Earn KES 150 for each friend</h2>
+            <p className="text-xs sm:text-sm text-[var(--text-secondary)] mt-1 leading-relaxed max-w-xl">
               When someone registers with your link and their first review is verified and approved, you receive KES 150 instantly into your available wallet balance.
             </p>
 
             {/* Referral Link Box */}
-            <div className="mt-5 p-4 rounded-[16px] bg-white text-[#0F1F3D] shadow-sm space-y-2 border border-blue-100/60">
+            <div className="mt-5 p-4 rounded-[16px] bg-[var(--bg-card-elevated)] text-[var(--text-primary)] shadow-xs space-y-2 border border-[var(--border-subtle)]">
               <div className="flex items-center justify-between text-xs">
-                <span className="text-[#6B7A99]">Your Personal Code:</span>
-                <span className="font-mono font-bold text-[#1E6FD9]">{refCode}</span>
+                <span className="text-[var(--text-muted)]">Your Personal Code:</span>
+                <span className="font-mono font-bold text-[var(--brand-blue)]">{refCode}</span>
               </div>
               <div className="flex items-center gap-2">
                 <input
@@ -186,21 +186,21 @@ export default function ActivityPage() {
       {/* Tab 2: Daily Streak */}
       {activeTab === "streak" && (
         <div className="space-y-4">
-          <div className="rounded-[24px] bg-gradient-to-br from-[#1E6FD9] via-[#165FC4] to-[#0B4FB3] p-6 sm:p-8 text-white shadow-[0_12px_36px_rgba(11,79,179,0.22)] relative overflow-hidden">
+          <div className="rounded-[24px] bg-[var(--bg-card)] border border-[var(--border-subtle)] p-6 sm:p-8 text-[var(--text-primary)] shadow-sm relative overflow-hidden">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <Flame className="w-6 h-6 text-orange-300" />
-                <span className="text-xs uppercase font-bold tracking-wider text-white">
+                <Flame className="w-6 h-6 text-[var(--accent-amber)]" />
+                <span className="text-xs uppercase font-bold tracking-wider text-[var(--accent-amber)]">
                   Streak Multipliers
                 </span>
               </div>
-              <span className="px-3 py-1 rounded-full bg-white/20 backdrop-blur-xs text-white font-bold text-xs border border-white/25">
+              <span className="px-3 py-1 rounded-full bg-[var(--accent-amber)]/10 text-[var(--accent-amber)] font-bold text-xs border border-[var(--accent-amber)]/25">
                 {user?.streakDays || 4} Days Active
               </span>
             </div>
 
-            <h2 className="text-xl sm:text-2xl font-black mt-3">Earn Daily Multipliers</h2>
-            <p className="text-xs sm:text-sm text-blue-100 mt-1 leading-relaxed">
+            <h2 className="text-xl sm:text-2xl font-black mt-3 font-display">Earn Daily Multipliers</h2>
+            <p className="text-xs sm:text-sm text-[var(--text-secondary)] mt-1 leading-relaxed">
               Check in daily to accumulate streak bonuses and unlock reward multipliers across all review tasks.
             </p>
 

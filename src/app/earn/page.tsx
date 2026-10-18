@@ -82,8 +82,8 @@ function EarnContent() {
           onClick={() => setSelectedCategory("all")}
           className={`px-4 py-2 rounded-full font-bold whitespace-nowrap transition-all cursor-pointer ${
             selectedCategory === "all"
-              ? "bg-gradient-to-r from-[#1E6FD9] to-[#0B4FB3] text-white shadow-blue-btn"
-              : "bg-[#EEF3FF] text-[#0A3D91] hover:bg-[#E2EDFF] border border-blue-100/60"
+              ? "bg-[var(--brand-blue)] text-white shadow-xs"
+              : "bg-[var(--bg-card)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] border border-[var(--border-subtle)]"
           }`}
         >
           All ({INITIAL_TASKS.length})
@@ -94,8 +94,8 @@ function EarnContent() {
             onClick={() => setSelectedCategory(cat.id)}
             className={`px-4 py-2 rounded-full font-bold whitespace-nowrap transition-all cursor-pointer ${
               selectedCategory === cat.id
-                ? "bg-gradient-to-r from-[#1E6FD9] to-[#0B4FB3] text-white shadow-blue-btn"
-                : "bg-[#EEF3FF] text-[#0A3D91] hover:bg-[#E2EDFF] border border-blue-100/60"
+                ? "bg-[var(--brand-blue)] text-white shadow-xs"
+                : "bg-[var(--bg-card)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] border border-[var(--border-subtle)]"
             }`}
           >
             {cat.title}
@@ -158,7 +158,7 @@ function EarnContent() {
                   </span>
                 </div>
 
-                <button className="px-4 py-2 rounded-[10px] bg-[#EEF3FF] group-hover:bg-gradient-to-r group-hover:from-[#1E6FD9] group-hover:to-[#0B4FB3] text-[#0A3D91] group-hover:text-white font-bold text-xs transition-all flex items-center gap-1 cursor-pointer">
+                <button className="px-4 py-2 rounded-[10px] bg-[var(--bg-card-elevated)] border border-[var(--border-subtle)] group-hover:bg-[var(--brand-blue)] text-[var(--brand-blue)] group-hover:text-white font-bold text-xs transition-all flex items-center gap-1 cursor-pointer">
                   <span>Start Task</span>
                   <ChevronRight className="w-3.5 h-3.5" />
                 </button>
@@ -219,7 +219,7 @@ function EarnContent() {
               </button>
               <Link
                 href={`/earn/submit?task=${activeTaskModal.id}`}
-                className="px-5 py-2.5 rounded-[12px] bg-gradient-to-r from-[#1E6FD9] to-[#0B4FB3] text-white font-bold text-xs shadow-blue-btn hover:brightness-105 transition-all"
+                className="px-5 py-2.5 rounded-[12px] bg-[var(--brand-blue)] text-white font-bold text-xs hover:opacity-95 transition-all shadow-xs"
               >
                 Proceed to Write Review
               </Link>

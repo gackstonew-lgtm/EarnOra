@@ -28,9 +28,9 @@ export const AppShell: React.FC<{ children: React.ReactNode }> = ({ children }) 
       <PwaInstallBanner />
       {!isAuthPage && <DesktopSidebar />}
       {!isAuthPage && (
-        <div className="md:pl-[72px] flex-1 flex flex-col transition-all duration-300">
+        <div className="md:pl-[76px] flex-1 flex flex-col transition-all duration-300">
           <AppHeader />
-          <main className="flex-1 w-full max-w-5xl mx-auto px-4 sm:px-6 pt-5 pb-24 md:pb-12">
+          <main className="flex-1 w-full max-w-[1600px] mx-auto px-3.5 sm:px-6 lg:px-8 pt-4 sm:pt-6 pb-24 md:pb-12">
             {children}
           </main>
         </div>

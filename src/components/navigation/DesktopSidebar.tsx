@@ -8,10 +8,10 @@ import {
   Sparkles,
   Wallet,
   History,
-  Building2,
-  Shield,
-  Menu as MenuIcon,
+  User as UserIcon,
   Settings as SettingsIcon,
+  Crown,
+  Headphones,
   Pin,
   PinOff,
   LogOut,
@@ -60,7 +60,7 @@ export const DesktopSidebar: React.FC = () => {
       isActive: pathname === "/dashboard",
     },
     {
-      label: "Earn Reviews",
+      label: "Earn",
       href: "/earn",
       icon: Sparkles,
       isActive: pathname.startsWith("/earn"),
@@ -79,28 +79,16 @@ export const DesktopSidebar: React.FC = () => {
       isActive: pathname.startsWith("/activity"),
     },
     {
-      label: "For Businesses",
-      href: "/business",
-      icon: Building2,
-      isActive: pathname.startsWith("/business"),
-    },
-    {
-      label: "Admin Portal",
-      href: "/admin",
-      icon: Shield,
-      isActive: pathname.startsWith("/admin"),
+      label: "Profile",
+      href: "/settings",
+      icon: UserIcon,
+      isActive: pathname === "/settings" && typeof window !== "undefined" && window.location.hash === "#profile",
     },
     {
       label: "Settings",
       href: "/settings",
       icon: SettingsIcon,
       isActive: pathname.startsWith("/settings"),
-    },
-    {
-      label: "Menu",
-      href: "/menu",
-      icon: MenuIcon,
-      isActive: pathname.startsWith("/menu"),
     },
   ];
 
@@ -110,20 +98,20 @@ export const DesktopSidebar: React.FC = () => {
     <aside
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className={`hidden md:flex flex-col fixed top-0 bottom-0 left-0 z-40 bg-[var(--bg-primary)] border-r border-[var(--border-subtle)] shadow-[4px_0_24px_rgba(15,31,61,0.04)] transition-all duration-300 ease-in-out ${
-        isExpanded ? "w-[260px]" : "w-[72px]"
+      className={`hidden md:flex flex-col fixed top-0 bottom-0 left-0 z-40 bg-[var(--bg-sidebar)] border-r border-[var(--border-subtle)] shadow-[4px_0_24px_rgba(7,13,24,0.08)] transition-all duration-300 ease-in-out ${
+        isExpanded ? "w-[260px]" : "w-[76px]"
       }`}
     >
       {/* Brand Header */}
-      <div className="h-16 flex items-center justify-between px-3.5 border-b border-[var(--border-subtle)]">
+      <div className="h-16 flex items-center justify-between px-4 border-b border-[var(--border-subtle)] shrink-0">
         <Link href="/dashboard" className="flex items-center gap-3 overflow-hidden select-none">
-          <EarnoraSymbol size={40} />
+          <EarnoraSymbol size={38} />
           {isExpanded && (
             <div className="flex flex-col leading-none animate-in fade-in duration-200">
               <span className="font-extrabold text-xl tracking-tight text-[var(--text-primary)] font-display">
-                Earn<span className="text-[#1E6FD9]">Ora</span>
+                Earn<span className="text-[var(--brand-blue)]">Ora</span>
               </span>
-              <span className="text-[9px] uppercase tracking-wider font-semibold text-[var(--text-muted)] mt-0.5">
+              <span className="text-[9px] uppercase tracking-wider font-semibold text-[var(--text-muted)] mt-1">
                 Review. Earn. Grow.
               </span>
             </div>
@@ -135,10 +123,10 @@ export const DesktopSidebar: React.FC = () => {
             type="button"
             onClick={togglePin}
             title={isPinned ? "Unpin sidebar" : "Pin sidebar"}
-            className="w-8 h-8 rounded-lg flex items-center justify-center text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-input)] transition-colors"
+            className="w-8 h-8 rounded-lg flex items-center justify-center text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-card-elevated)] transition-colors cursor-pointer"
           >
             {isPinned ? (
-              <PinOff className="w-4 h-4 text-[#1E6FD9]" />
+              <PinOff className="w-4 h-4 text-[var(--brand-blue)]" />
             ) : (
               <Pin className="w-4 h-4" />
             )}
@@ -146,65 +134,111 @@ export const DesktopSidebar: React.FC = () => {
         )}
       </div>
 
-      {/* Navigation Links */}
-      <nav className="flex-1 py-4 px-2 space-y-1.5 overflow-y-auto">
-        {navItems.map((item) => {
-          const Icon = item.icon;
-          const active = item.isActive;
+      {/* Main Navigation Links */}
+      <div className="flex-1 py-3 px-3 space-y-1 overflow-y-auto scrollbar-none flex flex-col justify-between">
+        <nav className="space-y-1">
+          {navItems.map((item) => {
+            const Icon = item.icon;
+            const active = item.isActive;
 
-          return (
-            <Link
-              key={item.label}
-              href={item.href}
-              className={`flex items-center gap-3.5 px-3 py-2.5 rounded-[12px] font-medium text-sm transition-all duration-200 ${
-                active
-                  ? "bg-gradient-to-r from-[#1E6FD9] to-[#0B4FB3] text-white shadow-blue-btn font-semibold"
-                  : "text-[#6B7A99] hover:text-[#0F1F3D] hover:bg-[#EEF3FF]"
-              }`}
-              title={!isExpanded ? item.label : undefined}
-            >
-              <Icon
-                className={`w-5 h-5 shrink-0 ${
-                  active ? "text-white" : "text-[#6B7A99]"
+            return (
+              <Link
+                key={item.label}
+                href={item.href}
+                className={`flex items-center gap-3.5 px-3 py-2.5 rounded-[12px] font-medium text-sm transition-all duration-150 ${
+                  active
+                    ? "bg-[var(--bg-card)] dark:bg-[#101B2B] text-[var(--accent-gold)] border border-[var(--border-subtle)] font-semibold shadow-xs"
+                    : "text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-card-elevated)]"
                 }`}
-              />
+                title={!isExpanded ? item.label : undefined}
+              >
+                <Icon
+                  className={`w-5 h-5 shrink-0 ${
+                    active ? "text-[var(--accent-gold)]" : "text-[var(--text-muted)]"
+                  }`}
+                />
 
-              {isExpanded && (
-                <div className="flex-1 flex items-center justify-between overflow-hidden whitespace-nowrap animate-in fade-in duration-200">
-                  <span className="truncate">{item.label}</span>
-                  {item.badge && (
-                    <span
-                      className={`text-[10px] font-bold px-1.5 py-0.5 rounded-full ${
-                        active
-                          ? "bg-white/20 text-white"
-                          : "bg-[#EAF3FF] text-[#1E6FD9]"
-                      }`}
-                    >
-                      {item.badge}
-                    </span>
-                  )}
+                {isExpanded && (
+                  <div className="flex-1 flex items-center justify-between overflow-hidden whitespace-nowrap animate-in fade-in duration-200">
+                    <span className="truncate">{item.label}</span>
+                    {item.badge && (
+                      <span
+                        className={`text-[10px] font-bold px-1.5 py-0.5 rounded-full ${
+                          active
+                            ? "bg-[var(--accent-green)] text-white"
+                            : "bg-[#22C55E]/15 text-[#22C55E] dark:text-[#22C55E]"
+                        }`}
+                      >
+                        {item.badge}
+                      </span>
+                    )}
+                  </div>
+                )}
+              </Link>
+            );
+          })}
+        </nav>
+
+        {/* Sidebar Cards (shown when expanded) */}
+        {isExpanded && (
+          <div className="pt-4 space-y-3 animate-in fade-in duration-200">
+            {/* Your Progress Card */}
+            <div className="p-3.5 rounded-[16px] bg-[var(--bg-card)] border border-[var(--border-subtle)]">
+              <div className="flex items-center justify-between mb-1.5">
+                <Crown className="w-5 h-5 text-[var(--accent-gold)]" />
+                <span className="text-[10px] font-bold text-[var(--accent-gold)] uppercase tracking-wider">
+                  Tier 1
+                </span>
+              </div>
+              <h4 className="text-xs font-bold text-[var(--text-primary)]">Your Progress</h4>
+              <p className="text-[11px] text-[var(--text-muted)] mt-0.5 leading-tight">
+                Complete more tasks to unlock higher rewards!
+              </p>
+
+              {/* Progress Ring / Circle Badge */}
+              <div className="mt-3 flex items-center justify-center">
+                <div className="w-16 h-16 rounded-full border-2 border-[var(--brand-blue)] flex flex-col items-center justify-center bg-[var(--bg-card-elevated)] shadow-inner">
+                  <span className="text-[11px] font-extrabold text-[var(--text-primary)]">Level 1</span>
+                  <span className="text-[9px] font-semibold text-[var(--text-muted)]">0 / 10</span>
                 </div>
-              )}
-            </Link>
-          );
-        })}
-      </nav>
+              </div>
+            </div>
+
+            {/* Need Help Card */}
+            <div className="p-3.5 rounded-[16px] bg-[var(--bg-card)] border border-[var(--border-subtle)]">
+              <div className="flex items-center gap-2 mb-1">
+                <Headphones className="w-4 h-4 text-[var(--brand-blue)]" />
+                <span className="text-xs font-bold text-[var(--text-primary)]">Need Help?</span>
+              </div>
+              <p className="text-[11px] text-[var(--text-muted)] leading-tight">
+                Our support team is here for you 24/7.
+              </p>
+              <Link
+                href="/settings"
+                className="mt-2.5 block text-center py-1.5 px-3 rounded-[10px] text-xs font-bold border border-[var(--border-subtle)] text-[var(--text-primary)] hover:bg-[var(--bg-card-elevated)] transition-colors"
+              >
+                Contact Support
+              </Link>
+            </div>
+          </div>
+        )}
+      </div>
 
       {/* Bottom User Area */}
-      <div className="p-3 border-t border-[var(--border-subtle)] bg-[var(--bg-input)]/40">
+      <div className="p-3 border-t border-[var(--border-subtle)] bg-[var(--bg-card-elevated)] shrink-0">
         {isAuthenticated ? (
           <div className="flex items-center gap-3 overflow-hidden">
-            <div className="w-10 h-10 rounded-full bg-[#EAF3FF] text-[#1E6FD9] font-bold flex items-center justify-center shrink-0 border border-blue-200/60">
-              {user?.username ? user.username.slice(0, 2).toUpperCase() : "EO"}
+            <div className="w-10 h-10 rounded-full bg-[var(--brand-blue)] text-white font-bold flex items-center justify-center shrink-0 shadow-xs">
+              {user?.username ? user.username.slice(0, 2).toUpperCase() : "GA"}
             </div>
 
             {isExpanded && (
               <div className="flex-1 overflow-hidden animate-in fade-in duration-200">
                 <p className="text-xs font-bold text-[var(--text-primary)] truncate">
-                  {user?.username || "Reviewer"}
+                  {user?.username || "Gackstone Wafula"}
                 </p>
-                <p className="text-[11px] font-semibold text-[#16A34A] truncate numeral-bold">
-                  KES {user?.availableBalance?.toLocaleString() || "0.00"}
+                <p className="text-[11px] font-semibold text-[var(--accent-green)] truncate numeral-bold">
+                  KES {(user?.availableBalance ?? 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                 </p>
               </div>
             )}
@@ -214,7 +248,7 @@ export const DesktopSidebar: React.FC = () => {
                 type="button"
                 onClick={logout}
                 title="Log out"
-                className="w-8 h-8 rounded-lg flex items-center justify-center text-[var(--text-muted)] hover:text-red-500 hover:bg-red-500/10 transition-colors"
+                className="w-8 h-8 rounded-lg flex items-center justify-center text-[var(--text-muted)] hover:text-[var(--accent-red)] hover:bg-[var(--accent-red)]/10 transition-colors cursor-pointer"
               >
                 <LogOut className="w-4 h-4" />
               </button>
@@ -224,7 +258,7 @@ export const DesktopSidebar: React.FC = () => {
           <div className="flex flex-col gap-2">
             <Link
               href="/auth/login"
-              className={`flex items-center justify-center py-2 rounded-[12px] bg-[#EEF3FF] text-[#0A3D91] text-xs font-bold hover:bg-[#D9E9FF] transition-all ${
+              className={`flex items-center justify-center py-2 rounded-[12px] bg-[var(--brand-blue)] text-white text-xs font-bold hover:opacity-90 transition-all ${
                 !isExpanded ? "px-0" : "px-3"
               }`}
             >

@@ -45,7 +45,7 @@ export const BottomNav: React.FC = () => {
   return (
     <nav
       aria-label="Bottom Navigation"
-      className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-[var(--bg-primary)]/95 backdrop-blur-md border-t border-[var(--border-subtle)] pb-[max(env(safe-area-inset-bottom),0.5rem)] pt-2 shadow-[0_-4px_20px_rgba(15,31,61,0.06)] transition-colors duration-200"
+      className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-[var(--bg-sidebar)] border-t border-[var(--border-subtle)] pb-[max(env(safe-area-inset-bottom),0.5rem)] pt-2 shadow-[0_-4px_20px_rgba(7,13,24,0.12)] transition-colors duration-200"
     >
       <div className="max-w-md mx-auto px-4 flex items-center justify-between relative">
         {navItems.map((item) => {
@@ -56,19 +56,14 @@ export const BottomNav: React.FC = () => {
               <div key={item.label} className="relative -top-5 flex flex-col items-center">
                 <Link
                   href={item.href}
-                  className={`w-14 h-14 rounded-full flex items-center justify-center shadow-blue-btn transition-transform active:scale-95 duration-200 ring-4 ring-[var(--bg-page)]
-                    ${
-                      item.isActive
-                        ? "bg-gradient-to-tr from-[#1E6FD9] to-[#0B4FB3] text-white shadow-[0_6px_22px_rgba(11,79,179,0.4)]"
-                        : "bg-gradient-to-tr from-[#1E6FD9] to-[#0B4FB3] text-white hover:brightness-105"
-                    }`}
+                  className={`w-14 h-14 rounded-full flex items-center justify-center transition-transform active:scale-95 duration-200 ring-4 ring-[var(--bg-sidebar)] shadow-md bg-[#F5C451] text-[#111827] border border-[#854D0E]`}
                   aria-label="Withdraw & Wallet"
                 >
                   <Icon className="w-6 h-6 stroke-[2.3]" />
                 </Link>
                 <span
                   className={`text-[11px] font-bold mt-1 ${
-                    item.isActive ? "text-[#1E6FD9]" : "text-[#6B7A99]"
+                    item.isActive ? "text-[var(--accent-gold)]" : "text-[var(--text-muted)]"
                   }`}
                 >
                   {item.label}
@@ -83,13 +78,13 @@ export const BottomNav: React.FC = () => {
               href={item.href}
               className={`flex flex-col items-center justify-center min-w-[48px] min-h-[44px] py-1 px-2.5 rounded-[12px] transition-all duration-150 active:scale-95 ${
                 item.isActive
-                  ? "text-[#1E6FD9] font-bold"
-                  : "text-[#475569] dark:text-[#94A3B8] hover:text-[#0F1F3D] dark:hover:text-white"
+                  ? "text-[var(--accent-gold)] font-bold"
+                  : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
               }`}
             >
               <Icon
                 className={`w-5 h-5 mb-0.5 transition-transform ${
-                  item.isActive ? "scale-110 stroke-[2.4]" : "stroke-[2]"
+                  item.isActive ? "scale-110 stroke-[2.4] text-[var(--accent-gold)]" : "stroke-[2]"
                 }`}
               />
               <span className="text-[11px] font-medium tracking-tight">{item.label}</span>

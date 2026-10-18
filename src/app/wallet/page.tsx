@@ -90,56 +90,52 @@ export default function WalletPage() {
 
   return (
     <div className="space-y-6">
-      {/* Wallet Balance Hero Card (Royal Blue Gradient) */}
-      <section className="rounded-[24px] bg-gradient-to-br from-[#1E6FD9] via-[#165FC4] to-[#0B4FB3] p-6 sm:p-8 text-white shadow-[0_12px_36px_rgba(11,79,179,0.22)] relative overflow-hidden">
-        {/* Subtle decorative circles */}
-        <div className="absolute -right-10 -bottom-10 w-60 h-60 rounded-full bg-white/10 blur-2xl pointer-events-none" />
-        <div className="absolute -left-10 -top-10 w-48 h-48 rounded-full bg-sky-300/15 blur-xl pointer-events-none" />
-
+      {/* Wallet Balance Hero Card (Solid Fintech Card) */}
+      <section className="rounded-[24px] bg-[var(--bg-card)] border border-[var(--border-subtle)] p-6 sm:p-8 text-[var(--text-primary)] shadow-sm relative overflow-hidden">
         <div className="relative z-10">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2.5">
-              <div className="w-10 h-10 rounded-full bg-white text-[#1E6FD9] flex items-center justify-center shadow-xs">
+              <div className="w-10 h-10 rounded-full bg-[var(--accent-green)]/15 text-[var(--accent-green)] flex items-center justify-center shadow-xs">
                 <Wallet className="w-5 h-5" />
               </div>
-              <span className="font-bold text-xs uppercase tracking-wider text-white">
+              <span className="font-bold text-xs uppercase tracking-wider text-[var(--text-primary)]">
                 Verified M-Pesa Wallet
               </span>
             </div>
 
-            <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/20 backdrop-blur-xs text-white text-[11px] font-semibold border border-white/25">
-              <ShieldCheck className="w-3.5 h-3.5 text-emerald-300" />
+            <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-[var(--accent-green)]/10 text-[var(--accent-green)] border border-[var(--accent-green)]/30 text-[11px] font-semibold">
+              <ShieldCheck className="w-3.5 h-3.5" />
               <span>Daraja Connected</span>
             </div>
           </div>
 
           {/* Big Available Balance Display */}
           <div className="mt-6">
-            <span className="text-xs text-blue-100 font-medium">
+            <span className="text-xs text-[var(--text-muted)] font-medium">
               Available for Withdrawal
             </span>
-            <div className="text-3xl sm:text-5xl font-extrabold tracking-tight text-white numeral-bold mt-1">
+            <div className="text-3xl sm:text-5xl font-extrabold tracking-tight text-[var(--text-primary)] numeral-bold mt-1 font-display">
               KES {availableBalance.toLocaleString(undefined, { minimumFractionDigits: 2 })}
             </div>
           </div>
 
           {/* 3 Secondary Financial Metrics */}
-          <div className="mt-8 grid grid-cols-3 gap-2.5 pt-5 border-t border-white/20">
-            <div className="bg-white/10 backdrop-blur-xs rounded-[14px] p-3 border border-white/15">
-              <span className="text-[10px] text-blue-100 block font-medium">Pending Reviews</span>
-              <span className="text-xs sm:text-sm font-bold text-amber-300 numeral-bold mt-0.5 block">
+          <div className="mt-8 grid grid-cols-3 gap-2.5 pt-5 border-t border-[var(--border-subtle)]">
+            <div className="bg-[var(--bg-card-elevated)] rounded-[14px] p-3 border border-[var(--border-subtle)]">
+              <span className="text-[10px] text-[var(--text-muted)] block font-medium">Pending Reviews</span>
+              <span className="text-xs sm:text-sm font-bold text-[var(--accent-gold)] numeral-bold mt-0.5 block">
                 KES {pendingBalance.toLocaleString()}
               </span>
             </div>
-            <div className="bg-white/10 backdrop-blur-xs rounded-[14px] p-3 border border-white/15">
-              <span className="text-[10px] text-blue-100 block font-medium">Total Earned</span>
-              <span className="text-xs sm:text-sm font-bold text-emerald-300 numeral-bold mt-0.5 block">
+            <div className="bg-[var(--bg-card-elevated)] rounded-[14px] p-3 border border-[var(--border-subtle)]">
+              <span className="text-[10px] text-[var(--text-muted)] block font-medium">Total Earned</span>
+              <span className="text-xs sm:text-sm font-bold text-[var(--accent-green)] numeral-bold mt-0.5 block">
                 KES {totalEarned.toLocaleString()}
               </span>
             </div>
-            <div className="bg-white/10 backdrop-blur-xs rounded-[14px] p-3 border border-white/15">
-              <span className="text-[10px] text-blue-100 block font-medium">Total Withdrawn</span>
-              <span className="text-xs sm:text-sm font-bold text-white numeral-bold mt-0.5 block">
+            <div className="bg-[var(--bg-card-elevated)] rounded-[14px] p-3 border border-[var(--border-subtle)]">
+              <span className="text-[10px] text-[var(--text-muted)] block font-medium">Total Withdrawn</span>
+              <span className="text-xs sm:text-sm font-bold text-[var(--text-primary)] numeral-bold mt-0.5 block">
                 KES {totalWithdrawn.toLocaleString()}
               </span>
             </div>

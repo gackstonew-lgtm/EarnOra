@@ -85,7 +85,7 @@ export const EarningCard: React.FC<EarningCardProps> = ({
           </span>
         </div>
 
-        <div className="min-w-[44px] min-h-[44px] w-11 h-11 rounded-full bg-[var(--bg-input)] group-hover:bg-gradient-to-r group-hover:from-[#1E6FD9] group-hover:to-[#0B4FB3] text-[#1E6FD9] group-hover:text-white flex items-center justify-center transition-all duration-200 shadow-xs">
+        <div className="min-w-[44px] min-h-[44px] w-11 h-11 rounded-full bg-[var(--bg-card-elevated)] border border-[var(--border-subtle)] group-hover:bg-[var(--brand-blue)] text-[var(--brand-blue)] group-hover:text-white flex items-center justify-center transition-all duration-200 shadow-xs">
           <ArrowRight className="w-4 h-4 transform group-hover:translate-x-0.5 transition-transform" />
         </div>
       </div>

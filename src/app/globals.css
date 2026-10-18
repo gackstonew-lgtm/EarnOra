@@ -17,38 +17,50 @@
   --text-4xl: 2.25rem;   /* 36px */
 
   --bg-primary: #FFFFFF;
+  --bg-sidebar: #FFFFFF;
   --bg-card: #FFFFFF;
-  --bg-page: #F8FAFC;
-  --bg-input: #EEF3FF;
-  --border-subtle: rgba(226, 232, 240, 0.8);
-  --border-card: rgba(219, 234, 254, 0.7);
-  --text-primary: #0F1F3D;
-  --text-muted: #6B7A99;
-  --text-secondary: #475569;
-  --brand-blue-start: #1E6FD9;
-  --brand-blue-end: #0B4FB3;
-  --brand-deep: #0A3D91;
+  --bg-card-elevated: #F8FAFC;
+  --bg-page: #F5F7FB;
+  --bg-input: #FFFFFF;
+  --border-subtle: #D1D5DB;
+  --border-card: #D1D5DB;
+  --text-primary: #111827;
+  --text-secondary: #374151;
+  --text-muted: #4B5563;
+  --brand-blue: #1D4ED8;
+  --accent-gold: #854D0E;
+  --accent-green: #166534;
+  --accent-amber: #92400E;
+  --accent-red: #B91C1C;
+  --brand-blue-start: #1D4ED8;
+  --brand-blue-end: #1D4ED8;
+  --brand-deep: #1D4ED8;
   --brand-sky: #EAF3FF;
-  --brand-input: #EEF3FF;
-  --accent-green: #16A34A;
+  --brand-input: #FFFFFF;
 }
 
 .dark {
-  --bg-primary: #070C18;
-  --bg-card: #0F172A;
-  --bg-page: #070C18;
-  --bg-input: #1E293B;
-  --border-subtle: rgba(51, 65, 85, 0.6);
-  --border-card: rgba(30, 41, 59, 0.8);
+  --bg-primary: #070D18;
+  --bg-sidebar: #0B1220;
+  --bg-card: #101B2B;
+  --bg-card-elevated: #162337;
+  --bg-page: #070D18;
+  --bg-input: #101B2B;
+  --border-subtle: #29384D;
+  --border-card: #29384D;
   --text-primary: #F8FAFC;
-  --text-muted: #94A3B8;
   --text-secondary: #CBD5E1;
-  --brand-blue-start: #1E6FD9;
-  --brand-blue-end: #0B4FB3;
-  --brand-deep: #38BDF8;
-  --brand-sky: #132347;
-  --brand-input: #1E293B;
+  --text-muted: #94A3B8;
+  --brand-blue: #3B82F6;
+  --accent-gold: #F5C451;
   --accent-green: #22C55E;
+  --accent-amber: #F59E0B;
+  --accent-red: #EF4444;
+  --brand-blue-start: #3B82F6;
+  --brand-blue-end: #3B82F6;
+  --brand-deep: #3B82F6;
+  --brand-sky: #162337;
+  --brand-input: #101B2B;
 }
 
 html {
@@ -78,23 +90,16 @@ input:not([type="checkbox"]):not([type="radio"]), select, textarea {
   font-size: 16px;
 }
 
-/* Reusable brand gradients */
-.bg-brand-gradient {
-  background: linear-gradient(135deg, #1E6FD9 0%, #0B4FB3 100%);
-}
-
-.bg-brand-gradient-h {
-  background: linear-gradient(90deg, #1E6FD9 0%, #0B4FB3 100%);
-}
-
+/* Solid Brand Colors - Gradients completely removed per specification */
+.bg-brand-gradient,
+.bg-brand-gradient-h,
 .bg-brand-radial {
-  background: radial-gradient(circle at 50% 20%, #297be6 0%, #0B4FB3 100%);
+  background: var(--brand-blue);
 }
 
 .text-brand-gradient {
-  background: linear-gradient(135deg, #1E6FD9 0%, #0B4FB3 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: var(--brand-blue);
+  -webkit-text-fill-color: var(--brand-blue);
 }
 
 /* Custom shadow utilities */

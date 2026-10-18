@@ -31,21 +31,21 @@ export default function MenuPage() {
 
       {/* User Profile Card */}
       {user && (
-        <div className="rounded-[20px] bg-white border border-blue-100/70 p-5 sm:p-6 shadow-[0_4px_20px_-2px_rgba(15,31,61,0.05)] flex items-center justify-between">
+        <div className="rounded-[20px] bg-[var(--bg-card)] border border-[var(--border-subtle)] p-5 sm:p-6 shadow-xs flex items-center justify-between">
           <div className="flex items-center gap-3.5">
-            <div className="w-12 h-12 rounded-full bg-gradient-to-r from-[#1E6FD9] to-[#0B4FB3] text-white font-extrabold text-base flex items-center justify-center shadow-xs">
+            <div className="w-12 h-12 rounded-full bg-[var(--brand-blue)] text-white font-extrabold text-base flex items-center justify-center shadow-xs">
               {user.username.slice(0, 2).toUpperCase()}
             </div>
             <div>
-              <h2 className="font-bold text-sm sm:text-base text-[#0F1F3D]">
+              <h2 className="font-bold text-sm sm:text-base text-[var(--text-primary)] font-display">
                 {user.username}
               </h2>
-              <p className="text-xs text-[#6B7A99]">
+              <p className="text-xs text-[var(--text-muted)]">
                 {user.phoneNumber}
               </p>
               <div className="flex items-center gap-1.5 mt-1">
-                <span className="w-2 h-2 rounded-full bg-[#16A34A]" />
-                <span className="text-[10px] font-bold text-[#16A34A] uppercase">
+                <span className="w-2 h-2 rounded-full bg-[var(--accent-green)]" />
+                <span className="text-[10px] font-bold text-[var(--accent-green)] uppercase">
                   M-Pesa Verified
                 </span>
               </div>
@@ -54,7 +54,7 @@ export default function MenuPage() {
 
           <Link
             href="/wallet"
-            className="px-3.5 py-2 rounded-[10px] bg-[#EEF3FF] hover:bg-[#E2EDFF] text-xs font-bold text-[#0A3D91] transition-colors"
+            className="px-3.5 py-2 rounded-[10px] bg-[var(--bg-card-elevated)] border border-[var(--border-subtle)] hover:bg-[var(--bg-card)] text-xs font-bold text-[var(--text-primary)] transition-colors"
           >
             Wallet
           </Link>

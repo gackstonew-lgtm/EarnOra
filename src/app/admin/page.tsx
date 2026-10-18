@@ -82,8 +82,8 @@ export default function AdminPage() {
           onClick={() => setActiveTab("moderation")}
           className={`px-3.5 py-2 rounded-[10px] transition-colors cursor-pointer ${
             activeTab === "moderation"
-              ? "bg-gradient-to-r from-[#1E6FD9] to-[#0B4FB3] text-white shadow-blue-btn"
-              : "text-[#6B7A99] hover:text-[#0F1F3D] hover:bg-[#EEF3FF]"
+              ? "bg-[var(--brand-blue)] text-white shadow-xs"
+              : "text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-card-elevated)]"
           }`}
         >
           Review Moderation Queue ({reviews.filter((r) => r.status === "pending_review").length})
