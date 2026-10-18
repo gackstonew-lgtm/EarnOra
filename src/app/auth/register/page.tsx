@@ -138,11 +138,19 @@ function RegisterContent() {
         return;
       }
 
-      // Generate verification OTP
-      generateOtp(phoneValidation.normalized, "registration");
+      const requireVerification =
+        process.env.NEXT_PUBLIC_REQUIRE_SIGNUP_VERIFICATION === "true";
 
-      // Redirect to OTP verification screen
-      router.push(`/auth/verify-otp?phone=${encodeURIComponent(phoneValidation.normalized)}`);
+      if (requireVerification) {
+        // Generate verification OTP
+        generateOtp(phoneValidation.normalized, "registration");
+
+        // Redirect to OTP verification screen
+        router.push(`/auth/verify-otp?phone=${encodeURIComponent(phoneValidation.normalized)}`);
+      } else {
+        // Automatically verify phone and redirect directly to dashboard
+        router.push("/dashboard");
+      }
     } catch {
       setFormError("An unexpected error occurred. Please try again.");
       setIsLoading(false);

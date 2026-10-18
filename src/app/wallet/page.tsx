@@ -37,6 +37,11 @@ export default function WalletPage() {
     setErrorMsg("");
     setSuccessMsg("");
 
+    if (!user?.isPhoneVerified) {
+      setErrorMsg("Phone number verification is required before initiating an M-Pesa withdrawal.");
+      return;
+    }
+
     const amount = Number(withdrawAmount);
 
     if (isNaN(amount) || amount < 100) {
@@ -160,6 +165,24 @@ export default function WalletPage() {
           </div>
         )}
 
+        {!user?.isPhoneVerified && (
+          <div className="mt-4 p-4 rounded-[14px] bg-amber-50 border border-amber-200/80 text-xs text-amber-900 flex items-start gap-3">
+            <AlertCircle className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
+            <div className="space-y-1">
+              <p className="font-bold">Phone Verification Required for M-Pesa Withdrawals</p>
+              <p className="text-[#6B7A99]">
+                To protect your earnings and satisfy Kenya anti-fraud regulations, payouts can only be disbursed to a verified phone line.
+              </p>
+              <a
+                href={`/auth/verify-otp?phone=${encodeURIComponent(user?.phoneNumber || "")}`}
+                className="inline-flex items-center gap-1 font-bold text-[#1E6FD9] hover:underline pt-1"
+              >
+                Verify Phone Number Now →
+              </a>
+            </div>
+          </div>
+        )}
+
         <form onSubmit={handleWithdrawal} className="mt-5 space-y-4">
           <div>
             <label className="block text-xs font-semibold text-[#0F1F3D] mb-1.5">
@@ -168,9 +191,15 @@ export default function WalletPage() {
             <div className="flex items-center gap-2.5 p-3 rounded-[12px] bg-[#EEF3FF] border border-blue-100/70 text-xs text-[#0F1F3D]">
               <Phone className="w-4 h-4 text-[#1E6FD9]" />
               <span className="font-bold">{mpesaNumber}</span>
-              <span className="ml-auto text-[10px] text-[#16A34A] font-bold px-2 py-0.5 rounded-full bg-emerald-50 border border-emerald-200/60">
-                Verified Line
-              </span>
+              {user?.isPhoneVerified ? (
+                <span className="ml-auto text-[10px] text-[#16A34A] font-bold px-2 py-0.5 rounded-full bg-emerald-50 border border-emerald-200/60">
+                  Verified Line
+                </span>
+              ) : (
+                <span className="ml-auto text-[10px] text-amber-600 font-bold px-2 py-0.5 rounded-full bg-amber-50 border border-amber-200/60">
+                  Unverified
+                </span>
+              )}
             </div>
           </div>
 

@@ -116,6 +116,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       10 + Math.random() * 90
     )}`;
 
+    const requireVerification =
+      process.env.NEXT_PUBLIC_REQUIRE_SIGNUP_VERIFICATION === "true";
+
     const newUser: UserProfile = {
       id: `usr_${Date.now()}`,
       username: data.username.trim(),
@@ -123,7 +126,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       country: data.country,
       callingCode: data.callingCode,
       role: "user",
-      isPhoneVerified: false, // will be verified via OTP
+      isPhoneVerified: !requireVerification, // verified immediately if verification not required
       referralCode: generatedRefCode,
       referredBy: data.referralCode || "Earnora",
       joinedAt: new Date().toISOString(),
