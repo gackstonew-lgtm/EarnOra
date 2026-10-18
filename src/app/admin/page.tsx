@@ -2,16 +2,13 @@
 
 import React, { useState } from "react";
 import {
-  ShieldAlert,
   CheckCircle,
   XCircle,
-  FileText,
-  UserCheck,
   AlertTriangle,
   Search,
-  Filter,
 } from "lucide-react";
 import { ModerationStatus } from "@/lib/types";
+import { Button } from "@/components/ui";
 
 interface QueuedReview {
   id: string;
@@ -21,7 +18,7 @@ interface QueuedReview {
   rating: number;
   wordCount: number;
   hasPhoto: boolean;
-  duplicateScore: number; // 0 to 100%
+  duplicateScore: number;
   status: ModerationStatus;
   headline: string;
   textSnippet: string;
@@ -38,7 +35,7 @@ export default function AdminPage() {
       rating: 4,
       wordCount: 84,
       hasPhoto: true,
-      duplicateScore: 2, // low fraud risk
+      duplicateScore: 2,
       status: "pending_review",
       headline: "Great coffee, but seating wait was longer than expected",
       textSnippet: "Visited on Tuesday afternoon. Barista gave great recommendations on Kenyan single origin beans. The seating area upstairs was well lit, though Wi-Fi experienced minor drops around 3 PM.",
@@ -52,7 +49,7 @@ export default function AdminPage() {
       rating: 5,
       wordCount: 52,
       hasPhoto: false,
-      duplicateScore: 94, // HIGH FRAUD RISK
+      duplicateScore: 94,
       status: "pending_review",
       headline: "Good app best app in Kenya download now",
       textSnippet: "This app is very good and nice I like it so much best app download now very good app is very good and nice I like it so much best app download now.",
@@ -71,114 +68,118 @@ export default function AdminPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight">
+        <h1 className="text-xl sm:text-2xl font-extrabold text-[#0F1F3D] tracking-tight">
           Admin & Moderation Desk
         </h1>
-        <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+        <p className="text-xs sm:text-sm text-[#6B7A99] mt-0.5">
           Role-based review verification, copy-paste fraud detection, and payout approval.
         </p>
       </div>
 
       {/* Admin Tabs */}
-      <div className="flex gap-2 border-b border-slate-200 dark:border-slate-800 pb-2 text-xs font-bold">
+      <div className="flex gap-2 border-b border-blue-100 pb-2 text-xs font-bold">
         <button
           onClick={() => setActiveTab("moderation")}
-          className={`px-3 py-1.5 rounded-lg transition-colors ${
+          className={`px-3.5 py-2 rounded-[10px] transition-colors cursor-pointer ${
             activeTab === "moderation"
-              ? "bg-emerald-500 text-slate-950"
-              : "text-slate-400 hover:text-white"
+              ? "bg-gradient-to-r from-[#1E6FD9] to-[#0B4FB3] text-white shadow-blue-btn"
+              : "text-[#6B7A99] hover:text-[#0F1F3D] hover:bg-[#EEF3FF]"
           }`}
         >
           Review Moderation Queue ({reviews.filter((r) => r.status === "pending_review").length})
         </button>
         <button
           onClick={() => setActiveTab("fraud")}
-          className={`px-3 py-1.5 rounded-lg transition-colors ${
+          className={`px-3.5 py-2 rounded-[10px] transition-colors cursor-pointer ${
             activeTab === "fraud"
-              ? "bg-rose-500 text-white"
-              : "text-slate-400 hover:text-white"
+              ? "bg-red-500 text-white shadow-xs"
+              : "text-[#6B7A99] hover:text-[#0F1F3D] hover:bg-[#EEF3FF]"
           }`}
         >
-          Fraud Flags (1 High Risk)
+          Fraud Alerts
         </button>
       </div>
 
-      {/* Review Moderation Queue */}
+      {/* Reviews Queue List */}
       <div className="space-y-4">
         {reviews.map((rev) => (
           <div
             key={rev.id}
-            className={`p-5 rounded-[22px] bg-white dark:bg-[#0F1A2E] border ${
-              rev.duplicateScore > 70
-                ? "border-rose-500/50 dark:border-rose-500/40"
-                : "border-slate-200 dark:border-slate-800"
-            } shadow-sm space-y-3`}
+            className="rounded-[20px] bg-white border border-blue-100/70 p-5 sm:p-6 shadow-[0_4px_20px_-2px_rgba(15,31,61,0.05)] space-y-4"
           >
-            <div className="flex items-start justify-between">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-slate-100">
               <div>
-                <span className="text-[11px] font-bold text-slate-900 dark:text-white">
-                  {rev.reviewer} ({rev.phone})
+                <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-[#EAF3FF] text-[#0A3D91]">
+                  {rev.taskTitle}
                 </span>
-                <p className="text-xs text-slate-400">
-                  Task: <strong>{rev.taskTitle}</strong> • Bounty: KES {rev.rewardKes}
+                <p className="text-xs font-semibold text-[#6B7A99] mt-1">
+                  Submitted by <strong>@{rev.reviewer}</strong> ({rev.phone})
                 </p>
               </div>
 
-              {/* Fraud Risk Tag */}
-              {rev.duplicateScore > 70 ? (
-                <span className="px-2.5 py-1 rounded-full bg-rose-500/20 text-rose-400 text-[10px] font-black flex items-center gap-1">
-                  <AlertTriangle className="w-3.5 h-3.5" />
-                  <span>Flagged: {rev.duplicateScore}% Duplicate Risk</span>
+              <div className="flex items-center gap-2">
+                <span className="text-xs font-bold text-[#16A34A] numeral-bold">
+                  Bounty: KES {rev.rewardKes}
                 </span>
-              ) : (
-                <span className="px-2.5 py-1 rounded-full bg-emerald-500/15 text-emerald-400 text-[10px] font-bold">
-                  Verified Genuine ({rev.wordCount} words)
+                <span
+                  className={`text-[10px] font-bold uppercase px-2.5 py-0.5 rounded-full ${
+                    rev.duplicateScore > 50
+                      ? "bg-red-50 text-red-600 border border-red-200"
+                      : "bg-emerald-50 text-[#16A34A] border border-emerald-200"
+                  }`}
+                >
+                  {rev.duplicateScore > 50
+                    ? `⚠️ High Risk (${rev.duplicateScore}%)`
+                    : `Verified (${rev.duplicateScore}% risk)`}
                 </span>
-              )}
+              </div>
             </div>
 
-            <div className="p-3 rounded-xl bg-slate-50 dark:bg-[#132347] border border-slate-200 dark:border-slate-700/60 text-xs">
-              <h4 className="font-bold text-slate-900 dark:text-white mb-1">
-                &ldquo;{rev.headline}&rdquo;
-              </h4>
-              <p className="text-slate-600 dark:text-slate-300 leading-relaxed">
-                {rev.textSnippet}
+            <div>
+              <h4 className="font-bold text-sm text-[#0F1F3D]">{rev.headline}</h4>
+              <p className="text-xs text-[#6B7A99] mt-1.5 leading-relaxed bg-[#EEF3FF]/60 p-3 rounded-[12px] border border-blue-100/60">
+                &ldquo;{rev.textSnippet}&rdquo;
               </p>
             </div>
 
-            <div className="flex items-center justify-between pt-2">
-              <span className="text-xs font-semibold text-slate-400">
-                Current Status:{" "}
-                <strong
-                  className={
-                    rev.status === "approved"
-                      ? "text-emerald-500"
-                      : rev.status === "rejected"
-                      ? "text-rose-500"
-                      : "text-amber-500"
-                  }
-                >
-                  {rev.status.toUpperCase()}
-                </strong>
-              </span>
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-2">
+              <div className="flex items-center gap-3 text-xs text-[#6B7A99]">
+                <span>{rev.wordCount} words</span>
+                <span>•</span>
+                <span>{rev.hasPhoto ? "Photo Attached" : "No Photo"}</span>
+                <span>•</span>
+                <span>Rating: {rev.rating}/5</span>
+              </div>
 
-              {rev.status === "pending_review" && (
+              {rev.status === "pending_review" ? (
                 <div className="flex gap-2">
-                  <button
+                  <Button
+                    variant="danger"
+                    size="sm"
                     onClick={() => handleDecision(rev.id, "rejected")}
-                    className="px-3.5 py-1.5 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 text-rose-500 font-bold text-xs flex items-center gap-1"
+                    leftIcon={<XCircle className="w-3.5 h-3.5" />}
                   >
-                    <XCircle className="w-3.5 h-3.5" />
-                    <span>Reject</span>
-                  </button>
-                  <button
+                    Reject
+                  </Button>
+                  <Button
+                    variant="success"
+                    size="sm"
                     onClick={() => handleDecision(rev.id, "approved")}
-                    className="px-3.5 py-1.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs flex items-center gap-1"
+                    leftIcon={<CheckCircle className="w-3.5 h-3.5" />}
                   >
-                    <CheckCircle className="w-3.5 h-3.5" />
-                    <span>Approve & Credit Wallet</span>
-                  </button>
+                    Approve & Disburse KES {rev.rewardKes}
+                  </Button>
                 </div>
+              ) : (
+                <span
+                  className={`text-xs font-bold uppercase px-3 py-1 rounded-full ${
+                    rev.status === "approved"
+                      ? "bg-emerald-50 text-[#16A34A]"
+                      : "bg-red-50 text-red-600"
+                  }`}
+                >
+                  Decision: {rev.status}
+                </span>
               )}
             </div>
           </div>

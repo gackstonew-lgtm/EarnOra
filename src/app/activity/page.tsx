@@ -11,11 +11,11 @@ import {
   TrendingUp,
   Clock,
   CheckCircle2,
-  AlertTriangle,
   Gift,
 } from "lucide-react";
 import { useAuth } from "@/components/providers/AuthProvider";
 import { LEADERBOARD_USERS } from "@/lib/mock-data";
+import { Button } from "@/components/ui";
 
 export default function ActivityPage() {
   const { user, updateProfile } = useAuth();
@@ -25,7 +25,7 @@ export default function ActivityPage() {
   const [streakClaimed, setStreakClaimed] = useState(false);
 
   const refCode = user?.referralCode || "EARN-KE-88";
-  const shareLink = `http://localhost:3005/auth/register?ref=${refCode}`;
+  const shareLink = `http://localhost:3000/auth/register?ref=${refCode}`;
 
   const handleCopyLink = () => {
     navigator.clipboard.writeText(shareLink);
@@ -35,7 +35,7 @@ export default function ActivityPage() {
 
   const handleWhatsAppShare = () => {
     const text = encodeURIComponent(
-      `Join Earnora and earn real M-Pesa cash for reviewing Kenyan restaurants, mobile apps, and services! Register with my invite link: ${shareLink}`
+      `Join EarnOra and earn real M-Pesa cash for reviewing Kenyan restaurants, mobile apps, and services! Register with my invite link: ${shareLink}`
     );
     window.open(`https://api.whatsapp.com/send?text=${text}`, "_blank");
   };
@@ -57,47 +57,47 @@ export default function ActivityPage() {
     <div className="space-y-6">
       {/* Title */}
       <div>
-        <h1 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight">
+        <h1 className="text-xl sm:text-2xl font-extrabold text-[#0F1F3D] tracking-tight">
           Engagement & Growth
         </h1>
-        <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
+        <p className="text-xs sm:text-sm text-[#6B7A99] mt-1">
           Referrals, daily multiplier check-ins, and weekly Kenyan reviewer leaderboard.
         </p>
       </div>
 
       {/* Tabs */}
-      <div className="flex rounded-2xl bg-slate-100 dark:bg-[#0F1A2E] p-1 border border-slate-200 dark:border-slate-800 text-xs font-bold">
+      <div className="flex rounded-[14px] bg-[#EEF3FF] p-1 border border-blue-100 text-xs font-bold">
         <button
           onClick={() => setActiveTab("referrals")}
-          className={`flex-1 py-2 rounded-xl transition-all flex items-center justify-center gap-1.5 ${
+          className={`flex-1 py-2.5 rounded-[10px] transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
             activeTab === "referrals"
-              ? "bg-white dark:bg-[#132347] text-slate-900 dark:text-white shadow-sm"
-              : "text-slate-500 dark:text-slate-400"
+              ? "bg-gradient-to-r from-[#1E6FD9] to-[#0B4FB3] text-white shadow-blue-btn"
+              : "text-[#6B7A99] hover:text-[#0F1F3D]"
           }`}
         >
-          <Users className="w-3.5 h-3.5 text-emerald-500" />
+          <Users className="w-3.5 h-3.5" />
           <span>Refer & Earn</span>
         </button>
         <button
           onClick={() => setActiveTab("streak")}
-          className={`flex-1 py-2 rounded-xl transition-all flex items-center justify-center gap-1.5 ${
+          className={`flex-1 py-2.5 rounded-[10px] transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
             activeTab === "streak"
-              ? "bg-white dark:bg-[#132347] text-slate-900 dark:text-white shadow-sm"
-              : "text-slate-500 dark:text-slate-400"
+              ? "bg-gradient-to-r from-[#1E6FD9] to-[#0B4FB3] text-white shadow-blue-btn"
+              : "text-[#6B7A99] hover:text-[#0F1F3D]"
           }`}
         >
-          <Flame className="w-3.5 h-3.5 text-orange-500" />
+          <Flame className="w-3.5 h-3.5" />
           <span>Daily Streak</span>
         </button>
         <button
           onClick={() => setActiveTab("leaderboard")}
-          className={`flex-1 py-2 rounded-xl transition-all flex items-center justify-center gap-1.5 ${
+          className={`flex-1 py-2.5 rounded-[10px] transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
             activeTab === "leaderboard"
-              ? "bg-white dark:bg-[#132347] text-slate-900 dark:text-white shadow-sm"
-              : "text-slate-500 dark:text-slate-400"
+              ? "bg-gradient-to-r from-[#1E6FD9] to-[#0B4FB3] text-white shadow-blue-btn"
+              : "text-[#6B7A99] hover:text-[#0F1F3D]"
           }`}
         >
-          <Award className="w-3.5 h-3.5 text-amber-500" />
+          <Award className="w-3.5 h-3.5" />
           <span>Leaderboard</span>
         </button>
       </div>
@@ -105,36 +105,36 @@ export default function ActivityPage() {
       {/* Tab 1: Referrals */}
       {activeTab === "referrals" && (
         <div className="space-y-4">
-          <div className="rounded-[22px] bg-gradient-to-br from-[#09221C] via-[#0E352B] to-[#071814] border border-emerald-500/30 p-6 text-white shadow-xl">
+          <div className="rounded-[24px] bg-gradient-to-br from-[#1E6FD9] via-[#165FC4] to-[#0B4FB3] p-6 sm:p-8 text-white shadow-[0_12px_36px_rgba(11,79,179,0.22)] relative overflow-hidden">
             <div className="flex items-center gap-2 mb-2">
-              <Gift className="w-5 h-5 text-emerald-400" />
-              <span className="text-xs uppercase font-bold tracking-wider text-emerald-400">
+              <Gift className="w-5 h-5 text-sky-200" />
+              <span className="text-xs uppercase font-bold tracking-wider text-white">
                 1-Level Referral Program
               </span>
             </div>
-            <h2 className="text-xl font-black">Earn KES 150 for each friend</h2>
-            <p className="text-xs text-slate-300 mt-1 leading-relaxed">
+            <h2 className="text-xl sm:text-2xl font-black">Earn KES 150 for each friend</h2>
+            <p className="text-xs sm:text-sm text-blue-100 mt-1 leading-relaxed max-w-xl">
               When someone registers with your link and their first review is verified and approved, you receive KES 150 instantly into your available wallet balance.
             </p>
 
             {/* Referral Link Box */}
-            <div className="mt-5 p-3 rounded-2xl bg-black/40 border border-emerald-500/30 space-y-2">
+            <div className="mt-5 p-4 rounded-[16px] bg-white text-[#0F1F3D] shadow-sm space-y-2 border border-blue-100/60">
               <div className="flex items-center justify-between text-xs">
-                <span className="text-slate-400">Your Personal Code:</span>
-                <span className="font-mono font-bold text-emerald-400">{refCode}</span>
+                <span className="text-[#6B7A99]">Your Personal Code:</span>
+                <span className="font-mono font-bold text-[#1E6FD9]">{refCode}</span>
               </div>
               <div className="flex items-center gap-2">
                 <input
                   type="text"
                   readOnly
                   value={shareLink}
-                  className="flex-1 bg-black/50 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-200 select-all"
+                  className="flex-1 bg-[#EEF3FF] border border-blue-100 rounded-[10px] px-3 py-2 text-xs text-[#0F1F3D] font-mono select-all"
                 />
                 <button
                   onClick={handleCopyLink}
-                  className="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs flex items-center gap-1"
+                  className="px-4 py-2 rounded-[10px] bg-[#EEF3FF] hover:bg-[#E2EDFF] text-[#1E6FD9] font-bold text-xs flex items-center gap-1 border border-blue-100 transition-colors cursor-pointer"
                 >
-                  {copiedLink ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
+                  {copiedLink ? <Check className="w-4 h-4 text-[#16A34A]" /> : <Copy className="w-4 h-4" />}
                   <span>{copiedLink ? "Copied" : "Copy"}</span>
                 </button>
               </div>
@@ -143,7 +143,7 @@ export default function ActivityPage() {
             {/* WhatsApp Share Button */}
             <button
               onClick={handleWhatsAppShare}
-              className="mt-4 w-full py-3 rounded-xl bg-[#25D366] hover:bg-[#20BD5A] text-slate-950 font-bold text-xs flex items-center justify-center gap-2 shadow-lg"
+              className="mt-4 w-full py-3 rounded-[12px] bg-[#25D366] hover:bg-[#20BD5A] text-white font-bold text-xs flex items-center justify-center gap-2 shadow-md transition-all cursor-pointer"
             >
               <Share2 className="w-4 h-4" />
               <span>Share Directly to WhatsApp</span>
@@ -151,31 +151,31 @@ export default function ActivityPage() {
           </div>
 
           {/* Referred Friends Ledger */}
-          <div className="rounded-[22px] bg-white dark:bg-[#0F1A2E] border border-slate-200 dark:border-slate-800 p-5 shadow-sm">
-            <h3 className="font-bold text-sm text-slate-900 dark:text-white mb-3">
+          <div className="rounded-[20px] bg-white border border-blue-100/70 p-6 shadow-[0_4px_20px_-2px_rgba(15,31,61,0.05)]">
+            <h3 className="font-bold text-sm text-[#0F1F3D] mb-3">
               Referred Friends (One-Level Policy)
             </h3>
-            <div className="divide-y divide-slate-100 dark:divide-slate-800 text-xs">
-              <div className="py-2.5 flex items-center justify-between">
+            <div className="divide-y divide-slate-100 text-xs">
+              <div className="py-3 flex items-center justify-between">
                 <div>
-                  <p className="font-bold text-slate-900 dark:text-white">@kevin_m</p>
-                  <p className="text-[10px] text-slate-400">Joined Oct 15, 2026</p>
+                  <p className="font-bold text-[#0F1F3D]">@kevin_m</p>
+                  <p className="text-[10px] text-[#6B7A99]">Joined Oct 15, 2026</p>
                 </div>
                 <div className="text-right">
-                  <span className="text-emerald-500 font-bold">+KES 150.00</span>
-                  <span className="block text-[10px] text-emerald-600 dark:text-emerald-400">
+                  <span className="text-[#16A34A] font-bold numeral-bold">+KES 150.00</span>
+                  <span className="block text-[10px] text-[#16A34A] font-semibold">
                     Qualified & Paid
                   </span>
                 </div>
               </div>
-              <div className="py-2.5 flex items-center justify-between">
+              <div className="py-3 flex items-center justify-between">
                 <div>
-                  <p className="font-bold text-slate-900 dark:text-white">@mercy_w</p>
-                  <p className="text-[10px] text-slate-400">Joined Oct 17, 2026</p>
+                  <p className="font-bold text-[#0F1F3D]">@mercy_w</p>
+                  <p className="text-[10px] text-[#6B7A99]">Joined Oct 17, 2026</p>
                 </div>
                 <div className="text-right">
-                  <span className="text-amber-500 font-bold">Pending Review</span>
-                  <span className="block text-[10px] text-slate-400">1 review submitted</span>
+                  <span className="text-amber-600 font-bold">Pending Review</span>
+                  <span className="block text-[10px] text-[#6B7A99]">1 review submitted</span>
                 </div>
               </div>
             </div>
@@ -186,21 +186,21 @@ export default function ActivityPage() {
       {/* Tab 2: Daily Streak */}
       {activeTab === "streak" && (
         <div className="space-y-4">
-          <div className="rounded-[22px] bg-gradient-to-br from-[#2D1609] via-[#381F0D] to-[#1E0D05] border border-orange-500/30 p-6 text-white shadow-xl">
+          <div className="rounded-[24px] bg-gradient-to-br from-[#1E6FD9] via-[#165FC4] to-[#0B4FB3] p-6 sm:p-8 text-white shadow-[0_12px_36px_rgba(11,79,179,0.22)] relative overflow-hidden">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <Flame className="w-6 h-6 text-orange-400" />
-                <span className="text-xs uppercase font-bold tracking-wider text-orange-400">
+                <Flame className="w-6 h-6 text-orange-300" />
+                <span className="text-xs uppercase font-bold tracking-wider text-white">
                   Streak Multipliers
                 </span>
               </div>
-              <span className="px-2.5 py-1 rounded-full bg-orange-500/20 text-orange-300 font-bold text-xs">
+              <span className="px-3 py-1 rounded-full bg-white/20 backdrop-blur-xs text-white font-bold text-xs border border-white/25">
                 {user?.streakDays || 4} Days Active
               </span>
             </div>
 
-            <h2 className="text-xl font-black mt-3">Earn Daily Multipliers</h2>
-            <p className="text-xs text-slate-300 mt-1 leading-relaxed">
+            <h2 className="text-xl sm:text-2xl font-black mt-3">Earn Daily Multipliers</h2>
+            <p className="text-xs sm:text-sm text-blue-100 mt-1 leading-relaxed">
               Check in daily to accumulate streak bonuses and unlock reward multipliers across all review tasks.
             </p>
 
@@ -214,12 +214,12 @@ export default function ActivityPage() {
                 return (
                   <div
                     key={day}
-                    className={`p-2.5 rounded-xl text-center border ${
+                    className={`p-2.5 rounded-[12px] text-center border ${
                       isPassed
-                        ? "bg-orange-500/30 border-orange-400/50 text-white"
+                        ? "bg-white/20 border-white/30 text-white"
                         : isCurrent
-                        ? "bg-orange-500 border-orange-300 text-slate-950 font-black animate-pulse"
-                        : "bg-black/30 border-slate-800 text-slate-400"
+                        ? "bg-white border-white text-[#0A3D91] font-black shadow-md scale-105"
+                        : "bg-white/10 border-white/15 text-blue-100"
                     }`}
                   >
                     <span className="text-[10px] uppercase font-semibold block">D{day}</span>
@@ -232,9 +232,9 @@ export default function ActivityPage() {
             <button
               onClick={handleClaimStreak}
               disabled={streakClaimed}
-              className="mt-5 w-full py-3 rounded-xl bg-gradient-to-r from-orange-500 to-amber-500 text-slate-950 font-bold text-xs flex items-center justify-center gap-2 shadow-lg disabled:opacity-50"
+              className="mt-6 w-full py-3.5 rounded-[12px] bg-white hover:bg-slate-50 text-[#0A3D91] font-extrabold text-xs flex items-center justify-center gap-2 shadow-md disabled:opacity-50 transition-all cursor-pointer"
             >
-              <Flame className="w-4 h-4" />
+              <Flame className="w-4 h-4 text-orange-500" />
               <span>{streakClaimed ? "Today's Bonus Claimed" : "Claim Day 4 Bonus (+KES 25)"}</span>
             </button>
           </div>
@@ -244,50 +244,55 @@ export default function ActivityPage() {
       {/* Tab 3: Leaderboard */}
       {activeTab === "leaderboard" && (
         <div className="space-y-4">
-          <div className="rounded-[22px] bg-white dark:bg-[#0F1A2E] border border-slate-200 dark:border-slate-800 p-5 shadow-sm">
+          <div className="rounded-[20px] bg-white border border-blue-100/70 p-6 shadow-[0_4px_20px_-2px_rgba(15,31,61,0.05)]">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="font-bold text-sm text-slate-900 dark:text-white flex items-center gap-2">
+              <h3 className="font-bold text-sm text-[#0F1F3D] flex items-center gap-2">
                 <Award className="w-4 h-4 text-amber-500" />
-                <span>Weekly Reviewer Hall of Fame</span>
+                <span>Weekly Kenyan Reviewer Leaderboard</span>
               </h3>
-              <span className="text-[10px] text-slate-400">Updates hourly</span>
+              <span className="text-[11px] text-[#6B7A99]">Resets Sunday 23:59 EAT</span>
             </div>
 
-            <div className="divide-y divide-slate-100 dark:divide-slate-800 text-xs">
-              {LEADERBOARD_USERS.map((usr) => (
-                <div key={usr.rank} className="py-3 flex items-center justify-between gap-3">
-                  <div className="flex items-center gap-3">
-                    <span
-                      className={`w-6 text-center font-black ${
-                        usr.rank === 1
-                          ? "text-amber-400 text-sm"
-                          : usr.rank === 2
-                          ? "text-slate-300 text-sm"
-                          : usr.rank === 3
-                          ? "text-amber-600 text-sm"
-                          : "text-slate-400"
-                      }`}
-                    >
-                      #{usr.rank}
-                    </span>
-                    <div className="w-8 h-8 rounded-full bg-slate-100 dark:bg-[#132347] text-slate-700 dark:text-slate-200 font-bold flex items-center justify-center">
-                      {usr.avatarLetter}
+            <div className="divide-y divide-slate-100">
+              {LEADERBOARD_USERS.map((lbUser) => {
+                const rank = lbUser.rank;
+                return (
+                  <div
+                    key={lbUser.username}
+                    className="py-3 flex items-center justify-between gap-3"
+                  >
+                    <div className="flex items-center gap-3">
+                      <span
+                        className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${
+                          rank === 1
+                            ? "bg-amber-100 text-amber-800"
+                            : rank === 2
+                            ? "bg-slate-200 text-slate-700"
+                            : rank === 3
+                            ? "bg-amber-50 text-amber-900 border border-amber-200"
+                            : "text-[#6B7A99]"
+                        }`}
+                      >
+                        {rank}
+                      </span>
+                      <div>
+                        <p className="text-xs sm:text-sm font-bold text-[#0F1F3D]">
+                          {lbUser.username}
+                        </p>
+                        <p className="text-[10px] text-[#6B7A99]">
+                          {lbUser.approvedReviewsCount} approved reviews
+                        </p>
+                      </div>
                     </div>
-                    <div>
-                      <p className="font-bold text-slate-900 dark:text-white">
-                        {usr.username}
-                      </p>
-                      <p className="text-[10px] text-slate-400">
-                        {usr.approvedReviewsCount} approved reviews
-                      </p>
+
+                    <div className="text-right">
+                      <span className="text-xs sm:text-sm font-extrabold text-[#16A34A] numeral-bold">
+                        KES {lbUser.totalEarnedKes.toLocaleString()}
+                      </span>
                     </div>
                   </div>
-
-                  <span className="font-black text-emerald-500 numeral-bold">
-                    KES {usr.totalEarnedKes.toLocaleString()}
-                  </span>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         </div>

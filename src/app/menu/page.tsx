@@ -9,48 +9,42 @@ import {
   FileText,
   HelpCircle,
   LogOut,
-  Moon,
   ChevronRight,
-  Sparkles,
+  Wallet,
 } from "lucide-react";
 import { useAuth } from "@/components/providers/AuthProvider";
-import { ThemeToggle } from "@/components/brand/ThemeToggle";
-import { EarnoraLogo } from "@/components/brand/EarnoraLogo";
 
 export default function MenuPage() {
   const { user, logout, isAuthenticated } = useAuth();
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight">
-            Menu & Account
-          </h1>
-          <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-            Platform settings, business workspace, and compliance.
-          </p>
-        </div>
-        <ThemeToggle />
+      <div>
+        <h1 className="text-xl sm:text-2xl font-extrabold text-[#0F1F3D] tracking-tight">
+          Menu & Account
+        </h1>
+        <p className="text-xs sm:text-sm text-[#6B7A99] mt-0.5">
+          Platform settings, business workspace, and compliance.
+        </p>
       </div>
 
       {/* User Profile Card */}
       {user && (
-        <div className="rounded-[22px] bg-white dark:bg-[#0F1A2E] border border-slate-200 dark:border-slate-800 p-5 shadow-sm flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-emerald-500 to-teal-400 text-slate-950 font-black text-base flex items-center justify-center">
+        <div className="rounded-[20px] bg-white border border-blue-100/70 p-5 sm:p-6 shadow-[0_4px_20px_-2px_rgba(15,31,61,0.05)] flex items-center justify-between">
+          <div className="flex items-center gap-3.5">
+            <div className="w-12 h-12 rounded-full bg-gradient-to-r from-[#1E6FD9] to-[#0B4FB3] text-white font-extrabold text-base flex items-center justify-center shadow-xs">
               {user.username.slice(0, 2).toUpperCase()}
             </div>
             <div>
-              <h2 className="font-bold text-sm text-slate-900 dark:text-white">
+              <h2 className="font-bold text-sm sm:text-base text-[#0F1F3D]">
                 {user.username}
               </h2>
-              <p className="text-xs text-slate-500 dark:text-slate-400">
+              <p className="text-xs text-[#6B7A99]">
                 {user.phoneNumber}
               </p>
               <div className="flex items-center gap-1.5 mt-1">
-                <span className="w-2 h-2 rounded-full bg-emerald-500" />
-                <span className="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 uppercase">
+                <span className="w-2 h-2 rounded-full bg-[#16A34A]" />
+                <span className="text-[10px] font-bold text-[#16A34A] uppercase">
                   M-Pesa Verified
                 </span>
               </div>
@@ -59,7 +53,7 @@ export default function MenuPage() {
 
           <Link
             href="/wallet"
-            className="px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-[#132347] text-xs font-bold text-slate-700 dark:text-slate-200"
+            className="px-3.5 py-2 rounded-[10px] bg-[#EEF3FF] hover:bg-[#E2EDFF] text-xs font-bold text-[#0A3D91] transition-colors"
           >
             Wallet
           </Link>
@@ -67,94 +61,111 @@ export default function MenuPage() {
       )}
 
       {/* Navigation Group 1: Workspaces */}
-      <div className="rounded-[22px] bg-white dark:bg-[#0F1A2E] border border-slate-200 dark:border-slate-800 p-2 shadow-sm space-y-1">
+      <div className="rounded-[20px] bg-white border border-blue-100/70 p-2 shadow-[0_4px_20px_-2px_rgba(15,31,61,0.05)] space-y-1">
         <Link
-          href="/business"
-          className="flex items-center justify-between p-3 rounded-xl hover:bg-slate-50 dark:hover:bg-[#132347] transition-colors"
+          href="/wallet"
+          className="flex items-center justify-between p-3.5 rounded-[12px] hover:bg-[#EEF3FF] transition-colors"
         >
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-blue-500/15 text-blue-500 flex items-center justify-center">
+            <div className="w-9 h-9 rounded-[10px] bg-[#EEF3FF] text-[#1E6FD9] flex items-center justify-center">
+              <Wallet className="w-4 h-4" />
+            </div>
+            <div>
+              <p className="text-xs font-bold text-[#0F1F3D]">
+                M-Pesa Wallet & Payouts
+              </p>
+              <p className="text-[11px] text-[#6B7A99]">
+                Instant B2C withdrawals from KES 100
+              </p>
+            </div>
+          </div>
+          <ChevronRight className="w-4 h-4 text-[#6B7A99]" />
+        </Link>
+
+        <Link
+          href="/business"
+          className="flex items-center justify-between p-3.5 rounded-[12px] hover:bg-[#EEF3FF] transition-colors"
+        >
+          <div className="flex items-center gap-3">
+            <div className="w-9 h-9 rounded-[10px] bg-[#EEF3FF] text-[#0A3D91] flex items-center justify-center">
               <Building2 className="w-4 h-4" />
             </div>
             <div>
-              <p className="text-xs font-bold text-slate-900 dark:text-white">
+              <p className="text-xs font-bold text-[#0F1F3D]">
                 Business Campaign Portal
               </p>
-              <p className="text-[10px] text-slate-400">
+              <p className="text-[11px] text-[#6B7A99]">
                 Sponsor reviews, set bounties, and view feedback analytics
               </p>
             </div>
           </div>
-          <ChevronRight className="w-4 h-4 text-slate-400" />
+          <ChevronRight className="w-4 h-4 text-[#6B7A99]" />
         </Link>
 
         <Link
           href="/admin"
-          className="flex items-center justify-between p-3 rounded-xl hover:bg-slate-50 dark:hover:bg-[#132347] transition-colors"
+          className="flex items-center justify-between p-3.5 rounded-[12px] hover:bg-[#EEF3FF] transition-colors"
         >
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-purple-500/15 text-purple-400 flex items-center justify-center">
+            <div className="w-9 h-9 rounded-[10px] bg-sky-50 text-sky-700 flex items-center justify-center">
               <ShieldCheck className="w-4 h-4" />
             </div>
             <div>
-              <p className="text-xs font-bold text-slate-900 dark:text-white">
-                Admin & Moderation Desk
+              <p className="text-xs font-bold text-[#0F1F3D]">
+                Admin Operations Desk
               </p>
-              <p className="text-[10px] text-slate-400">
-                Review moderation, fraud detection, and payout auditing
+              <p className="text-[11px] text-[#6B7A99]">
+                Quality moderation, NLP check, and ledger verification
               </p>
             </div>
           </div>
-          <ChevronRight className="w-4 h-4 text-slate-400" />
+          <ChevronRight className="w-4 h-4 text-[#6B7A99]" />
         </Link>
       </div>
 
-      {/* Navigation Group 2: Legal & Trust */}
-      <div className="rounded-[22px] bg-white dark:bg-[#0F1A2E] border border-slate-200 dark:border-slate-800 p-2 shadow-sm space-y-1">
+      {/* Navigation Group 2: Compliance & Legal */}
+      <div className="rounded-[20px] bg-white border border-blue-100/70 p-2 shadow-[0_4px_20px_-2px_rgba(15,31,61,0.05)] space-y-1">
         <Link
           href="/terms"
-          className="flex items-center justify-between p-3 rounded-xl hover:bg-slate-50 dark:hover:bg-[#132347] transition-colors"
+          className="flex items-center justify-between p-3.5 rounded-[12px] hover:bg-[#EEF3FF] transition-colors"
         >
           <div className="flex items-center gap-3">
-            <FileText className="w-4 h-4 text-slate-400" />
-            <span className="text-xs font-bold text-slate-700 dark:text-slate-200">
-              Terms of Service & Earning Rules
-            </span>
+            <div className="w-9 h-9 rounded-[10px] bg-[#EEF3FF] text-[#6B7A99] flex items-center justify-center">
+              <FileText className="w-4 h-4" />
+            </div>
+            <p className="text-xs font-bold text-[#0F1F3D]">
+              Terms of Service & Rules
+            </p>
           </div>
-          <ChevronRight className="w-4 h-4 text-slate-400" />
+          <ChevronRight className="w-4 h-4 text-[#6B7A99]" />
         </Link>
 
         <Link
           href="/privacy"
-          className="flex items-center justify-between p-3 rounded-xl hover:bg-slate-50 dark:hover:bg-[#132347] transition-colors"
+          className="flex items-center justify-between p-3.5 rounded-[12px] hover:bg-[#EEF3FF] transition-colors"
         >
           <div className="flex items-center gap-3">
-            <ShieldCheck className="w-4 h-4 text-slate-400" />
-            <span className="text-xs font-bold text-slate-700 dark:text-slate-200">
-              Kenya Data Protection Act (2019) & Privacy
-            </span>
+            <div className="w-9 h-9 rounded-[10px] bg-[#EEF3FF] text-[#6B7A99] flex items-center justify-center">
+              <ShieldCheck className="w-4 h-4" />
+            </div>
+            <p className="text-xs font-bold text-[#0F1F3D]">
+              Privacy Policy (Kenya DPA 2019)
+            </p>
           </div>
-          <ChevronRight className="w-4 h-4 text-slate-400" />
+          <ChevronRight className="w-4 h-4 text-[#6B7A99]" />
         </Link>
       </div>
 
-      {/* Logout button */}
+      {/* Sign Out Action */}
       {isAuthenticated && (
         <button
           onClick={logout}
-          className="w-full py-3 rounded-2xl bg-rose-500/10 hover:bg-rose-500/20 text-rose-500 font-bold text-xs flex items-center justify-center gap-2 transition-colors"
+          className="w-full py-3.5 rounded-[14px] bg-white border border-red-200 text-red-600 font-bold text-xs flex items-center justify-center gap-2 hover:bg-red-50 transition-colors shadow-xs cursor-pointer"
         >
           <LogOut className="w-4 h-4" />
-          <span>Log Out of Earnora</span>
+          <span>Sign Out of EarnOra</span>
         </button>
       )}
-
-      {/* Version & Brand Credit */}
-      <div className="text-center pt-2">
-        <p className="text-[11px] font-semibold text-slate-400">
-          Earnora v1.0.0 • Mobile-First PWA • Kenya
-        </p>
-      </div>
     </div>
   );
 }
