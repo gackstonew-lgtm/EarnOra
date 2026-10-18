@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { Menu, X, ArrowRight, Sparkles } from "lucide-react";
 import { EarnoraLogo } from "@/components/brand/EarnoraLogo";
+import { ThemeToggle } from "@/components/brand/ThemeToggle";
 import { useAuth } from "@/components/providers/AuthProvider";
 
 export const LandingNavbar: React.FC = () => {
@@ -32,8 +33,8 @@ export const LandingNavbar: React.FC = () => {
     <header
       className={`sticky top-0 z-50 w-full transition-all duration-300 ${
         isScrolled
-          ? "bg-white/95 backdrop-blur-md border-b border-blue-100/80 shadow-[0_4px_20px_rgba(15,31,61,0.04)]"
-          : "bg-white/70 backdrop-blur-xs border-b border-blue-50/60"
+          ? "bg-[var(--bg-primary)]/95 backdrop-blur-md border-b border-[var(--border-subtle)] shadow-[0_4px_20px_rgba(15,31,61,0.04)]"
+          : "bg-[var(--bg-primary)]/70 backdrop-blur-xs border-b border-[var(--border-subtle)]/60"
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 flex items-center justify-between">
@@ -41,7 +42,7 @@ export const LandingNavbar: React.FC = () => {
         <EarnoraLogo size="md" showTagline={false} />
 
         {/* Desktop Navigation Links */}
-        <nav className="hidden md:flex items-center gap-7 text-xs font-semibold text-[#6B7A99]">
+        <nav className="hidden md:flex items-center gap-7 text-xs font-semibold text-[var(--text-muted)]">
           {navLinks.map((link) => (
             <a
               key={link.label}
@@ -55,19 +56,21 @@ export const LandingNavbar: React.FC = () => {
 
         {/* Desktop Actions */}
         <div className="hidden md:flex items-center gap-3">
+          <ThemeToggle />
+
           {isAuthenticated ? (
             <Link
               href="/dashboard"
               className="px-5 py-2.5 rounded-[12px] bg-gradient-to-r from-[#1E6FD9] to-[#0B4FB3] text-white font-bold text-xs flex items-center gap-1.5 shadow-blue-btn hover:brightness-105 active:scale-95 transition-all"
             >
-              <span>Go to App</span>
+              <span>Go to Dashboard</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </Link>
           ) : (
             <>
               <Link
                 href="/auth/login"
-                className="px-4 py-2.5 rounded-[12px] text-xs font-bold text-[#0F1F3D] hover:bg-[#EEF3FF] transition-all"
+                className="px-4 py-2.5 rounded-[12px] text-xs font-bold text-[var(--text-primary)] hover:bg-[var(--bg-input)] transition-all"
               >
                 Log In
               </Link>
@@ -84,10 +87,11 @@ export const LandingNavbar: React.FC = () => {
 
         {/* Mobile Menu Hamburger */}
         <div className="flex md:hidden items-center gap-2">
+          <ThemeToggle />
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
-            className="w-10 h-10 rounded-[12px] bg-[#EEF3FF] border border-blue-100 text-[#0F1F3D] flex items-center justify-center hover:bg-[#E2EDFF]"
+            className="w-10 h-10 rounded-[12px] bg-[var(--bg-input)] border border-[var(--border-subtle)] text-[var(--text-primary)] flex items-center justify-center hover:opacity-90"
           >
             {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>

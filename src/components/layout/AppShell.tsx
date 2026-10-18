@@ -15,7 +15,7 @@ export const AppShell: React.FC<{ children: React.ReactNode }> = ({ children }) 
 
   if (isLandingPage) {
     return (
-      <div className="min-h-screen flex flex-col bg-[#F8FAFC] text-[#0F1F3D] antialiased overflow-x-hidden selection:bg-[#1E6FD9] selection:text-white">
+      <div className="min-h-screen flex flex-col bg-[var(--bg-page)] text-[var(--text-primary)] antialiased overflow-x-hidden selection:bg-[#1E6FD9] selection:text-white transition-colors duration-200">
         <PwaInstallBanner />
         {children}
       </div>
@@ -24,7 +24,7 @@ export const AppShell: React.FC<{ children: React.ReactNode }> = ({ children }) 
 
   // App Pages (/dashboard, /earn, /wallet, /activity, /menu, /business, /admin, etc.)
   return (
-    <div className="min-h-screen flex flex-col bg-[#F8FAFC] text-[#0F1F3D] antialiased selection:bg-[#1E6FD9] selection:text-white">
+    <div className="min-h-screen flex flex-col bg-[var(--bg-page)] text-[var(--text-primary)] antialiased selection:bg-[#1E6FD9] selection:text-white transition-colors duration-200">
       <PwaInstallBanner />
       {!isAuthPage && <DesktopSidebar />}
       {!isAuthPage && (

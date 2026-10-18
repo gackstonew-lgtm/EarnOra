@@ -45,7 +45,7 @@ export const BottomNav: React.FC = () => {
   return (
     <nav
       aria-label="Bottom Navigation"
-      className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-t border-blue-100/80 pb-[max(env(safe-area-inset-bottom),0.5rem)] pt-2 shadow-[0_-4px_20px_rgba(15,31,61,0.06)] transition-all"
+      className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-[var(--bg-primary)]/95 backdrop-blur-md border-t border-[var(--border-subtle)] pb-[max(env(safe-area-inset-bottom),0.5rem)] pt-2 shadow-[0_-4px_20px_rgba(15,31,61,0.06)] transition-colors duration-200"
     >
       <div className="max-w-md mx-auto px-4 flex items-center justify-between relative">
         {navItems.map((item) => {
@@ -56,7 +56,7 @@ export const BottomNav: React.FC = () => {
               <div key={item.label} className="relative -top-5 flex flex-col items-center">
                 <Link
                   href={item.href}
-                  className={`w-14 h-14 rounded-full flex items-center justify-center shadow-blue-btn transition-transform active:scale-95 duration-200 ring-4 ring-[#F8FAFC]
+                  className={`w-14 h-14 rounded-full flex items-center justify-center shadow-blue-btn transition-transform active:scale-95 duration-200 ring-4 ring-[var(--bg-page)]
                     ${
                       item.isActive
                         ? "bg-gradient-to-tr from-[#1E6FD9] to-[#0B4FB3] text-white shadow-[0_6px_22px_rgba(11,79,179,0.4)]"

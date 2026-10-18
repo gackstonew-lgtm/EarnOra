@@ -36,6 +36,14 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
     setResolvedTheme(resolved);
     if (typeof document !== "undefined") {
       document.documentElement.classList.toggle("dark", resolved === "dark");
+      // Update meta theme-color to match active background token
+      let metaThemeColor = document.querySelector('meta[name="theme-color"]');
+      if (!metaThemeColor) {
+        metaThemeColor = document.createElement("meta");
+        metaThemeColor.setAttribute("name", "theme-color");
+        document.head.appendChild(metaThemeColor);
+      }
+      metaThemeColor.setAttribute("content", resolved === "dark" ? "#070C18" : "#FFFFFF");
     }
   };
 
@@ -47,7 +55,20 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
     } catch {
       applyTheme("light");
     }
+
+    // Listen to OS system theme changes
+    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+    const handleChange = () => {
+      const currentSaved = (localStorage.getItem("earnora_theme") as Theme) || "light";
+      if (currentSaved === "system") {
+        applyTheme("system");
+      }
+    };
+
+    mediaQuery.addEventListener("change", handleChange);
     setMounted(true);
+
+    return () => mediaQuery.removeEventListener("change", handleChange);
   }, []);
 
   const setTheme = (newTheme: Theme) => {

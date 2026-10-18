@@ -110,20 +110,20 @@ export const DesktopSidebar: React.FC = () => {
     <aside
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className={`hidden md:flex flex-col fixed top-0 bottom-0 left-0 z-40 bg-white border-r border-blue-100 shadow-[4px_0_24px_rgba(15,31,61,0.04)] transition-all duration-300 ease-in-out ${
+      className={`hidden md:flex flex-col fixed top-0 bottom-0 left-0 z-40 bg-[var(--bg-primary)] border-r border-[var(--border-subtle)] shadow-[4px_0_24px_rgba(15,31,61,0.04)] transition-all duration-300 ease-in-out ${
         isExpanded ? "w-[260px]" : "w-[72px]"
       }`}
     >
       {/* Brand Header */}
-      <div className="h-16 flex items-center justify-between px-3.5 border-b border-blue-50/80">
+      <div className="h-16 flex items-center justify-between px-3.5 border-b border-[var(--border-subtle)]">
         <Link href="/dashboard" className="flex items-center gap-3 overflow-hidden select-none">
           <EarnoraSymbol size={40} />
           {isExpanded && (
             <div className="flex flex-col leading-none animate-in fade-in duration-200">
-              <span className="font-extrabold text-xl tracking-tight text-[#0F1F3D] font-display">
+              <span className="font-extrabold text-xl tracking-tight text-[var(--text-primary)] font-display">
                 Earn<span className="text-[#1E6FD9]">Ora</span>
               </span>
-              <span className="text-[9px] uppercase tracking-wider font-semibold text-[#6B7A99] mt-0.5">
+              <span className="text-[9px] uppercase tracking-wider font-semibold text-[var(--text-muted)] mt-0.5">
                 Review. Earn. Grow.
               </span>
             </div>
@@ -135,7 +135,7 @@ export const DesktopSidebar: React.FC = () => {
             type="button"
             onClick={togglePin}
             title={isPinned ? "Unpin sidebar" : "Pin sidebar"}
-            className="w-8 h-8 rounded-lg flex items-center justify-center text-[#6B7A99] hover:text-[#0F1F3D] hover:bg-[#EEF3FF] transition-colors"
+            className="w-8 h-8 rounded-lg flex items-center justify-center text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-input)] transition-colors"
           >
             {isPinned ? (
               <PinOff className="w-4 h-4 text-[#1E6FD9]" />
@@ -191,7 +191,7 @@ export const DesktopSidebar: React.FC = () => {
       </nav>
 
       {/* Bottom User Area */}
-      <div className="p-3 border-t border-blue-50/80 bg-slate-50/50">
+      <div className="p-3 border-t border-[var(--border-subtle)] bg-[var(--bg-input)]/40">
         {isAuthenticated ? (
           <div className="flex items-center gap-3 overflow-hidden">
             <div className="w-10 h-10 rounded-full bg-[#EAF3FF] text-[#1E6FD9] font-bold flex items-center justify-center shrink-0 border border-blue-200/60">
@@ -200,7 +200,7 @@ export const DesktopSidebar: React.FC = () => {
 
             {isExpanded && (
               <div className="flex-1 overflow-hidden animate-in fade-in duration-200">
-                <p className="text-xs font-bold text-[#0F1F3D] truncate">
+                <p className="text-xs font-bold text-[var(--text-primary)] truncate">
                   {user?.username || "Reviewer"}
                 </p>
                 <p className="text-[11px] font-semibold text-[#16A34A] truncate numeral-bold">
@@ -214,7 +214,7 @@ export const DesktopSidebar: React.FC = () => {
                 type="button"
                 onClick={logout}
                 title="Log out"
-                className="w-8 h-8 rounded-lg flex items-center justify-center text-[#6B7A99] hover:text-red-600 hover:bg-red-50 transition-colors"
+                className="w-8 h-8 rounded-lg flex items-center justify-center text-[var(--text-muted)] hover:text-red-500 hover:bg-red-500/10 transition-colors"
               >
                 <LogOut className="w-4 h-4" />
               </button>

@@ -86,6 +86,23 @@ export default function RootLayout({
       suppressHydrationWarning
       className={`${fontBody.variable} ${fontDisplay.variable}`}
     >
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              try {
+                var theme = localStorage.getItem('earnora_theme');
+                var isDark = theme === 'dark' || (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+                if (isDark) {
+                  document.documentElement.classList.add('dark');
+                } else {
+                  document.documentElement.classList.remove('dark');
+                }
+              } catch (e) {}
+            `,
+          }}
+        />
+      </head>
       <body className="antialiased min-h-screen bg-[var(--bg-page)] text-[var(--text-primary)] font-body selection:bg-[#1E6FD9] selection:text-white">
         <ThemeProvider>
           <AuthProvider>

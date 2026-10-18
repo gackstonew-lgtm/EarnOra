@@ -4,6 +4,7 @@ import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { Bell, User, LogOut, ShieldCheck, Wallet, ChevronDown, CheckCheck, Settings } from "lucide-react";
 import { EarnoraLogo } from "../brand/EarnoraLogo";
+import { ThemeToggle } from "../brand/ThemeToggle";
 import { useAuth } from "../providers/AuthProvider";
 
 interface NotificationItem {
@@ -84,7 +85,7 @@ export const AppHeader: React.FC = () => {
   };
 
   return (
-    <header className="sticky top-0 z-30 w-full backdrop-blur-md bg-white/95 border-b border-blue-100/80 transition-colors shadow-[0_2px_15px_rgba(15,31,61,0.03)]">
+    <header className="sticky top-0 z-30 w-full backdrop-blur-md bg-[var(--bg-primary)]/95 border-b border-[var(--border-subtle)] transition-colors shadow-[0_2px_15px_rgba(15,31,61,0.03)]">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
         {/* Brand Logo (Visible on mobile/tablet or when header needs brand presence) */}
         <div className="flex items-center gap-3">
@@ -92,7 +93,10 @@ export const AppHeader: React.FC = () => {
         </div>
 
         {/* Right Action Icons */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2.5">
+          {/* Theme Toggle Button */}
+          <ThemeToggle />
+
           {/* Notifications Bell */}
           <div className="relative" ref={notifRef}>
             <button
@@ -101,7 +105,7 @@ export const AppHeader: React.FC = () => {
                 setShowUserMenu(false);
               }}
               aria-label="View notifications"
-              className="relative w-10 h-10 rounded-full flex items-center justify-center bg-[#EEF3FF] text-[#0F1F3D] hover:bg-[#E2EDFF] border border-blue-100 transition-colors cursor-pointer"
+              className="relative min-w-[44px] min-h-[44px] w-10 h-10 rounded-full flex items-center justify-center bg-[var(--bg-input)] text-[var(--text-primary)] hover:opacity-90 border border-[var(--border-subtle)] transition-colors cursor-pointer"
             >
               <Bell className="w-4.5 h-4.5 text-[#0A3D91]" />
               {unreadCount > 0 && (
