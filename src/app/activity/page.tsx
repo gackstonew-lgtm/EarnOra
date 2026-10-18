@@ -57,10 +57,10 @@ export default function ActivityPage() {
     <div className="space-y-6">
       {/* Title */}
       <div>
-        <h1 className="text-xl sm:text-2xl font-extrabold text-[#0F1F3D] tracking-tight">
+        <h1 className="text-xl sm:text-2xl font-extrabold text-[var(--text-primary)] font-display tracking-tight">
           Engagement & Growth
         </h1>
-        <p className="text-xs sm:text-sm text-[#6B7A99] mt-1">
+        <p className="text-xs sm:text-sm text-[var(--text-muted)] mt-1">
           Referrals, daily multiplier check-ins, and weekly Kenyan reviewer leaderboard.
         </p>
       </div>
@@ -107,8 +107,8 @@ export default function ActivityPage() {
         <div className="space-y-4">
           <div className="rounded-[24px] bg-[var(--bg-card)] border border-[var(--border-subtle)] p-6 sm:p-8 text-[var(--text-primary)] shadow-sm relative overflow-hidden">
             <div className="flex items-center gap-2 mb-2">
-              <Gift className="w-5 h-5 text-[var(--accent-gold)]" />
-              <span className="text-xs uppercase font-bold tracking-wider text-[var(--accent-gold)]">
+              <Gift className="w-5 h-5 text-[var(--brand-blue)]" />
+              <span className="text-xs uppercase font-bold tracking-wider text-[var(--brand-blue)]">
                 1-Level Referral Program
               </span>
             </div>

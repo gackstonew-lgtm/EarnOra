@@ -17,7 +17,7 @@ export default function NotFound() {
         </div>
 
         <div className="space-y-2">
-          <span className="text-4xl sm:text-5xl font-black text-[var(--accent-gold)] font-display block">
+          <span className="text-4xl sm:text-5xl font-black text-[var(--brand-blue)] font-display block">
             404
           </span>
           <h1 className="text-lg sm:text-xl font-bold text-[var(--text-primary)] font-display">

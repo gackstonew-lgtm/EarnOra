@@ -28,13 +28,13 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(
 
     const variantStyles = {
       default:
-        "bg-white border border-blue-100/60 shadow-[0_4px_20px_-2px_rgba(15,31,61,0.06)]",
+        "bg-[var(--bg-card)] border border-[var(--border-subtle)] shadow-xs",
       flat:
-        "bg-[#EEF3FF]/70 border border-blue-100/40",
+        "bg-[var(--bg-card-elevated)] border border-[var(--border-subtle)]",
       elevated:
-        "bg-white border border-blue-100/70 shadow-[0_10px_30px_-4px_rgba(15,31,61,0.1)]",
+        "bg-[var(--bg-card)] border border-[var(--border-subtle)] shadow-md",
       interactive:
-        "bg-white border border-blue-100/60 shadow-[0_4px_20px_-2px_rgba(15,31,61,0.06)] hover:shadow-[0_8px_25px_-2px_rgba(30,111,217,0.12)] hover:border-blue-200 transition-all duration-200 cursor-pointer",
+        "bg-[var(--bg-card)] border border-[var(--border-subtle)] shadow-xs hover:border-[var(--brand-blue)] hover:shadow-md transition-all duration-200 cursor-pointer",
     };
 
     return (
@@ -42,7 +42,7 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(
         ref={ref}
         className={`
           rounded-[20px]
-          text-[#0F1F3D]
+          text-[var(--text-primary)]
           ${paddingStyles[padding]}
           ${variantStyles[variant]}
           ${className}

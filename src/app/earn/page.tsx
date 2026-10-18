@@ -40,10 +40,10 @@ function EarnContent() {
     <div className="space-y-6">
       {/* Page Title Header */}
       <div>
-        <h1 className="text-xl sm:text-2xl font-extrabold text-[#0F1F3D] tracking-tight">
+        <h1 className="text-xl sm:text-2xl font-extrabold text-[var(--text-primary)] font-display tracking-tight">
           Explore Earning Tasks
         </h1>
-        <p className="text-xs sm:text-sm text-[#6B7A99] mt-1">
+        <p className="text-xs sm:text-sm text-[var(--text-muted)] mt-1">
           Select verified review bounties, surveys, and testing opportunities.
         </p>
       </div>
@@ -51,13 +51,13 @@ function EarnContent() {
       {/* Search & Filter Bar */}
       <div className="flex flex-col sm:flex-row gap-2.5">
         <div className="relative flex-1 flex items-center">
-          <Search className="w-4 h-4 text-[#6B7A99] absolute left-3.5" />
+          <Search className="w-4 h-4 text-[var(--text-muted)] absolute left-3.5" />
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search hotel, app, brand, or local service..."
-            className="w-full h-11 pl-10 pr-4 text-xs sm:text-sm rounded-[12px] bg-[#EEF3FF] border border-blue-100/70 text-[#0F1F3D] placeholder-[#6B7A99] focus:outline-hidden focus:bg-white focus:border-[#1E6FD9] focus:ring-2 focus:ring-[#1E6FD9]/20 transition-all"
+            className="w-full h-11 pl-10 pr-4 text-xs sm:text-sm rounded-[12px] bg-[var(--bg-card)] border border-[var(--border-subtle)] text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:outline-hidden focus:border-[var(--brand-blue)] focus:ring-1 focus:ring-[var(--brand-blue)] transition-all"
           />
         </div>
 
@@ -66,7 +66,7 @@ function EarnContent() {
           <select
             value={minReward}
             onChange={(e) => setMinReward(Number(e.target.value))}
-            className="h-11 px-3.5 rounded-[12px] bg-[#EEF3FF] border border-blue-100/70 text-xs font-semibold text-[#0F1F3D] focus:outline-hidden focus:bg-white focus:border-[#1E6FD9] focus:ring-2 focus:ring-[#1E6FD9]/20 transition-all cursor-pointer"
+            className="h-11 px-3.5 rounded-[12px] bg-[var(--bg-card)] border border-[var(--border-subtle)] text-xs font-semibold text-[var(--text-primary)] focus:outline-hidden focus:border-[var(--brand-blue)] focus:ring-1 focus:ring-[var(--brand-blue)] transition-all cursor-pointer"
           >
             <option value={0}>All Rewards</option>
             <option value={200}>KES 200+</option>

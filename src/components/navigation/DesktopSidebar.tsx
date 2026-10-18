@@ -147,14 +147,14 @@ export const DesktopSidebar: React.FC = () => {
                 href={item.href}
                 className={`flex items-center gap-3.5 px-3 py-2.5 rounded-[12px] font-medium text-sm transition-all duration-150 ${
                   active
-                    ? "bg-[var(--bg-card)] dark:bg-[#101B2B] text-[var(--accent-gold)] border border-[var(--border-subtle)] font-semibold shadow-xs"
+                    ? "bg-[var(--brand-blue)]/10 text-[var(--brand-blue)] border border-[var(--brand-blue)]/20 font-bold shadow-xs"
                     : "text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-card-elevated)]"
                 }`}
                 title={!isExpanded ? item.label : undefined}
               >
                 <Icon
                   className={`w-5 h-5 shrink-0 ${
-                    active ? "text-[var(--accent-gold)]" : "text-[var(--text-muted)]"
+                    active ? "text-[var(--brand-blue)]" : "text-[var(--text-muted)]"
                   }`}
                 />
 
@@ -165,8 +165,8 @@ export const DesktopSidebar: React.FC = () => {
                       <span
                         className={`text-[10px] font-bold px-1.5 py-0.5 rounded-full ${
                           active
-                            ? "bg-[var(--accent-green)] text-white"
-                            : "bg-[#22C55E]/15 text-[#22C55E] dark:text-[#22C55E]"
+                            ? "bg-[var(--brand-blue)] text-white"
+                            : "bg-[var(--brand-blue)]/10 text-[var(--brand-blue)]"
                         }`}
                       >
                         {item.badge}
@@ -185,8 +185,8 @@ export const DesktopSidebar: React.FC = () => {
             {/* Your Progress Card */}
             <div className="p-3.5 rounded-[16px] bg-[var(--bg-card)] border border-[var(--border-subtle)]">
               <div className="flex items-center justify-between mb-1.5">
-                <Crown className="w-5 h-5 text-[var(--accent-gold)]" />
-                <span className="text-[10px] font-bold text-[var(--accent-gold)] uppercase tracking-wider">
+                <Crown className="w-5 h-5 text-[var(--brand-blue)]" />
+                <span className="text-[10px] font-bold text-[var(--brand-blue)] uppercase tracking-wider">
                   Tier 1
                 </span>
               </div>

@@ -56,14 +56,14 @@ export const BottomNav: React.FC = () => {
               <div key={item.label} className="relative -top-5 flex flex-col items-center">
                 <Link
                   href={item.href}
-                  className={`w-14 h-14 rounded-full flex items-center justify-center transition-transform active:scale-95 duration-200 ring-4 ring-[var(--bg-sidebar)] shadow-md bg-[#F5C451] text-[#111827] border border-[#854D0E]`}
+                  className="w-14 h-14 rounded-full flex items-center justify-center transition-transform active:scale-95 duration-200 ring-4 ring-[var(--bg-sidebar)] shadow-lg shadow-blue-500/25 bg-[var(--brand-blue)] text-white border border-blue-400/30"
                   aria-label="Withdraw & Wallet"
                 >
                   <Icon className="w-6 h-6 stroke-[2.3]" />
                 </Link>
                 <span
                   className={`text-[11px] font-bold mt-1 ${
-                    item.isActive ? "text-[var(--accent-gold)]" : "text-[var(--text-muted)]"
+                    item.isActive ? "text-[var(--brand-blue)]" : "text-[var(--text-muted)]"
                   }`}
                 >
                   {item.label}
@@ -78,13 +78,13 @@ export const BottomNav: React.FC = () => {
               href={item.href}
               className={`flex flex-col items-center justify-center min-w-[48px] min-h-[44px] py-1 px-2.5 rounded-[12px] transition-all duration-150 active:scale-95 ${
                 item.isActive
-                  ? "text-[var(--accent-gold)] font-bold"
+                  ? "text-[var(--brand-blue)] font-bold"
                   : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
               }`}
             >
               <Icon
                 className={`w-5 h-5 mb-0.5 transition-transform ${
-                  item.isActive ? "scale-110 stroke-[2.4] text-[var(--accent-gold)]" : "stroke-[2]"
+                  item.isActive ? "scale-110 stroke-[2.4] text-[var(--brand-blue)]" : "stroke-[2]"
                 }`}
               />
               <span className="text-[11px] font-medium tracking-tight">{item.label}</span>

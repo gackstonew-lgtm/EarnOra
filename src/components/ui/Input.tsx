@@ -34,7 +34,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         {label && (
           <label
             htmlFor={inputId}
-            className="text-xs font-semibold text-[#0F1F3D] tracking-wide"
+            className="text-xs font-semibold text-[var(--text-primary)] tracking-wide"
           >
             {label}
           </label>
@@ -42,7 +42,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 
         <div className="relative flex items-center">
           {leftIcon && (
-            <div className="absolute left-3.5 flex items-center pointer-events-none text-[#6B7A99]">
+            <div className="absolute left-3.5 flex items-center pointer-events-none text-[var(--text-muted)]">
               {leftIcon}
             </div>
           )}
@@ -52,21 +52,21 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             id={inputId}
             className={`
               w-full h-11 px-3.5 text-sm rounded-[12px]
-              bg-[#EEF3FF] text-[#0F1F3D] placeholder-[#6B7A99]
-              border border-blue-100/70
+              bg-[var(--bg-card-elevated)] text-[var(--text-primary)] placeholder-[var(--text-muted)]
+              border border-[var(--border-subtle)]
               transition-all duration-200
-              focus:outline-hidden focus:bg-white focus:border-[#1E6FD9] focus:ring-2 focus:ring-[#1E6FD9]/20
+              focus:outline-hidden focus:bg-[var(--bg-card)] focus:border-[var(--brand-blue)] focus:ring-1 focus:ring-[var(--brand-blue)]
               disabled:opacity-60 disabled:cursor-not-allowed
               ${leftIcon ? "pl-10" : ""}
               ${rightIcon ? "pr-10" : ""}
-              ${error ? "!border-[#EF4444] !ring-2 !ring-[#EF4444]/20" : ""}
+              ${error ? "!border-[#EF4444] !ring-1 !ring-[#EF4444]" : ""}
               ${className}
             `}
             {...props}
           />
 
           {rightIcon && (
-            <div className="absolute right-3.5 flex items-center text-[#6B7A99]">
+            <div className="absolute right-3.5 flex items-center text-[var(--text-muted)]">
               {rightIcon}
             </div>
           )}
@@ -77,7 +77,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         )}
 
         {!error && helperText && (
-          <p className="text-xs text-[#6B7A99] mt-0.5">{helperText}</p>
+          <p className="text-xs text-[var(--text-muted)] mt-0.5">{helperText}</p>
         )}
       </div>
     );

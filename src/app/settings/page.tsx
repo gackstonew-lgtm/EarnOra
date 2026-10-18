@@ -148,23 +148,23 @@ export default function SettingsPage() {
   return (
     <div className="space-y-6 pb-8">
       <div>
-        <h1 className="text-xl sm:text-2xl font-extrabold text-[#0F1F3D] tracking-tight">
+        <h1 className="text-xl sm:text-2xl font-extrabold text-[var(--text-primary)] font-display tracking-tight">
           Settings & Preferences
         </h1>
-        <p className="text-xs sm:text-sm text-[#6B7A99] mt-0.5">
+        <p className="text-xs sm:text-sm text-[var(--text-muted)] mt-0.5">
           Manage appearance, data saving mode, payout accounts, and privacy.
         </p>
       </div>
 
       {/* SECTION 1: APPEARANCE */}
-      <section className="rounded-[20px] bg-white border border-blue-100/70 p-5 sm:p-6 shadow-[0_4px_20px_-2px_rgba(15,31,61,0.05)] space-y-4">
-        <div className="flex items-center gap-2.5 pb-3 border-b border-slate-100">
-          <div className="w-9 h-9 rounded-[10px] bg-[#EEF3FF] text-[#1E6FD9] flex items-center justify-center">
+      <section className="rounded-[20px] bg-[var(--bg-card)] border border-[var(--border-subtle)] p-5 sm:p-6 shadow-xs space-y-4">
+        <div className="flex items-center gap-2.5 pb-3 border-b border-[var(--border-subtle)]">
+          <div className="w-9 h-9 rounded-[10px] bg-[var(--brand-blue)]/10 text-[var(--brand-blue)] flex items-center justify-center">
             <Sun className="w-4 h-4" />
           </div>
           <div>
-            <h2 className="text-sm font-bold text-[#0F1F3D]">Appearance</h2>
-            <p className="text-xs text-[#6B7A99]">Customize theme display</p>
+            <h2 className="text-sm font-bold text-[var(--text-primary)]">Appearance</h2>
+            <p className="text-xs text-[var(--text-muted)]">Customize theme display</p>
           </div>
         </div>
 
@@ -183,8 +183,8 @@ export default function SettingsPage() {
                 onClick={() => setTheme(opt.key)}
                 className={`p-3.5 rounded-[14px] border flex flex-col items-center justify-center gap-2 transition-all cursor-pointer ${
                   isSelected
-                    ? "bg-[#EAF3FF] border-[#1E6FD9] text-[#1E6FD9] shadow-xs font-bold"
-                    : "bg-[#F8FAFC] border-slate-200/80 text-[#6B7A99] hover:bg-slate-100/80 font-medium"
+                    ? "bg-[var(--brand-blue)]/10 border-[var(--brand-blue)] text-[var(--brand-blue)] shadow-xs font-bold"
+                    : "bg-[var(--bg-card-elevated)] border-[var(--border-subtle)] text-[var(--text-muted)] hover:text-[var(--text-primary)] font-medium"
                 }`}
               >
                 <Icon className="w-5 h-5" />
@@ -196,18 +196,18 @@ export default function SettingsPage() {
       </section>
 
       {/* SECTION 2: PERFORMANCE & DATA */}
-      <section className="rounded-[20px] bg-white border border-blue-100/70 p-5 sm:p-6 shadow-[0_4px_20px_-2px_rgba(15,31,61,0.05)] space-y-4">
-        <div className="flex items-center gap-2.5 pb-3 border-b border-slate-100">
-          <div className="w-9 h-9 rounded-[10px] bg-[#EEF3FF] text-[#0A3D91] flex items-center justify-center">
+      <section className="rounded-[20px] bg-[var(--bg-card)] border border-[var(--border-subtle)] p-5 sm:p-6 shadow-xs space-y-4">
+        <div className="flex items-center gap-2.5 pb-3 border-b border-[var(--border-subtle)]">
+          <div className="w-9 h-9 rounded-[10px] bg-[var(--brand-blue)]/10 text-[var(--brand-blue)] flex items-center justify-center">
             <Wifi className="w-4 h-4" />
           </div>
           <div>
-            <h2 className="text-sm font-bold text-[#0F1F3D]">Performance & Data Optimization</h2>
-            <p className="text-xs text-[#6B7A99]">Low-bandwidth mode and offline review sync</p>
+            <h2 className="text-sm font-bold text-[var(--text-primary)]">Performance & Data Optimization</h2>
+            <p className="text-xs text-[var(--text-muted)]">Low-bandwidth mode and offline review sync</p>
           </div>
         </div>
 
-        <div className="divide-y divide-slate-100 text-xs">
+        <div className="divide-y divide-[var(--border-subtle)] text-xs">
           {/* Data Saver Mode */}
           <div className="py-3 flex items-center justify-between">
             <div className="pr-4">
@@ -296,22 +296,22 @@ export default function SettingsPage() {
       </section>
 
       {/* SECTION 3: NOTIFICATIONS */}
-      <section className="rounded-[20px] bg-white border border-blue-100/70 p-5 sm:p-6 shadow-[0_4px_20px_-2px_rgba(15,31,61,0.05)] space-y-4">
-        <div className="flex items-center gap-2.5 pb-3 border-b border-slate-100">
-          <div className="w-9 h-9 rounded-[10px] bg-[#EEF3FF] text-[#1E6FD9] flex items-center justify-center">
+      <section className="rounded-[20px] bg-[var(--bg-card)] border border-[var(--border-subtle)] p-5 sm:p-6 shadow-xs space-y-4">
+        <div className="flex items-center gap-2.5 pb-3 border-b border-[var(--border-subtle)]">
+          <div className="w-9 h-9 rounded-[10px] bg-[var(--brand-blue)]/10 text-[var(--brand-blue)] flex items-center justify-center">
             <Bell className="w-4 h-4" />
           </div>
           <div>
-            <h2 className="text-sm font-bold text-[#0F1F3D]">Notification Alerts</h2>
-            <p className="text-xs text-[#6B7A99]">Control in-app alerts and SMS updates</p>
+            <h2 className="text-sm font-bold text-[var(--text-primary)]">Notification Alerts</h2>
+            <p className="text-xs text-[var(--text-muted)]">Control in-app alerts and SMS updates</p>
           </div>
         </div>
 
-        <div className="divide-y divide-slate-100 text-xs">
+        <div className="divide-y divide-[var(--border-subtle)] text-xs">
           <div className="py-3 flex items-center justify-between">
             <div className="pr-4">
-              <p className="font-bold text-[#0F1F3D]">New Task & Bounty Alerts</p>
-              <p className="text-[#6B7A99] mt-0.5">
+              <p className="font-bold text-[var(--text-primary)]">New Task & Bounty Alerts</p>
+              <p className="text-[var(--text-muted)] mt-0.5">
                 Get notified when high-value reviews or sponsored product bounties open.
               </p>
             </div>
@@ -319,7 +319,7 @@ export default function SettingsPage() {
               type="button"
               onClick={() => setNotifTaskAlerts(!notifTaskAlerts)}
               className={`w-11 h-6 rounded-full transition-colors relative cursor-pointer ${
-                notifTaskAlerts ? "bg-[#1E6FD9]" : "bg-slate-300"
+                notifTaskAlerts ? "bg-[var(--brand-blue)]" : "bg-slate-300 dark:bg-slate-700"
               }`}
             >
               <span
@@ -332,8 +332,8 @@ export default function SettingsPage() {
 
           <div className="py-3 flex items-center justify-between">
             <div className="pr-4">
-              <p className="font-bold text-[#0F1F3D]">M-Pesa Payout Confirmations</p>
-              <p className="text-[#6B7A99] mt-0.5">
+              <p className="font-bold text-[var(--text-primary)]">M-Pesa Payout Confirmations</p>
+              <p className="text-[var(--text-muted)] mt-0.5">
                 Notifications when Daraja B2C disbursements are processed and sent to your line.
               </p>
             </div>
@@ -341,7 +341,7 @@ export default function SettingsPage() {
               type="button"
               onClick={() => setNotifPayoutUpdates(!notifPayoutUpdates)}
               className={`w-11 h-6 rounded-full transition-colors relative cursor-pointer ${
-                notifPayoutUpdates ? "bg-[#1E6FD9]" : "bg-slate-300"
+                notifPayoutUpdates ? "bg-[var(--brand-blue)]" : "bg-slate-300 dark:bg-slate-700"
               }`}
             >
               <span
@@ -354,8 +354,8 @@ export default function SettingsPage() {
 
           <div className="py-3 flex items-center justify-between">
             <div className="pr-4">
-              <p className="font-bold text-[#0F1F3D]">Referral Bonus Credits</p>
-              <p className="text-[#6B7A99] mt-0.5">
+              <p className="font-bold text-[var(--text-primary)]">Referral Bonus Credits</p>
+              <p className="text-[var(--text-muted)] mt-0.5">
                 Alerts when friends join using your link and complete their first review.
               </p>
             </div>
@@ -363,7 +363,7 @@ export default function SettingsPage() {
               type="button"
               onClick={() => setNotifReferralActivity(!notifReferralActivity)}
               className={`w-11 h-6 rounded-full transition-colors relative cursor-pointer ${
-                notifReferralActivity ? "bg-[#1E6FD9]" : "bg-slate-300"
+                notifReferralActivity ? "bg-[var(--brand-blue)]" : "bg-slate-300 dark:bg-slate-700"
               }`}
             >
               <span
@@ -377,26 +377,26 @@ export default function SettingsPage() {
       </section>
 
       {/* SECTION 4: ACCOUNT & M-PESA LINE */}
-      <section className="rounded-[20px] bg-white border border-blue-100/70 p-5 sm:p-6 shadow-[0_4px_20px_-2px_rgba(15,31,61,0.05)] space-y-4">
-        <div className="flex items-center gap-2.5 pb-3 border-b border-slate-100">
-          <div className="w-9 h-9 rounded-[10px] bg-[#EEF3FF] text-[#1E6FD9] flex items-center justify-center">
+      <section className="rounded-[20px] bg-[var(--bg-card)] border border-[var(--border-subtle)] p-5 sm:p-6 shadow-xs space-y-4">
+        <div className="flex items-center gap-2.5 pb-3 border-b border-[var(--border-subtle)]">
+          <div className="w-9 h-9 rounded-[10px] bg-[var(--brand-blue)]/10 text-[var(--brand-blue)] flex items-center justify-center">
             <User className="w-4 h-4" />
           </div>
           <div>
-            <h2 className="text-sm font-bold text-[#0F1F3D]">Account & M-Pesa Payout Number</h2>
-            <p className="text-xs text-[#6B7A99]">Update contact details and disbursement line</p>
+            <h2 className="text-sm font-bold text-[var(--text-primary)]">Account & M-Pesa Payout Number</h2>
+            <p className="text-xs text-[var(--text-muted)]">Update contact details and disbursement line</p>
           </div>
         </div>
 
         {accountSuccess && (
-          <div className="p-3.5 rounded-[12px] bg-emerald-50 border border-emerald-200 text-xs text-[#16A34A] flex items-start gap-2">
+          <div className="p-3.5 rounded-[12px] bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800 text-xs text-[var(--accent-green)] flex items-start gap-2">
             <CheckCircle2 className="w-4 h-4 shrink-0 mt-0.5" />
             <span>{accountSuccess}</span>
           </div>
         )}
 
         {accountError && (
-          <div className="p-3.5 rounded-[12px] bg-red-50 border border-red-200 text-xs text-red-600 flex items-start gap-2">
+          <div className="p-3.5 rounded-[12px] bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-800 text-xs text-red-600 dark:text-red-400 flex items-start gap-2">
             <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
             <span>{accountError}</span>
           </div>
@@ -405,25 +405,25 @@ export default function SettingsPage() {
         <form onSubmit={handleSaveAccount} className="space-y-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="flex flex-col gap-1.5">
-              <label className="text-xs font-semibold text-[#0F1F3D]">Username</label>
+              <label className="text-xs font-semibold text-[var(--text-primary)]">Username</label>
               <input
                 type="text"
                 required
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                className="w-full h-11 px-3.5 text-xs sm:text-sm rounded-[12px] bg-[#EEF3FF] border border-blue-100/70 text-[#0F1F3D] focus:outline-hidden focus:bg-white focus:border-[#1E6FD9] transition-all"
+                className="w-full h-11 px-3.5 text-xs sm:text-sm rounded-[12px] bg-[var(--bg-card-elevated)] border border-[var(--border-subtle)] text-[var(--text-primary)] focus:outline-hidden focus:bg-[var(--bg-card)] focus:border-[var(--brand-blue)] transition-all"
               />
             </div>
 
             <div className="flex flex-col gap-1.5">
-              <label className="text-xs font-semibold text-[#0F1F3D]">M-Pesa Payout Phone Number</label>
+              <label className="text-xs font-semibold text-[var(--text-primary)]">M-Pesa Payout Phone Number</label>
               <input
                 type="text"
                 required
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
                 placeholder="0712345678"
-                className="w-full h-11 px-3.5 text-xs sm:text-sm rounded-[12px] bg-[#EEF3FF] border border-blue-100/70 text-[#0F1F3D] focus:outline-hidden focus:bg-white focus:border-[#1E6FD9] transition-all"
+                className="w-full h-11 px-3.5 text-xs sm:text-sm rounded-[12px] bg-[var(--bg-card-elevated)] border border-[var(--border-subtle)] text-[var(--text-primary)] focus:outline-hidden focus:bg-[var(--bg-card)] focus:border-[var(--brand-blue)] transition-all"
               />
             </div>
           </div>
@@ -437,22 +437,22 @@ export default function SettingsPage() {
       </section>
 
       {/* SECTION 5: PRIVACY & DATA RIGHTS */}
-      <section className="rounded-[20px] bg-white border border-blue-100/70 p-5 sm:p-6 shadow-[0_4px_20px_-2px_rgba(15,31,61,0.05)] space-y-4">
-        <div className="flex items-center gap-2.5 pb-3 border-b border-slate-100">
-          <div className="w-9 h-9 rounded-[10px] bg-sky-50 text-[#0A3D91] flex items-center justify-center">
+      <section className="rounded-[20px] bg-[var(--bg-card)] border border-[var(--border-subtle)] p-5 sm:p-6 shadow-xs space-y-4">
+        <div className="flex items-center gap-2.5 pb-3 border-b border-[var(--border-subtle)]">
+          <div className="w-9 h-9 rounded-[10px] bg-[var(--brand-blue)]/10 text-[var(--brand-blue)] flex items-center justify-center">
             <Shield className="w-4 h-4" />
           </div>
           <div>
-            <h2 className="text-sm font-bold text-[#0F1F3D]">Privacy & Data Protection</h2>
-            <p className="text-xs text-[#6B7A99]">Kenya Data Protection Act 2019 Rights</p>
+            <h2 className="text-sm font-bold text-[var(--text-primary)]">Privacy & Data Protection</h2>
+            <p className="text-xs text-[var(--text-muted)]">Kenya Data Protection Act 2019 Rights</p>
           </div>
         </div>
 
         <div className="space-y-2 text-xs">
-          <div className="flex items-center justify-between p-3 rounded-[12px] hover:bg-[#EEF3FF] transition-colors">
+          <div className="flex items-center justify-between p-3 rounded-[12px] hover:bg-[var(--bg-card-elevated)] transition-colors">
             <div>
-              <p className="font-bold text-[#0F1F3D]">Export Your Data</p>
-              <p className="text-[#6B7A99]">Download a JSON copy of your profile and task history.</p>
+              <p className="font-bold text-[var(--text-primary)]">Export Your Data</p>
+              <p className="text-[var(--text-muted)]">Download a JSON copy of your profile and task history.</p>
             </div>
             <Button variant="outline" size="sm" onClick={handleDownloadData}>
               <Download className="w-3.5 h-3.5 mr-1" />
@@ -462,36 +462,36 @@ export default function SettingsPage() {
 
           <Link
             href="/privacy"
-            className="flex items-center justify-between p-3 rounded-[12px] hover:bg-[#EEF3FF] transition-colors"
+            className="flex items-center justify-between p-3 rounded-[12px] hover:bg-[var(--bg-card-elevated)] transition-colors"
           >
             <div>
-              <p className="font-bold text-[#0F1F3D]">Privacy Policy</p>
-              <p className="text-[#6B7A99]">Read our lawful basis and consent disclosures.</p>
+              <p className="font-bold text-[var(--text-primary)]">Privacy Policy</p>
+              <p className="text-[var(--text-muted)]">Read our lawful basis and consent disclosures.</p>
             </div>
-            <ChevronRight className="w-4 h-4 text-[#6B7A99]" />
+            <ChevronRight className="w-4 h-4 text-[var(--text-muted)]" />
           </Link>
 
           <Link
             href="/terms"
-            className="flex items-center justify-between p-3 rounded-[12px] hover:bg-[#EEF3FF] transition-colors"
+            className="flex items-center justify-between p-3 rounded-[12px] hover:bg-[var(--bg-card-elevated)] transition-colors"
           >
             <div>
-              <p className="font-bold text-[#0F1F3D]">Terms of Service</p>
-              <p className="text-[#6B7A99]">Community guidelines and review payout rules.</p>
+              <p className="font-bold text-[var(--text-primary)]">Terms of Service</p>
+              <p className="text-[var(--text-muted)]">Community guidelines and review payout rules.</p>
             </div>
-            <ChevronRight className="w-4 h-4 text-[#6B7A99]" />
+            <ChevronRight className="w-4 h-4 text-[var(--text-muted)]" />
           </Link>
 
-          <div className="pt-2 flex items-center justify-between p-3 rounded-[12px] bg-red-50/50 border border-red-100">
+          <div className="pt-2 flex items-center justify-between p-3 rounded-[12px] bg-red-50/50 dark:bg-red-950/20 border border-red-100 dark:border-red-900/30">
             <div>
-              <p className="font-bold text-red-600">Delete Account & Scrub Data</p>
-              <p className="text-[#6B7A99]">Request permanent erasure of your reviewer account.</p>
+              <p className="font-bold text-red-600 dark:text-red-400">Delete Account & Scrub Data</p>
+              <p className="text-[var(--text-muted)]">Request permanent erasure of your reviewer account.</p>
             </div>
             <Button
               variant="outline"
               size="sm"
               onClick={() => setDeleteRequested(true)}
-              className="text-red-600 border-red-200 hover:bg-red-50 text-xs"
+              className="text-red-600 dark:text-red-400 border-red-200 dark:border-red-800 hover:bg-red-50 dark:hover:bg-red-950/40 text-xs"
             >
               <Trash2 className="w-3.5 h-3.5 mr-1" />
               {deleteRequested ? "Request Sent" : "Request Erasure"}
@@ -505,7 +505,7 @@ export default function SettingsPage() {
         <button
           type="button"
           onClick={logout}
-          className="w-full py-3.5 rounded-[14px] bg-white border border-red-200 text-red-600 font-bold text-xs flex items-center justify-center gap-2 hover:bg-red-50 transition-colors shadow-xs cursor-pointer"
+          className="w-full py-3.5 rounded-[14px] bg-[var(--bg-card)] border border-red-200 dark:border-red-900/40 text-red-600 dark:text-red-400 font-bold text-xs flex items-center justify-center gap-2 hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors shadow-xs cursor-pointer"
         >
           <LogOut className="w-4 h-4" />
           <span>Sign Out of EarnOra</span>

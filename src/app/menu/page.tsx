@@ -21,10 +21,10 @@ export default function MenuPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-xl sm:text-2xl font-extrabold text-[#0F1F3D] tracking-tight">
+        <h1 className="text-xl sm:text-2xl font-extrabold text-[var(--text-primary)] font-display tracking-tight">
           Menu & Account
         </h1>
-        <p className="text-xs sm:text-sm text-[#6B7A99] mt-0.5">
+        <p className="text-xs sm:text-sm text-[var(--text-muted)] mt-0.5">
           Platform settings, business workspace, and compliance.
         </p>
       </div>

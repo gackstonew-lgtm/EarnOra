@@ -151,22 +151,23 @@ export default function DashboardPage() {
             {/* Top Area: Text + Flush Image */}
             <div className="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-6 items-end">
               {/* Left Column: Copy & Value Proposition */}
-              <div className="md:col-span-7 space-y-3 md:self-center pb-1 md:pb-4">
+              <div className="md:col-span-7 space-y-3.5 md:self-center pb-2 md:pb-4">
                 {/* Trusted & Verified Badge */}
-                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[var(--accent-gold)]/10 text-[var(--accent-gold)] border border-[var(--accent-gold)]/30 text-xs font-bold">
-                  <Sparkles className="w-3.5 h-3.5" />
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[var(--brand-blue)]/10 text-[var(--brand-blue)] border border-[var(--brand-blue)]/20 text-xs font-bold">
+                  <ShieldCheck className="w-3.5 h-3.5 text-[var(--brand-blue)]" />
                   <span>Trusted & Verified</span>
                 </div>
 
                 {/* Main Headline */}
-                <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight leading-tight text-[var(--text-primary)] font-display">
-                  Turn your honest opinions into real{" "}
-                  <span className="text-[var(--accent-gold)]">M-Pesa earnings.</span>
+                <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight leading-[1.18] text-[var(--text-primary)] font-display">
+                  <span>Your Perspective.</span><br />
+                  <span className="text-[var(--brand-blue)]">Your Influence.</span><br />
+                  <span>Your Rewards.</span>
                 </h1>
 
                 {/* Subtitle Description */}
-                <p className="text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed">
-                  Get rewarded for genuine, first-hand reviews of Kenyan restaurants, mobile apps, local businesses, telcos, and products. Verified payouts directly to your M-Pesa.
+                <p className="text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed max-w-xl">
+                  Earn rewards for sharing authentic, first-hand reviews of Kenyan restaurants, mobile applications, local businesses, telecommunications services, and consumer products. Get rewarded for your feedback with convenient M-Pesa payouts.
                 </p>
               </div>
 
@@ -192,14 +193,18 @@ export default function DashboardPage() {
                 href="/wallet"
                 className="group flex items-center justify-between p-3.5 rounded-[16px] bg-[var(--bg-card-elevated)] border border-[var(--border-subtle)] hover:border-[var(--brand-blue)] transition-all"
               >
-                <div className="space-y-0.5">
-                  <div className="flex items-center gap-1.5 text-xs font-semibold text-[var(--text-muted)]">
-                    <Wallet className="w-3.5 h-3.5 text-[var(--accent-green)]" />
-                    <span>Available</span>
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-[10px] bg-[var(--brand-blue)]/10 text-[var(--brand-blue)] flex items-center justify-center shrink-0">
+                    <Wallet className="w-4 h-4" />
                   </div>
-                  <p className="text-base sm:text-lg font-extrabold text-[var(--text-primary)] numeral-bold">
-                    KES {availableBal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-                  </p>
+                  <div className="space-y-0.5">
+                    <span className="text-xs font-medium text-[var(--text-muted)] block">
+                      Available
+                    </span>
+                    <p className="text-sm sm:text-base font-extrabold text-[var(--text-primary)] numeral-bold">
+                      KES {availableBal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                    </p>
+                  </div>
                 </div>
                 <ChevronRight className="w-4 h-4 text-[var(--text-muted)] group-hover:text-[var(--text-primary)] group-hover:translate-x-0.5 transition-transform" />
               </Link>
@@ -209,14 +214,18 @@ export default function DashboardPage() {
                 href="/wallet"
                 className="group flex items-center justify-between p-3.5 rounded-[16px] bg-[var(--bg-card-elevated)] border border-[var(--border-subtle)] hover:border-[var(--brand-blue)] transition-all"
               >
-                <div className="space-y-0.5">
-                  <div className="flex items-center gap-1.5 text-xs font-semibold text-[var(--text-muted)]">
-                    <Clock className="w-3.5 h-3.5 text-[var(--accent-gold)]" />
-                    <span>Pending</span>
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-[10px] bg-[var(--brand-blue)]/10 text-[var(--brand-blue)] flex items-center justify-center shrink-0">
+                    <Clock className="w-4 h-4" />
                   </div>
-                  <p className="text-base sm:text-lg font-extrabold text-[var(--accent-gold)] numeral-bold">
-                    KES {pendingBal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-                  </p>
+                  <div className="space-y-0.5">
+                    <span className="text-xs font-medium text-[var(--text-muted)] block">
+                      Pending
+                    </span>
+                    <p className="text-sm sm:text-base font-extrabold text-[var(--text-primary)] numeral-bold">
+                      KES {pendingBal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                    </p>
+                  </div>
                 </div>
                 <ChevronRight className="w-4 h-4 text-[var(--text-muted)] group-hover:text-[var(--text-primary)] group-hover:translate-x-0.5 transition-transform" />
               </Link>
@@ -226,14 +235,18 @@ export default function DashboardPage() {
                 href="/activity"
                 className="group flex items-center justify-between p-3.5 rounded-[16px] bg-[var(--bg-card-elevated)] border border-[var(--border-subtle)] hover:border-[var(--brand-blue)] transition-all"
               >
-                <div className="space-y-0.5">
-                  <div className="flex items-center gap-1.5 text-xs font-semibold text-[var(--text-muted)]">
-                    <Flame className="w-3.5 h-3.5 text-[var(--accent-amber)]" />
-                    <span>Streak</span>
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-[10px] bg-[var(--brand-blue)]/10 text-[var(--brand-blue)] flex items-center justify-center shrink-0">
+                    <Flame className="w-4 h-4" />
                   </div>
-                  <p className="text-base sm:text-lg font-extrabold text-[var(--accent-amber)]">
-                    {streakCount} {streakCount === 1 ? "Day" : "Days"}
-                  </p>
+                  <div className="space-y-0.5">
+                    <span className="text-xs font-medium text-[var(--text-muted)] block">
+                      Streak
+                    </span>
+                    <p className="text-sm sm:text-base font-extrabold text-[var(--text-primary)]">
+                      {streakCount} {streakCount === 1 ? "Day" : "Days"}
+                    </p>
+                  </div>
                 </div>
                 <ChevronRight className="w-4 h-4 text-[var(--text-muted)] group-hover:text-[var(--text-primary)] group-hover:translate-x-0.5 transition-transform" />
               </Link>
@@ -243,7 +256,7 @@ export default function DashboardPage() {
           {/* Payout Trust Indicator Strip */}
           <div className="flex items-center justify-between px-4 py-3 rounded-[16px] bg-[var(--bg-card)] border border-[var(--border-subtle)] text-xs">
             <div className="flex items-center gap-2 text-[var(--text-secondary)] font-medium">
-              <ShieldCheck className="w-4 h-4 text-[var(--accent-green)] shrink-0" />
+              <ShieldCheck className="w-4 h-4 text-[var(--brand-blue)] shrink-0" />
               <span>
                 {isDarajaProduction
                   ? "Safaricom Daraja B2C Verified Payouts"
@@ -321,8 +334,8 @@ export default function DashboardPage() {
               <h2 className="text-lg sm:text-xl font-bold text-[var(--text-primary)] font-display">
                 Featured Tasks
               </h2>
-              <div className="flex items-center gap-1 text-xs font-bold text-[var(--accent-amber)]">
-                <Flame className="w-4 h-4 text-[var(--accent-amber)]" />
+              <div className="flex items-center gap-1 text-xs font-bold text-[var(--brand-blue)]">
+                <Flame className="w-4 h-4 text-[var(--brand-blue)]" />
                 <span>Hot Right Now</span>
               </div>
             </div>
@@ -336,7 +349,7 @@ export default function DashboardPage() {
                   <div className="space-y-2">
                     {/* Category Tag */}
                     <div className="flex items-center justify-between">
-                      <span className="text-[10px] font-bold uppercase tracking-wider text-[var(--accent-gold)] bg-[var(--accent-gold)]/10 px-2 py-0.5 rounded-md border border-[var(--accent-gold)]/20">
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-[var(--brand-blue)] bg-[var(--brand-blue)]/10 px-2 py-0.5 rounded-md border border-[var(--brand-blue)]/20">
                         {task.categoryTag}
                       </span>
                     </div>
@@ -393,7 +406,7 @@ export default function DashboardPage() {
               {/* Available Balance */}
               <div className="flex items-center justify-between p-3 rounded-[14px] bg-[var(--bg-card-elevated)] border border-[var(--border-subtle)]">
                 <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-full bg-green-500/15 text-[var(--accent-green)] flex items-center justify-center shrink-0">
+                  <div className="w-9 h-9 rounded-full bg-emerald-500/15 text-[var(--accent-green)] flex items-center justify-center shrink-0">
                     <Wallet className="w-4 h-4" />
                   </div>
                   <div>
@@ -417,7 +430,7 @@ export default function DashboardPage() {
                     <span className="text-[11px] font-semibold text-[var(--text-muted)] block">
                       Pending Earnings
                     </span>
-                    <span className="text-sm font-extrabold text-[var(--accent-gold)] numeral-bold">
+                    <span className="text-sm font-extrabold text-[var(--text-primary)] numeral-bold">
                       KES {pendingBal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                     </span>
                   </div>
@@ -427,14 +440,14 @@ export default function DashboardPage() {
               {/* Current Streak */}
               <div className="flex items-center justify-between p-3 rounded-[14px] bg-[var(--bg-card-elevated)] border border-[var(--border-subtle)]">
                 <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-full bg-orange-500/15 text-[var(--accent-amber)] flex items-center justify-center shrink-0">
+                  <div className="w-9 h-9 rounded-full bg-blue-500/15 text-[var(--brand-blue)] flex items-center justify-center shrink-0">
                     <Flame className="w-4 h-4" />
                   </div>
                   <div>
                     <span className="text-[11px] font-semibold text-[var(--text-muted)] block">
                       Current Streak
                     </span>
-                    <span className="text-sm font-extrabold text-[var(--accent-amber)]">
+                    <span className="text-sm font-extrabold text-[var(--text-primary)]">
                       {streakCount} {streakCount === 1 ? "Day" : "Days"}
                     </span>
                   </div>
@@ -467,8 +480,8 @@ export default function DashboardPage() {
                     className="p-2.5 rounded-[12px] bg-[var(--bg-card-elevated)] border border-[var(--border-subtle)] flex items-center justify-between gap-2"
                   >
                     <div className="flex items-center gap-2.5 min-w-0">
-                      <div className="w-8 h-8 rounded-full bg-[var(--bg-card)] border border-[var(--border-subtle)] flex items-center justify-center shrink-0">
-                        <Icon className="w-4 h-4" style={{ color: act.iconColor }} />
+                      <div className="w-8 h-8 rounded-full bg-[var(--brand-blue)]/10 text-[var(--brand-blue)] flex items-center justify-center shrink-0">
+                        <Icon className="w-4 h-4 text-[var(--brand-blue)]" />
                       </div>
                       <div className="min-w-0">
                         <p className="text-xs font-bold text-[var(--text-primary)] truncate">
@@ -497,12 +510,12 @@ export default function DashboardPage() {
           <div className="rounded-[20px] bg-[var(--bg-card)] border border-[var(--border-subtle)] p-4 sm:p-5 space-y-3">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <Crown className="w-5 h-5 text-[var(--accent-gold)]" />
+                <Crown className="w-5 h-5 text-[var(--brand-blue)]" />
                 <h4 className="font-bold text-xs sm:text-sm text-[var(--text-primary)]">
                   Earn More, Get Higher Rewards
                 </h4>
               </div>
-              <Gift className="w-6 h-6 text-[var(--accent-gold)] shrink-0" />
+              <Gift className="w-6 h-6 text-[var(--brand-blue)] shrink-0" />
             </div>
 
             <p className="text-xs text-[var(--text-secondary)] leading-relaxed">
@@ -511,7 +524,7 @@ export default function DashboardPage() {
 
             <Link
               href="/activity"
-              className="inline-flex items-center justify-center gap-1.5 w-full py-2.5 px-4 rounded-[12px] bg-[var(--accent-gold)] text-[#111827] text-xs font-extrabold hover:opacity-95 transition-all shadow-xs"
+              className="inline-flex items-center justify-center gap-1.5 w-full py-2.5 px-4 rounded-[12px] bg-[var(--brand-blue)] text-white text-xs font-extrabold hover:opacity-95 transition-all shadow-xs"
             >
               <span>View Rewards</span>
               <ArrowRight className="w-3.5 h-3.5" />
