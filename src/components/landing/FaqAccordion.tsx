@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { ChevronDown, HelpCircle, Sparkles } from "lucide-react";
+import { ChevronDown, HelpCircle } from "lucide-react";
 
 export const FaqAccordion: React.FC = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
@@ -38,17 +38,17 @@ export const FaqAccordion: React.FC = () => {
   };
 
   return (
-    <section id="faq" className="py-20 md:py-28 relative">
+    <section id="faq" className="py-20 md:py-28 bg-[#F8FAFC] relative">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center space-y-2 mb-12">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/25 text-blue-400 text-xs font-bold uppercase tracking-wider">
+          <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#EAF3FF] border border-blue-200/70 text-[#1E6FD9] text-xs font-bold uppercase tracking-wider">
             <HelpCircle className="w-3.5 h-3.5" />
             <span>Got Questions?</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-black text-white tracking-tight">
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-[#0F1F3D] tracking-tight">
             Frequently Asked Questions
           </h2>
-          <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
+          <p className="text-xs sm:text-sm text-[#6B7A99] leading-relaxed">
             Everything you need to know about review bounties, moderation, M-Pesa payouts, and platform rules.
           </p>
         </div>
@@ -60,19 +60,19 @@ export const FaqAccordion: React.FC = () => {
             return (
               <div
                 key={faq.q}
-                className="rounded-[22px] bg-[#0A101D] border border-slate-800 overflow-hidden shadow-sm transition-colors"
+                className="rounded-[16px] bg-white border border-blue-100/70 overflow-hidden shadow-xs transition-colors"
               >
                 <button
                   onClick={() => toggle(idx)}
-                  className="w-full p-5 text-left flex items-center justify-between gap-4 hover:bg-slate-900/60 transition-colors"
+                  className="w-full p-5 text-left flex items-center justify-between gap-4 hover:bg-[#EEF3FF]/40 transition-colors cursor-pointer"
                   aria-expanded={isOpen}
                 >
-                  <span className="font-bold text-sm sm:text-base text-white">
+                  <span className="font-bold text-sm sm:text-base text-[#0F1F3D]">
                     {faq.q}
                   </span>
                   <div
-                    className={`w-7 h-7 rounded-full bg-slate-900 border border-slate-700 flex items-center justify-center shrink-0 transition-transform duration-200 ${
-                      isOpen ? "rotate-180 text-emerald-400 border-emerald-500/50" : "text-slate-400"
+                    className={`w-7 h-7 rounded-full bg-[#EEF3FF] border border-blue-100 flex items-center justify-center shrink-0 transition-transform duration-200 ${
+                      isOpen ? "rotate-180 text-[#1E6FD9]" : "text-[#6B7A99]"
                     }`}
                   >
                     <ChevronDown className="w-4 h-4" />
@@ -80,7 +80,7 @@ export const FaqAccordion: React.FC = () => {
                 </button>
 
                 {isOpen && (
-                  <div className="px-5 pb-5 text-xs sm:text-sm text-slate-300 leading-relaxed border-t border-slate-800/80 pt-3 animate-in fade-in duration-150">
+                  <div className="px-5 pb-5 text-xs sm:text-sm text-[#6B7A99] leading-relaxed border-t border-slate-100 pt-3 animate-in fade-in duration-150">
                     {faq.a}
                   </div>
                 )}

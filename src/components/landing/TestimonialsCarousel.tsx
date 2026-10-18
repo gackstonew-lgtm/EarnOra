@@ -57,24 +57,24 @@ export const TestimonialsCarousel: React.FC = () => {
   const active = testimonials[currentIndex];
 
   return (
-    <section className="py-20 bg-[#0A101D]/80 border-y border-slate-800/80 relative">
+    <section className="py-20 bg-white border-y border-blue-100/70 relative">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center space-y-2 mb-10">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/25 text-emerald-400 text-xs font-bold uppercase tracking-wider">
+          <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#EAF3FF] border border-blue-200/70 text-[#1E6FD9] text-xs font-bold uppercase tracking-wider">
             <Sparkles className="w-3.5 h-3.5" />
             <span>Community Feedback</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-black text-white tracking-tight">
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-[#0F1F3D] tracking-tight">
             Loved by Reviewers Across Kenya
           </h2>
-          <p className="text-xs text-amber-400 font-semibold">
-            [Preview Placeholder Content — Early Beta Reviewer Testimonials]
+          <p className="text-xs text-[#16A34A] font-semibold">
+            [Early Beta Reviewer Testimonials]
           </p>
         </div>
 
         {/* Carousel Card */}
-        <div className="relative rounded-[30px] bg-gradient-to-br from-[#0F1E3D] via-[#0B1528] to-[#070C18] border border-slate-700/80 p-8 sm:p-12 shadow-2xl backdrop-blur-xl">
-          <Quote className="w-10 h-10 text-emerald-500/20 mb-4" />
+        <div className="relative rounded-[24px] bg-white border border-blue-100/80 p-8 sm:p-12 shadow-[0_12px_40px_rgba(15,31,61,0.06)]">
+          <Quote className="w-10 h-10 text-[#1E6FD9]/20 mb-4" />
 
           {/* Star Rating */}
           <div className="flex items-center gap-1 mb-4">
@@ -83,55 +83,40 @@ export const TestimonialsCarousel: React.FC = () => {
             ))}
           </div>
 
-          <p className="text-sm sm:text-base lg:text-lg text-slate-100 italic leading-relaxed min-h-[90px]">
+          <p className="text-sm sm:text-base lg:text-lg text-[#0F1F3D] italic leading-relaxed min-h-[90px]">
             &ldquo;{active.quote}&rdquo;
           </p>
 
-          <div className="mt-8 pt-6 border-t border-slate-800 flex items-center justify-between">
+          <div className="mt-8 pt-6 border-t border-slate-100 flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="w-11 h-11 rounded-full bg-gradient-to-tr from-emerald-500 to-teal-400 text-slate-950 font-black text-sm flex items-center justify-center">
+              <div className="w-11 h-11 rounded-full bg-gradient-to-r from-[#1E6FD9] to-[#0B4FB3] text-white font-black text-sm flex items-center justify-center shadow-xs">
                 {active.avatar}
               </div>
               <div>
-                <h4 className="font-extrabold text-sm text-white">{active.author}</h4>
-                <p className="text-xs text-slate-400">
-                  {active.location} • <span className="text-emerald-400">{active.role}</span>
+                <h4 className="font-extrabold text-sm text-[#0F1F3D]">{active.author}</h4>
+                <p className="text-xs text-[#6B7A99]">
+                  {active.location} • <span className="text-[#16A34A] font-semibold">{active.role}</span>
                 </p>
               </div>
             </div>
 
-            {/* Navigation Buttons */}
             <div className="flex items-center gap-2">
               <button
                 onClick={prev}
                 aria-label="Previous testimonial"
-                className="w-9 h-9 rounded-full bg-slate-900 border border-slate-700 text-slate-300 hover:text-white hover:border-slate-500 flex items-center justify-center transition-colors"
+                className="w-9 h-9 rounded-full bg-[#EEF3FF] hover:bg-[#EAF3FF] text-[#0F1F3D] flex items-center justify-center transition-colors border border-blue-100 cursor-pointer"
               >
                 <ChevronLeft className="w-4 h-4" />
               </button>
               <button
                 onClick={next}
                 aria-label="Next testimonial"
-                className="w-9 h-9 rounded-full bg-slate-900 border border-slate-700 text-slate-300 hover:text-white hover:border-slate-500 flex items-center justify-center transition-colors"
+                className="w-9 h-9 rounded-full bg-[#EEF3FF] hover:bg-[#EAF3FF] text-[#0F1F3D] flex items-center justify-center transition-colors border border-blue-100 cursor-pointer"
               >
                 <ChevronRight className="w-4 h-4" />
               </button>
             </div>
           </div>
-        </div>
-
-        {/* Carousel indicators */}
-        <div className="flex justify-center gap-2 mt-5">
-          {testimonials.map((_, i) => (
-            <button
-              key={i}
-              onClick={() => setCurrentIndex(i)}
-              aria-label={`Go to testimonial ${i + 1}`}
-              className={`h-2 rounded-full transition-all duration-300 ${
-                currentIndex === i ? "w-6 bg-emerald-400" : "w-2 bg-slate-700 hover:bg-slate-600"
-              }`}
-            />
-          ))}
         </div>
       </div>
     </section>

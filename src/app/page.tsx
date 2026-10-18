@@ -20,7 +20,6 @@ export const metadata: Metadata = {
 };
 
 export default function LandingPage() {
-  // Schema.org Structured Data for SEO
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
@@ -55,41 +54,18 @@ export default function LandingPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <div className="w-full min-h-screen flex flex-col bg-[#070C18] text-slate-100 overflow-x-hidden">
-        {/* 1. Sticky Navbar */}
+      <div className="w-full min-h-screen flex flex-col bg-[#F8FAFC] text-[#0F1F3D] overflow-x-hidden selection:bg-[#1E6FD9] selection:text-white">
         <LandingNavbar />
-
-        {/* 2. Hero Section */}
         <HeroSection />
-
-        {/* 3. Trust Strip */}
         <TrustStrip />
-
-        {/* 4. How It Works (3 Steps) */}
         <HowItWorks />
-
-        {/* 5. Earning Categories Grid (8 Cards) */}
         <EarningCategories />
-
-        {/* 6. Why EarnOra Pillars */}
         <WhyEarnOra />
-
-        {/* 7. For Businesses Section */}
         <ForBusinesses />
-
-        {/* 8. Reviewer Levels (Bronze to Platinum) */}
         <ReviewerLevels />
-
-        {/* 9. Testimonials Carousel */}
         <TestimonialsCarousel />
-
-        {/* 10. FAQ Accordion */}
         <FaqAccordion />
-
-        {/* 11. Final Call to Action Banner */}
         <FinalCta />
-
-        {/* 12. Landing Footer */}
         <LandingFooter />
       </div>
     </>
