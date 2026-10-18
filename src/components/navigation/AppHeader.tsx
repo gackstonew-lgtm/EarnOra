@@ -2,7 +2,7 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
-import { Bell, User, LogOut, ShieldCheck, Wallet, ChevronDown, CheckCheck } from "lucide-react";
+import { Bell, User, LogOut, ShieldCheck, Wallet, ChevronDown, CheckCheck, Settings } from "lucide-react";
 import { EarnoraLogo } from "../brand/EarnoraLogo";
 import { useAuth } from "../providers/AuthProvider";
 
@@ -239,6 +239,15 @@ export const AppHeader: React.FC = () => {
                   >
                     <ShieldCheck className="w-4 h-4 text-[#0A3D91]" />
                     <span>Business Workspace</span>
+                  </Link>
+
+                  <Link
+                    href="/settings"
+                    onClick={() => setShowUserMenu(false)}
+                    className="flex items-center gap-2.5 px-3 py-2 rounded-[10px] text-xs font-medium text-[#0F1F3D] hover:bg-[#EEF3FF] transition-colors"
+                  >
+                    <Settings className="w-4 h-4 text-[#1E6FD9]" />
+                    <span>Settings & Preferences</span>
                   </Link>
 
                   <div className="pt-2 mt-1 border-t border-slate-100">

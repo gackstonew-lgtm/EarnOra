@@ -11,6 +11,7 @@ import {
   Building2,
   Shield,
   Menu as MenuIcon,
+  Settings as SettingsIcon,
   Pin,
   PinOff,
   LogOut,
@@ -90,7 +91,13 @@ export const DesktopSidebar: React.FC = () => {
       isActive: pathname.startsWith("/admin"),
     },
     {
-      label: "Menu & Settings",
+      label: "Settings",
+      href: "/settings",
+      icon: SettingsIcon,
+      isActive: pathname.startsWith("/settings"),
+    },
+    {
+      label: "Menu",
       href: "/menu",
       icon: MenuIcon,
       isActive: pathname.startsWith("/menu"),

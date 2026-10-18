@@ -11,6 +11,7 @@ import {
   LogOut,
   ChevronRight,
   Wallet,
+  Settings,
 } from "lucide-react";
 import { useAuth } from "@/components/providers/AuthProvider";
 
@@ -116,6 +117,26 @@ export default function MenuPage() {
               </p>
               <p className="text-[11px] text-[#6B7A99]">
                 Quality moderation, NLP check, and ledger verification
+              </p>
+            </div>
+          </div>
+          <ChevronRight className="w-4 h-4 text-[#6B7A99]" />
+        </Link>
+
+        <Link
+          href="/settings"
+          className="flex items-center justify-between p-3.5 rounded-[12px] hover:bg-[#EEF3FF] transition-colors"
+        >
+          <div className="flex items-center gap-3">
+            <div className="w-9 h-9 rounded-[10px] bg-[#EEF3FF] text-[#1E6FD9] flex items-center justify-center">
+              <Settings className="w-4 h-4" />
+            </div>
+            <div>
+              <p className="text-xs font-bold text-[#0F1F3D]">
+                Settings & Preferences
+              </p>
+              <p className="text-[11px] text-[#6B7A99]">
+                Appearance, data saver mode, payout number, and notifications
               </p>
             </div>
           </div>
