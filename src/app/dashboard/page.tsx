@@ -19,9 +19,9 @@ import {
   Crown,
   Sparkles,
 } from "lucide-react";
+import Image from "next/image";
 import { useAuth } from "@/components/providers/AuthProvider";
 import { INITIAL_TASKS } from "@/lib/mock-data";
-import { MpesaPhoneMockup } from "@/components/brand/MpesaPhoneMockup";
 
 export default function DashboardPage() {
   const { user } = useAuth();
@@ -147,10 +147,11 @@ export default function DashboardPage() {
         {/* Main Content Workspace (Cols 1 to 8 on desktop) */}
         <div className="lg:col-span-8 space-y-6">
           {/* Main Hero Card (Solid fintech surface, zero gradients) */}
-          <section className="relative rounded-[24px] bg-[var(--bg-card)] border border-[var(--border-subtle)] p-5 sm:p-7 text-[var(--text-primary)] shadow-sm overflow-hidden">
-            <div className="grid grid-cols-1 sm:grid-cols-12 gap-6 items-center">
+          <section className="relative rounded-[24px] bg-[var(--bg-card)] border border-[var(--border-subtle)] px-5 sm:px-7 pt-5 sm:pt-7 pb-5 sm:pb-7 text-[var(--text-primary)] shadow-sm overflow-hidden">
+            {/* Top Area: Text + Flush Image */}
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-6 items-end">
               {/* Left Column: Copy & Value Proposition */}
-              <div className="sm:col-span-7 space-y-3">
+              <div className="md:col-span-7 space-y-3 md:self-center pb-1 md:pb-4">
                 {/* Trusted & Verified Badge */}
                 <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[var(--accent-gold)]/10 text-[var(--accent-gold)] border border-[var(--accent-gold)]/30 text-xs font-bold">
                   <Sparkles className="w-3.5 h-3.5" />
@@ -169,14 +170,23 @@ export default function DashboardPage() {
                 </p>
               </div>
 
-              {/* Right Column: Solid M-Pesa Fintech Phone Graphic */}
-              <div className="sm:col-span-5 flex justify-center py-2 sm:py-0">
-                <MpesaPhoneMockup compact className="scale-95 sm:scale-100" />
+              {/* Right/Bottom Column: Happy user with cash and phone, sitting flush on the divider line */}
+              <div className="md:col-span-5 flex justify-center md:justify-end items-end w-full overflow-hidden mt-3 sm:mt-4 md:mt-0">
+                <div className="relative w-[85%] max-w-[280px] sm:max-w-[310px] md:max-w-[340px] flex justify-center items-end">
+                  <Image
+                    src="/images/dashboard-hero.png"
+                    alt="Happy Earnora user holding cash and the Earnora app on his phone"
+                    width={903}
+                    height={1024}
+                    priority
+                    className="w-full h-auto max-h-[270px] sm:max-h-[295px] md:max-h-[310px] object-contain object-bottom block select-none pointer-events-none -mb-[1px]"
+                  />
+                </div>
               </div>
             </div>
 
-            {/* Bottom: 3 Financial Summary Cards (Available, Pending, Streak) */}
-            <div className="mt-6 pt-5 border-t border-[var(--border-subtle)] grid grid-cols-1 sm:grid-cols-3 gap-3">
+            {/* Bottom: 3 Financial Summary Cards (Available, Pending, Streak) sitting flush under divider */}
+            <div className="pt-5 border-t border-[var(--border-subtle)] grid grid-cols-1 sm:grid-cols-3 gap-3">
               {/* Available Balance Card */}
               <Link
                 href="/wallet"
