@@ -81,18 +81,18 @@ export const BottomNav: React.FC = () => {
             <Link
               key={item.label}
               href={item.href}
-              className={`flex flex-col items-center py-1 px-3 rounded-[12px] transition-all duration-150 active:scale-95 ${
+              className={`flex flex-col items-center justify-center min-w-[48px] min-h-[44px] py-1 px-2.5 rounded-[12px] transition-all duration-150 active:scale-95 ${
                 item.isActive
                   ? "text-[#1E6FD9] font-bold"
-                  : "text-[#6B7A99] hover:text-[#0F1F3D]"
+                  : "text-[#475569] dark:text-[#94A3B8] hover:text-[#0F1F3D] dark:hover:text-white"
               }`}
             >
               <Icon
-                className={`w-5 h-5 mb-1 transition-transform ${
-                  item.isActive ? "scale-110 stroke-[2.4]" : "stroke-[1.8]"
+                className={`w-5 h-5 mb-0.5 transition-transform ${
+                  item.isActive ? "scale-110 stroke-[2.4]" : "stroke-[2]"
                 }`}
               />
-              <span className="text-[11px] tracking-tight">{item.label}</span>
+              <span className="text-[11px] font-medium tracking-tight">{item.label}</span>
             </Link>
           );
         })}
