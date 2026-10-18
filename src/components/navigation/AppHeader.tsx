@@ -4,7 +4,6 @@ import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { Bell, User, LogOut, ShieldCheck, Wallet, ChevronDown, CheckCheck } from "lucide-react";
 import { EarnoraLogo } from "../brand/EarnoraLogo";
-import { ThemeToggle } from "../brand/ThemeToggle";
 import { useAuth } from "../providers/AuthProvider";
 
 interface NotificationItem {
@@ -21,12 +20,11 @@ export const AppHeader: React.FC = () => {
   const [showNotifications, setShowNotifications] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
 
-  // Dynamic application-driven notifications
   const [notifications, setNotifications] = useState<NotificationItem[]>([
     {
       id: "notif-1",
       title: "Review Approved!",
-      message: "KES 450 credited to your available balance for Java House Kimathi St review.",
+      message: "KES 450 credited to your available balance for Java House review.",
       timestamp: "10 mins ago",
       isRead: false,
       type: "earning",
@@ -42,7 +40,7 @@ export const AppHeader: React.FC = () => {
     {
       id: "notif-3",
       title: "New Sponsored Task",
-      message: "Mount Kenya Organics is looking for 50 product testers in Kenya.",
+      message: "Mount Kenya Organics is looking for product testers in Kenya.",
       timestamp: "Yesterday",
       isRead: true,
       type: "system",
@@ -58,7 +56,6 @@ export const AppHeader: React.FC = () => {
     setNotifications((prev) => prev.map((n) => ({ ...n, isRead: true })));
   };
 
-  // Close dropdowns on outside click
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (notifRef.current && !notifRef.current.contains(event.target as Node)) {
@@ -73,7 +70,7 @@ export const AppHeader: React.FC = () => {
   }, []);
 
   const getInitials = (name?: string) => {
-    if (!name) return "E";
+    if (!name) return "EO";
     const parts = name.split(/[_\s]/);
     if (parts.length > 1) {
       return (parts[0][0] + parts[1][0]).toUpperCase();
@@ -82,16 +79,15 @@ export const AppHeader: React.FC = () => {
   };
 
   return (
-    <header className="sticky top-0 z-40 w-full backdrop-blur-md bg-white/90 dark:bg-[#070C18]/90 border-b border-slate-200/80 dark:border-slate-800/80 transition-colors">
-      <div className="max-w-4xl mx-auto px-4 h-16 flex items-center justify-between">
-        {/* Brand Logo */}
-        <EarnoraLogo size="sm" showTagline={false} />
+    <header className="sticky top-0 z-30 w-full backdrop-blur-md bg-white/95 border-b border-blue-100/80 transition-colors shadow-[0_2px_15px_rgba(15,31,61,0.03)]">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+        {/* Brand Logo (Visible on mobile/tablet or when header needs brand presence) */}
+        <div className="flex items-center gap-3">
+          <EarnoraLogo size="sm" showTagline={false} href="/dashboard" />
+        </div>
 
         {/* Right Action Icons */}
-        <div className="flex items-center gap-2">
-          {/* Theme Toggle */}
-          <ThemeToggle />
-
+        <div className="flex items-center gap-3">
           {/* Notifications Bell */}
           <div className="relative" ref={notifRef}>
             <button
@@ -100,11 +96,11 @@ export const AppHeader: React.FC = () => {
                 setShowUserMenu(false);
               }}
               aria-label="View notifications"
-              className="relative w-9 h-9 rounded-full flex items-center justify-center bg-slate-100 dark:bg-slate-800/80 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700/80 border border-slate-200 dark:border-slate-700/60 transition-colors"
+              className="relative w-10 h-10 rounded-full flex items-center justify-center bg-[#EEF3FF] text-[#0F1F3D] hover:bg-[#E2EDFF] border border-blue-100 transition-colors cursor-pointer"
             >
-              <Bell className="w-4 h-4" />
+              <Bell className="w-4.5 h-4.5 text-[#0A3D91]" />
               {unreadCount > 0 && (
-                <span className="absolute -top-1 -right-1 w-4 h-4 bg-emerald-500 text-white dark:text-slate-950 font-bold text-[10px] rounded-full flex items-center justify-center ring-2 ring-white dark:ring-[#070C18] animate-pulse">
+                <span className="absolute -top-0.5 -right-0.5 w-4.5 h-4.5 bg-[#1E6FD9] text-white font-bold text-[10px] rounded-full flex items-center justify-center ring-2 ring-white">
                   {unreadCount}
                 </span>
               )}
@@ -112,14 +108,14 @@ export const AppHeader: React.FC = () => {
 
             {/* Notifications Dropdown Panel */}
             {showNotifications && (
-              <div className="absolute right-0 mt-2 w-80 sm:w-96 rounded-2xl bg-white dark:bg-[#0F1A2E] border border-slate-200 dark:border-slate-700/80 shadow-2xl p-4 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
-                <div className="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800">
+              <div className="absolute right-0 mt-2 w-80 sm:w-96 rounded-[20px] bg-white border border-blue-100/80 shadow-[0_12px_40px_rgba(15,31,61,0.12)] p-4 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
+                <div className="flex items-center justify-between pb-3 border-b border-slate-100">
                   <div className="flex items-center gap-2">
-                    <span className="font-bold text-sm text-slate-900 dark:text-white">
+                    <span className="font-bold text-sm text-[#0F1F3D]">
                       Notifications
                     </span>
                     {unreadCount > 0 && (
-                      <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-500/15 text-emerald-500">
+                      <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-[#EAF3FF] text-[#1E6FD9]">
                         {unreadCount} new
                       </span>
                     )}
@@ -127,7 +123,7 @@ export const AppHeader: React.FC = () => {
                   {unreadCount > 0 && (
                     <button
                       onClick={markAllAsRead}
-                      className="text-xs text-emerald-600 dark:text-emerald-400 hover:underline flex items-center gap-1 font-medium"
+                      className="text-xs text-[#1E6FD9] hover:underline flex items-center gap-1 font-semibold cursor-pointer"
                     >
                       <CheckCheck className="w-3.5 h-3.5" />
                       Mark all read
@@ -135,36 +131,36 @@ export const AppHeader: React.FC = () => {
                   )}
                 </div>
 
-                <div className="divide-y divide-slate-100 dark:divide-slate-800/60 max-h-72 overflow-y-auto mt-2">
+                <div className="divide-y divide-slate-100 max-h-72 overflow-y-auto mt-2">
                   {notifications.map((notif) => (
                     <div
                       key={notif.id}
-                      className={`py-3 px-2 rounded-xl transition-colors ${
+                      className={`py-3 px-2 rounded-[12px] transition-colors ${
                         !notif.isRead
-                          ? "bg-emerald-50/50 dark:bg-emerald-950/20"
-                          : "hover:bg-slate-50 dark:hover:bg-slate-800/40"
+                          ? "bg-[#EAF3FF]/40"
+                          : "hover:bg-slate-50"
                       }`}
                     >
                       <div className="flex items-start justify-between gap-2">
-                        <p className="text-xs font-bold text-slate-900 dark:text-white">
+                        <p className="text-xs font-bold text-[#0F1F3D]">
                           {notif.title}
                         </p>
-                        <span className="text-[10px] text-slate-400 shrink-0">
+                        <span className="text-[10px] text-[#6B7A99] shrink-0">
                           {notif.timestamp}
                         </span>
                       </div>
-                      <p className="text-xs text-slate-600 dark:text-slate-300 mt-1 leading-relaxed">
+                      <p className="text-xs text-[#6B7A99] mt-1 leading-relaxed">
                         {notif.message}
                       </p>
                     </div>
                   ))}
                 </div>
 
-                <div className="pt-2 text-center border-t border-slate-100 dark:border-slate-800 mt-2">
+                <div className="pt-2 text-center border-t border-slate-100 mt-2">
                   <Link
                     href="/activity"
                     onClick={() => setShowNotifications(false)}
-                    className="text-xs font-semibold text-emerald-600 dark:text-emerald-400 hover:underline"
+                    className="text-xs font-semibold text-[#1E6FD9] hover:underline"
                   >
                     View full activity history →
                   </Link>
@@ -181,20 +177,20 @@ export const AppHeader: React.FC = () => {
                   setShowUserMenu(!showUserMenu);
                   setShowNotifications(false);
                 }}
-                className="flex items-center gap-2 pl-2 pr-2.5 py-1 rounded-full bg-slate-100 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/60 hover:bg-slate-200/80 dark:hover:bg-slate-700/80 transition-all text-left"
+                className="flex items-center gap-2 pl-1.5 pr-2.5 py-1 rounded-full bg-[#EEF3FF] border border-blue-100 hover:bg-[#E2EDFF] transition-all text-left cursor-pointer"
               >
-                <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-emerald-600 to-teal-400 text-slate-950 font-bold text-xs flex items-center justify-center shadow-sm">
+                <div className="w-8 h-8 rounded-full bg-gradient-to-r from-[#1E6FD9] to-[#0B4FB3] text-white font-bold text-xs flex items-center justify-center shadow-xs">
                   {getInitials(user.username)}
                 </div>
-                <span className="text-xs font-semibold text-slate-900 dark:text-slate-100 max-w-[80px] truncate hidden sm:inline">
+                <span className="text-xs font-semibold text-[#0F1F3D] max-w-[90px] truncate hidden sm:inline">
                   {user.username}
                 </span>
-                <ChevronDown className="w-3.5 h-3.5 text-slate-400" />
+                <ChevronDown className="w-3.5 h-3.5 text-[#6B7A99]" />
               </button>
             ) : (
               <Link
                 href="/auth/login"
-                className="px-3.5 py-1.5 rounded-full text-xs font-semibold bg-emerald-500 hover:bg-emerald-600 text-slate-950 transition-colors shadow-sm"
+                className="px-4 py-2 rounded-[12px] text-xs font-bold bg-gradient-to-r from-[#1E6FD9] to-[#0B4FB3] text-white shadow-blue-btn hover:brightness-105 transition-all"
               >
                 Sign In
               </Link>
@@ -202,17 +198,17 @@ export const AppHeader: React.FC = () => {
 
             {/* Profile Dropdown */}
             {showUserMenu && user && (
-              <div className="absolute right-0 mt-2 w-64 rounded-2xl bg-white dark:bg-[#0F1A2E] border border-slate-200 dark:border-slate-700/80 shadow-2xl p-3 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
-                <div className="p-2 bg-slate-50 dark:bg-[#132347] rounded-xl mb-2">
-                  <p className="text-xs font-bold text-slate-900 dark:text-white truncate">
+              <div className="absolute right-0 mt-2 w-64 rounded-[20px] bg-white border border-blue-100/80 shadow-[0_12px_40px_rgba(15,31,61,0.12)] p-3 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
+                <div className="p-3 bg-[#EEF3FF]/70 rounded-[14px] mb-2 border border-blue-100/50">
+                  <p className="text-xs font-bold text-[#0F1F3D] truncate">
                     {user.username}
                   </p>
-                  <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5 truncate">
+                  <p className="text-[11px] text-[#6B7A99] mt-0.5 truncate">
                     {user.phoneNumber}
                   </p>
                   <div className="flex items-center gap-1.5 mt-2">
-                    <span className="w-2 h-2 rounded-full bg-emerald-500" />
-                    <span className="text-[10px] font-semibold text-emerald-600 dark:text-emerald-400">
+                    <span className="w-2 h-2 rounded-full bg-[#16A34A]" />
+                    <span className="text-[10px] font-bold text-[#16A34A]">
                       M-Pesa Verified
                     </span>
                   </div>
@@ -222,11 +218,11 @@ export const AppHeader: React.FC = () => {
                   <Link
                     href="/wallet"
                     onClick={() => setShowUserMenu(false)}
-                    className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                    className="flex items-center gap-2.5 px-3 py-2 rounded-[10px] text-xs font-medium text-[#0F1F3D] hover:bg-[#EEF3FF] transition-colors"
                   >
-                    <Wallet className="w-4 h-4 text-emerald-500" />
+                    <Wallet className="w-4 h-4 text-[#1E6FD9]" />
                     <span>Wallet & Payouts</span>
-                    <span className="ml-auto font-bold text-emerald-600 dark:text-emerald-400 text-xs">
+                    <span className="ml-auto font-bold text-[#16A34A] text-xs numeral-bold">
                       KES {user.availableBalance.toLocaleString()}
                     </span>
                   </Link>
@@ -234,31 +230,22 @@ export const AppHeader: React.FC = () => {
                   <Link
                     href="/business"
                     onClick={() => setShowUserMenu(false)}
-                    className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                    className="flex items-center gap-2.5 px-3 py-2 rounded-[10px] text-xs font-medium text-[#0F1F3D] hover:bg-[#EEF3FF] transition-colors"
                   >
-                    <ShieldCheck className="w-4 h-4 text-blue-500" />
+                    <ShieldCheck className="w-4 h-4 text-[#0A3D91]" />
                     <span>Business Workspace</span>
                   </Link>
 
-                  <Link
-                    href="/admin"
-                    onClick={() => setShowUserMenu(false)}
-                    className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
-                  >
-                    <User className="w-4 h-4 text-purple-400" />
-                    <span>Admin Operations</span>
-                  </Link>
-
-                  <div className="pt-2 border-t border-slate-100 dark:border-slate-800">
+                  <div className="pt-2 mt-1 border-t border-slate-100">
                     <button
                       onClick={() => {
-                        logout();
                         setShowUserMenu(false);
+                        logout();
                       }}
-                      className="w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-semibold text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-950/20 transition-colors"
+                      className="w-full flex items-center gap-2.5 px-3 py-2 rounded-[10px] text-xs font-semibold text-red-600 hover:bg-red-50 transition-colors cursor-pointer text-left"
                     >
                       <LogOut className="w-4 h-4" />
-                      <span>Log Out</span>
+                      <span>Sign Out</span>
                     </button>
                   </div>
                 </div>
