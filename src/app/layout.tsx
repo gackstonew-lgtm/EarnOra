@@ -7,7 +7,7 @@ import { AppShell } from "@/components/layout/AppShell";
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"),
   title: {
-    default: "EarnOra — Your Honest Opinion Pays | Real M-Pesa Earnings",
+    default: "EarnOra — Review. Earn. Grow. | Real M-Pesa Earnings",
     template: "%s | EarnOra Kenya",
   },
   description:
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     locale: "en_KE",
     url: "https://earnora.co.ke",
     siteName: "EarnOra",
-    title: "EarnOra — Your Honest Opinion Pays | Real M-Pesa Earnings",
+    title: "EarnOra — Turn your honest opinions into real M-Pesa earnings",
     description:
       "Join thousands of Kenyans earning real M-Pesa cash by submitting genuine reviews of restaurants, apps, and local businesses.",
     images: [
@@ -71,7 +71,7 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 5,
   viewportFit: "cover",
-  themeColor: "#070C18",
+  themeColor: "#1E6FD9",
 };
 
 export default function RootLayout({
@@ -80,8 +80,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="dark" suppressHydrationWarning>
-      <body className="antialiased min-h-screen bg-[#070C18] text-slate-100 selection:bg-emerald-500 selection:text-black">
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+          rel="stylesheet"
+        />
+      </head>
+      <body className="antialiased min-h-screen bg-[#F8FAFC] text-[#0F1F3D] font-sans selection:bg-[#1E6FD9] selection:text-white">
         <ThemeProvider>
           <AuthProvider>
             <AppShell>{children}</AppShell>

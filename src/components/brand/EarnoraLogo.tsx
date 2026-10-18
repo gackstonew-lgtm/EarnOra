@@ -6,7 +6,9 @@ import { EarnoraSymbol } from "./EarnoraSymbol";
 
 interface EarnoraLogoProps {
   showTagline?: boolean;
-  size?: "sm" | "md" | "lg";
+  size?: "sm" | "md" | "lg" | "xl";
+  layout?: "horizontal" | "vertical";
+  variant?: "light" | "dark"; // 'light' is white text for blue backgrounds, 'dark' is navy text for light backgrounds
   href?: string;
   className?: string;
 }
@@ -14,38 +16,52 @@ interface EarnoraLogoProps {
 export const EarnoraLogo: React.FC<EarnoraLogoProps> = ({
   showTagline = false,
   size = "md",
+  layout = "horizontal",
+  variant = "dark",
   href = "/",
   className = "",
 }) => {
   const symbolSizes = {
     sm: 32,
     md: 40,
-    lg: 52,
+    lg: 56,
+    xl: 72,
   };
 
   const textSizes = {
     sm: "text-lg",
-    md: "text-2xl",
-    lg: "text-3xl",
+    md: "text-xl",
+    lg: "text-2xl",
+    xl: "text-3xl",
   };
 
-  const content = (
-    <div className={`flex items-center gap-2.5 select-none ${className}`}>
-      <div className="relative flex items-center justify-center">
-        <EarnoraSymbol size={symbolSizes[size]} />
-      </div>
+  const isLight = variant === "light";
+  const textColor = isLight ? "text-white" : "text-[#0F1F3D]";
+  const accentColor = isLight ? "text-sky-200" : "text-[#1E6FD9]";
+  const taglineColor = isLight ? "text-white/80" : "text-[#6B7A99]";
 
-      <div className="flex flex-col leading-none">
+  const content = (
+    <div
+      className={`select-none ${
+        layout === "vertical"
+          ? "flex flex-col items-center text-center gap-3"
+          : "inline-flex items-center gap-3"
+      } ${className}`}
+    >
+      <EarnoraSymbol
+        size={symbolSizes[size]}
+        useWhiteBg={true}
+      />
+
+      <div className={`flex flex-col ${layout === "vertical" ? "items-center" : "leading-none"}`}>
         <div className="flex items-center">
-          <span
-            className={`font-extrabold tracking-tight text-slate-900 dark:text-white ${textSizes[size]}`}
-          >
-            Earn<span className="text-emerald-500">ora</span>
+          <span className={`font-bold tracking-tight font-sans ${textColor} ${textSizes[size]}`}>
+            Earn<span className={accentColor}>Ora</span>
           </span>
-          <span className="ml-1 w-1.5 h-1.5 rounded-full bg-emerald-500 self-baseline mt-1.5" />
+          <span className={`ml-1 w-1.5 h-1.5 rounded-full ${isLight ? "bg-white" : "bg-[#1E6FD9]"} self-baseline mt-1`} />
         </div>
         {showTagline && (
-          <span className="text-[10px] tracking-wider font-semibold uppercase text-slate-500 dark:text-slate-400 mt-0.5">
+          <span className={`text-[10px] tracking-wider font-semibold uppercase mt-1 ${taglineColor}`}>
             Review. Earn. Grow.
           </span>
         )}

@@ -5,82 +5,66 @@ import React from "react";
 interface EarnoraSymbolProps {
   className?: string;
   size?: number;
-  useImage?: boolean;
+  useWhiteBg?: boolean;
 }
 
 export const EarnoraSymbol: React.FC<EarnoraSymbolProps> = ({
-  className = "w-9 h-9",
-  size = 36,
-  useImage = false,
+  className = "",
+  size = 48,
+  useWhiteBg = true,
 }) => {
-  if (useImage) {
-    return (
-      <img
-        src="/assets/earnora-logo-light.jpg"
-        alt="Earnora Symbol"
-        width={size}
-        height={size}
-        className={`rounded-full object-cover dark:hidden ${className}`}
-      />
-    );
-  }
-
-  // High-fidelity vector SVG reproducing the exact dual-circle interlocking checkmark identity
   return (
-    <svg
-      viewBox="0 0 240 180"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      className={className}
-      style={{ width: size, height: (size * 3) / 4 }}
-      aria-label="Earnora brand mark"
+    <div
+      style={{ width: size, height: size }}
+      className={`relative inline-flex items-center justify-center rounded-full shrink-0 ${
+        useWhiteBg
+          ? "bg-white shadow-[0_4px_16px_rgba(11,79,179,0.12)] border border-blue-50/80"
+          : "bg-transparent"
+      } ${className}`}
     >
-      <g>
-        {/* Deep Teal Left Ring */}
-        <path
-          d="M 85 25
-             C 45 25 15 55 15 95
-             C 15 135 45 165 85 165
-             C 105 165 122 157 135 144
-             L 108 117
-             C 101 124 93 128 85 128
-             C 67 128 52 113 52 95
-             C 52 77 67 62 85 62
-             C 97 62 107 68 113 78
-             L 135 56
-             C 122 37 105 25 85 25 Z"
-          fill="#005F73"
+      <svg
+        viewBox="0 0 48 48"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        className="w-[62%] h-[62%]"
+        aria-label="EarnOra logo symbol"
+      >
+        <defs>
+          <linearGradient id="earnora-blue-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#1E6FD9" />
+            <stop offset="100%" stopColor="#0B4FB3" />
+          </linearGradient>
+          <linearGradient id="earnora-star-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#38BDF8" />
+            <stop offset="100%" stopColor="#1E6FD9" />
+          </linearGradient>
+        </defs>
+
+        {/* Outer Coin / Dialogue Ring */}
+        <circle
+          cx="24"
+          cy="24"
+          r="20"
+          stroke="url(#earnora-blue-grad)"
+          strokeWidth="3.5"
+          className="drop-shadow-xs"
         />
 
-        {/* Vibrant Emerald Right Ring */}
+        {/* Dynamic verified opinion & earning checkmark / star motif */}
         <path
-          d="M 155 25
-             C 135 25 118 33 105 46
-             L 132 73
-             C 139 66 147 62 155 62
-             C 173 62 188 77 188 95
-             C 188 113 173 128 155 128
-             C 143 128 133 122 127 112
-             L 105 134
-             C 118 153 135 165 155 165
-             C 195 165 225 135 225 95
-             C 225 55 195 25 155 25 Z"
-          fill="#00E676"
-        />
-
-        {/* Dynamic Connected Checkmark Overlay */}
-        <path
-          d="M 75 92 
-             L 108 125 
-             C 114 131 124 131 130 125 
-             L 190 65"
-          stroke="currentColor"
-          strokeWidth="24"
+          d="M 16 24.5 L 21.5 30 L 32 18"
+          stroke="url(#earnora-blue-grad)"
+          strokeWidth="4"
           strokeLinecap="round"
           strokeLinejoin="round"
-          className="text-white dark:text-[#070C18]"
         />
-      </g>
-    </svg>
+
+        {/* Mini Accent Sparkle / Coin Star */}
+        <path
+          d="M 32 11 L 33 13.5 L 35.5 14.5 L 33 15.5 L 32 18 L 31 15.5 L 28.5 14.5 L 31 13.5 Z"
+          fill="url(#earnora-star-grad)"
+        />
+      </svg>
+    </div>
   );
 };
