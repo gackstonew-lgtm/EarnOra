@@ -178,7 +178,7 @@ function RegisterContent() {
         <div className="flex flex-col gap-1.5">
           <label className="text-xs font-semibold text-[#0F1F3D]">Username</label>
           <div className="relative flex items-center">
-            <div className="absolute left-3.5 flex items-center pointer-events-none text-[#6B7A99]">
+            <div className="absolute left-3.5 flex items-center pointer-events-none text-[#5A6E8C]">
               <User className="w-4 h-4" />
             </div>
             <input
@@ -187,7 +187,7 @@ function RegisterContent() {
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               placeholder="e.g. Baraka_Ke"
-              className="w-full h-11 pl-10 pr-3.5 text-sm rounded-[12px] bg-[#EEF3FF] text-[#0F1F3D] placeholder-[#6B7A99] border border-blue-100/70 focus:outline-hidden focus:bg-white focus:border-[#1E6FD9] focus:ring-2 focus:ring-[#1E6FD9]/20 transition-all"
+              className="w-full h-11 pl-10 pr-3.5 text-sm rounded-[12px] bg-[#EEF3FF] text-[#0F1F3D] placeholder-[#5A6E8C] border border-blue-100/70 focus:outline-hidden focus:bg-white focus:border-[#1E6FD9] focus:ring-2 focus:ring-[#1E6FD9]/20 transition-all font-medium"
             />
           </div>
         </div>
@@ -199,7 +199,7 @@ function RegisterContent() {
             <select
               value={selectedCountryCode}
               onChange={handleCountryChange}
-              className="w-full h-11 px-3.5 text-sm rounded-[12px] bg-[#EEF3FF] text-[#0F1F3D] border border-blue-100/70 focus:outline-hidden focus:bg-white focus:border-[#1E6FD9] focus:ring-2 focus:ring-[#1E6FD9]/20 transition-all cursor-pointer"
+              className="w-full h-11 px-3.5 text-sm rounded-[12px] bg-[#EEF3FF] text-[#0F1F3D] font-medium border border-blue-100/70 focus:outline-hidden focus:bg-white focus:border-[#1E6FD9] focus:ring-2 focus:ring-[#1E6FD9]/20 transition-all cursor-pointer"
             >
               {SUPPORTED_COUNTRIES.map((c) => (
                 <option key={c.code} value={c.code}>
@@ -218,7 +218,7 @@ function RegisterContent() {
               {activeCountry.flag} {selectedCountryCode}
             </span>
             <div className="relative flex-1 flex items-center">
-              <div className="absolute left-3 flex items-center pointer-events-none text-[#6B7A99]">
+              <div className="absolute left-3 flex items-center pointer-events-none text-[#5A6E8C]">
                 <Phone className="w-4 h-4" />
               </div>
               <input
@@ -227,7 +227,7 @@ function RegisterContent() {
                 value={phoneInput}
                 onChange={(e) => handlePhoneChange(e.target.value)}
                 placeholder={activeCountry.placeholder}
-                className={`w-full h-11 pl-9 pr-3 text-sm rounded-[12px] bg-[#EEF3FF] text-[#0F1F3D] placeholder-[#6B7A99] border ${
+                className={`w-full h-11 pl-9 pr-3 text-sm rounded-[12px] bg-[#EEF3FF] text-[#0F1F3D] placeholder-[#5A6E8C] font-medium border ${
                   phoneError
                     ? "border-red-500 ring-2 ring-red-500/20"
                     : "border-blue-100/70"
@@ -236,15 +236,15 @@ function RegisterContent() {
             </div>
           </div>
           {phoneError && (
-            <p className="text-xs text-red-500 font-medium">{phoneError}</p>
+            <p className="text-xs text-red-600 font-semibold">{phoneError}</p>
           )}
 
           {/* Payout note */}
           <div
             className={`mt-1 p-2 rounded-[10px] text-xs flex items-center gap-2 ${
               payoutEligibility.isEligible
-                ? "bg-emerald-50 text-[#16A34A] border border-emerald-200/60"
-                : "bg-amber-50 text-amber-700 border border-amber-200/60"
+                ? "bg-emerald-50 text-[#15803D] border border-emerald-200/80 font-medium"
+                : "bg-amber-50 text-amber-800 border border-amber-200/80 font-medium"
             }`}
           >
             <ShieldCheck className="w-3.5 h-3.5 shrink-0" />
@@ -258,7 +258,7 @@ function RegisterContent() {
         <div className="flex flex-col gap-1.5">
           <label className="text-xs font-semibold text-[#0F1F3D]">Password</label>
           <div className="relative flex items-center">
-            <div className="absolute left-3.5 flex items-center pointer-events-none text-[#6B7A99]">
+            <div className="absolute left-3.5 flex items-center pointer-events-none text-[#5A6E8C]">
               <Lock className="w-4 h-4" />
             </div>
             <input
@@ -268,12 +268,12 @@ function RegisterContent() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="At least 6 characters"
-              className="w-full h-11 pl-10 pr-10 text-sm rounded-[12px] bg-[#EEF3FF] text-[#0F1F3D] placeholder-[#6B7A99] border border-blue-100/70 focus:outline-hidden focus:bg-white focus:border-[#1E6FD9] focus:ring-2 focus:ring-[#1E6FD9]/20 transition-all"
+              className="w-full h-11 pl-10 pr-10 text-sm rounded-[12px] bg-[#EEF3FF] text-[#0F1F3D] placeholder-[#5A6E8C] font-medium border border-blue-100/70 focus:outline-hidden focus:bg-white focus:border-[#1E6FD9] focus:ring-2 focus:ring-[#1E6FD9]/20 transition-all"
             />
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-3 text-[#6B7A99] hover:text-[#0F1F3D] cursor-pointer"
+              className="absolute right-3 text-[#5A6E8C] hover:text-[#0F1F3D] cursor-pointer"
               aria-label={showPassword ? "Hide password" : "Show password"}
             >
               {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
@@ -296,7 +296,7 @@ function RegisterContent() {
                 className="w-full h-11 pl-10 pr-3 text-sm rounded-[12px] bg-[#EEF3FF] text-[#0A3D91] font-semibold border border-blue-100/70 cursor-not-allowed select-none"
               />
             </div>
-            <p className="text-[11px] text-[#6B7A99]">
+            <p className="text-[11px] text-[#475569] font-medium">
               Referral code validated.
             </p>
           </div>
@@ -311,13 +311,13 @@ function RegisterContent() {
               onChange={(e) => setAgreeTerms(e.target.checked)}
               className="mt-0.5 w-4 h-4 rounded text-[#1E6FD9] focus:ring-[#1E6FD9] border-blue-200 accent-[#1E6FD9]"
             />
-            <span className="text-xs text-[#6B7A99] leading-snug">
+            <span className="text-xs text-[#475569] font-medium leading-snug">
               I agree to the{" "}
-              <Link href="/terms" className="text-[#1E6FD9] font-semibold hover:underline">
+              <Link href="/terms" className="text-[#1E6FD9] font-bold hover:underline">
                 Terms of Service
               </Link>{" "}
               and{" "}
-              <Link href="/privacy" className="text-[#1E6FD9] font-semibold hover:underline">
+              <Link href="/privacy" className="text-[#1E6FD9] font-bold hover:underline">
                 Privacy Policy
               </Link>
               .
@@ -345,7 +345,7 @@ function RegisterContent() {
 
       {/* Already have an account link */}
       <div className="text-center pt-2">
-        <p className="text-xs text-[#6B7A99]">
+        <p className="text-xs text-[#475569]">
           Already have an account?{" "}
           <Link
             href="/auth/login"

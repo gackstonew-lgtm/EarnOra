@@ -37,7 +37,7 @@ export const EarnoraLogo: React.FC<EarnoraLogoProps> = ({
 
   const isLight = variant === "light";
   const textColor = isLight ? "text-white" : "text-[var(--text-primary)]";
-  const accentColor = "text-[var(--brand-blue)]";
+  const accentColor = isLight ? "text-white" : "text-[var(--brand-blue)]";
   const taglineColor = isLight ? "text-white/80" : "text-[var(--text-muted)]";
 
   const content = (

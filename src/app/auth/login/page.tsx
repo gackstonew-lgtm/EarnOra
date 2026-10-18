@@ -69,7 +69,7 @@ function LoginForm() {
             Phone Number or Username
           </label>
           <div className="relative flex items-center">
-            <div className="absolute left-3.5 flex items-center pointer-events-none text-[#6B7A99]">
+            <div className="absolute left-3.5 flex items-center pointer-events-none text-[#5A6E8C]">
               <User className="w-4 h-4" />
             </div>
             <input
@@ -78,7 +78,7 @@ function LoginForm() {
               value={identifier}
               onChange={(e) => setIdentifier(e.target.value)}
               placeholder="e.g. 0712345678 or username"
-              className="w-full h-11 pl-10 pr-3.5 text-sm rounded-[12px] bg-[#EEF3FF] text-[#0F1F3D] placeholder-[#6B7A99] border border-blue-100/70 focus:outline-hidden focus:bg-white focus:border-[#1E6FD9] focus:ring-2 focus:ring-[#1E6FD9]/20 transition-all"
+              className="w-full h-11 pl-10 pr-3.5 text-sm rounded-[12px] bg-[#EEF3FF] text-[#0F1F3D] placeholder-[#5A6E8C] border border-blue-100/70 focus:outline-hidden focus:bg-white focus:border-[#1E6FD9] focus:ring-2 focus:ring-[#1E6FD9]/20 transition-all font-medium"
             />
           </div>
         </div>
@@ -89,13 +89,13 @@ function LoginForm() {
             <label className="text-xs font-semibold text-[#0F1F3D]">Password</label>
             <Link
               href="/auth/forgot-password"
-              className="text-xs font-medium text-[#1E6FD9] hover:underline"
+              className="text-xs font-semibold text-[#1E6FD9] hover:underline"
             >
               Forgot password?
             </Link>
           </div>
           <div className="relative flex items-center">
-            <div className="absolute left-3.5 flex items-center pointer-events-none text-[#6B7A99]">
+            <div className="absolute left-3.5 flex items-center pointer-events-none text-[#5A6E8C]">
               <Lock className="w-4 h-4" />
             </div>
             <input
@@ -104,12 +104,12 @@ function LoginForm() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Enter your password"
-              className="w-full h-11 pl-10 pr-10 text-sm rounded-[12px] bg-[#EEF3FF] text-[#0F1F3D] placeholder-[#6B7A99] border border-blue-100/70 focus:outline-hidden focus:bg-white focus:border-[#1E6FD9] focus:ring-2 focus:ring-[#1E6FD9]/20 transition-all"
+              className="w-full h-11 pl-10 pr-10 text-sm rounded-[12px] bg-[#EEF3FF] text-[#0F1F3D] placeholder-[#5A6E8C] border border-blue-100/70 focus:outline-hidden focus:bg-white focus:border-[#1E6FD9] focus:ring-2 focus:ring-[#1E6FD9]/20 transition-all font-medium"
             />
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-3 text-[#6B7A99] hover:text-[#0F1F3D] cursor-pointer"
+              className="absolute right-3 text-[#5A6E8C] hover:text-[#0F1F3D] cursor-pointer"
               aria-label={showPassword ? "Hide password" : "Show password"}
             >
               {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
@@ -126,7 +126,7 @@ function LoginForm() {
               onChange={(e) => setRememberMe(e.target.checked)}
               className="w-4 h-4 rounded text-[#1E6FD9] focus:ring-[#1E6FD9] border-blue-200 accent-[#1E6FD9]"
             />
-            <span className="text-xs text-[#6B7A99]">Remember me</span>
+            <span className="text-xs text-[#475569] font-medium">Remember me</span>
           </label>
         </div>
 
@@ -150,7 +150,7 @@ function LoginForm() {
 
       {/* Don't have an account link */}
       <div className="text-center pt-2">
-        <p className="text-xs text-[#6B7A99]">
+        <p className="text-xs text-[#475569]">
           Don&apos;t have an account?{" "}
           <Link
             href="/auth/register"

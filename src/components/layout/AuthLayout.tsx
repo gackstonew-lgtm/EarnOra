@@ -26,13 +26,13 @@ export const AuthLayout: React.FC<AuthLayoutProps> = ({
       <div className="w-full max-w-5xl bg-white sm:rounded-[28px] shadow-[0_15px_50px_rgba(15,31,61,0.1)] border border-blue-100/70 overflow-hidden min-h-screen sm:min-h-[660px] flex flex-col lg:flex-row">
         
         {/* ========================================================= */}
-        {/* LEFT PANEL (DESKTOP) / TOP HEADER (MOBILE) - BLUE GRADIENT */}
+        {/* LEFT PANEL (DESKTOP) / TOP HEADER (MOBILE) - SOLID BRAND BLUE */}
         {/* ========================================================= */}
-        <div className="relative bg-gradient-to-br from-[#1E6FD9] via-[#165FC4] to-[#0B4FB3] text-white flex flex-col justify-between shrink-0 lg:w-[45%] xl:w-[42%] overflow-hidden">
+        <div className="relative bg-[#1E6FD9] text-white flex flex-col justify-between shrink-0 lg:w-[45%] xl:w-[42%] overflow-hidden">
           
           {/* Mobile Header View */}
-          <div className="lg:hidden flex flex-col items-center justify-center pt-10 pb-12 px-6 text-center relative z-10">
-            <span className="text-xs uppercase tracking-widest font-semibold text-white/80 mb-2">
+          <div className="lg:hidden flex flex-col items-center justify-center pt-8 pb-14 px-6 text-center relative z-10">
+            <span className="text-xs uppercase tracking-widest font-semibold text-white/90 mb-2">
               Welcome to
             </span>
             <EarnoraLogo
@@ -42,7 +42,7 @@ export const AuthLayout: React.FC<AuthLayoutProps> = ({
               showTagline={false}
               href="/auth/login"
             />
-            <p className="text-xs text-blue-100 max-w-xs mt-3 leading-relaxed">
+            <p className="text-xs text-blue-50 max-w-xs mt-3 leading-relaxed font-medium">
               {pitch}
             </p>
           </div>
@@ -50,7 +50,7 @@ export const AuthLayout: React.FC<AuthLayoutProps> = ({
           {/* Desktop Left Side View */}
           <div className="hidden lg:flex flex-col justify-between h-full p-10 xl:p-12 relative z-10">
             <div className="space-y-6">
-              <span className="text-sm uppercase tracking-widest font-semibold text-white/80">
+              <span className="text-sm uppercase tracking-widest font-semibold text-white/90">
                 Welcome to
               </span>
               <div className="pt-2">
@@ -62,13 +62,13 @@ export const AuthLayout: React.FC<AuthLayoutProps> = ({
                   href="/auth/login"
                 />
               </div>
-              <p className="text-sm text-blue-100 leading-relaxed max-w-xs pt-4">
+              <p className="text-sm text-blue-50 leading-relaxed max-w-xs pt-4 font-medium">
                 {pitch}
               </p>
             </div>
 
             {/* Bottom Footer Links */}
-            <div className="pt-8 border-t border-white/15 flex items-center gap-4 text-xs font-semibold tracking-wider uppercase text-white/80">
+            <div className="pt-8 border-t border-white/20 flex items-center gap-4 text-xs font-semibold tracking-wider uppercase text-white/90">
               <Link
                 href="/auth/register"
                 className={`transition-colors hover:text-white ${
@@ -109,7 +109,7 @@ export const AuthLayout: React.FC<AuthLayoutProps> = ({
                 {title}
               </h1>
               {subtitle && (
-                <p className="text-xs sm:text-sm text-[#6B7A99] mt-1.5">
+                <p className="text-xs sm:text-sm text-[#475569] mt-1.5 font-medium">
                   {subtitle}
                 </p>
               )}

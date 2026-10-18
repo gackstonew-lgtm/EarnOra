@@ -18,52 +18,52 @@ export const EarnoraSymbol: React.FC<EarnoraSymbolProps> = ({
       style={{ width: size, height: size }}
       className={`relative inline-flex items-center justify-center rounded-full shrink-0 ${
         useWhiteBg
-          ? "bg-white shadow-[0_4px_16px_rgba(11,79,179,0.12)] border border-blue-50/80"
+          ? "bg-white shadow-[0_4px_16px_rgba(30,111,217,0.14)] border border-blue-100/70"
           : "bg-transparent"
       } ${className}`}
     >
       <svg
-        viewBox="0 0 48 48"
+        viewBox="0 0 24 24"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        className="w-[62%] h-[62%]"
-        aria-label="EarnOra logo symbol"
+        className="w-[62%] h-[62%] select-none pointer-events-none"
+        aria-label="EarnOra rocket brand mark"
       >
-        <defs>
-          <linearGradient id="earnora-blue-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#1E6FD9" />
-            <stop offset="100%" stopColor="#0B4FB3" />
-          </linearGradient>
-          <linearGradient id="earnora-green-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#16A34A" />
-            <stop offset="100%" stopColor="#00D26A" />
-          </linearGradient>
-        </defs>
-
-        {/* Dual interlocking brand mark: Value circle + growth circle */}
-        <circle
-          cx="20"
-          cy="24"
-          r="14"
-          stroke="url(#earnora-blue-grad)"
-          strokeWidth="3.5"
-          className="drop-shadow-xs"
-        />
-
-        <circle
-          cx="28"
-          cy="24"
-          r="13"
-          stroke="url(#earnora-green-grad)"
-          strokeWidth="3.5"
-          className="drop-shadow-xs"
-        />
-
-        {/* Crisp checkmark verifying reviews */}
+        {/* Right Wing / Fin */}
         <path
-          d="M 18 24.5 L 23 29.5 L 32 17"
-          stroke="#16A34A"
-          strokeWidth="3"
+          d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"
+          fill="#1E6FD9"
+          stroke="#1E6FD9"
+          strokeWidth="1.2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        {/* Left Wing / Fin */}
+        <path
+          d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 .05 5 .05"
+          fill="#1E6FD9"
+          stroke="#1E6FD9"
+          strokeWidth="1.2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        {/* Main Rocket Fuselage */}
+        <path
+          d="M9 12a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.4 22.4 0 0 1-4 2z"
+          fill="#1E6FD9"
+          stroke="#1E6FD9"
+          strokeWidth="1.2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        {/* Porthole Window */}
+        <circle cx="15.2" cy="8.8" r="1.6" fill="#FFFFFF" />
+        {/* Thrust Flame / Exhaust Plume */}
+        <path
+          d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09"
+          fill="#1E6FD9"
+          stroke="#1E6FD9"
+          strokeWidth="1.2"
           strokeLinecap="round"
           strokeLinejoin="round"
         />
