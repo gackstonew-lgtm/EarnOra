@@ -5,13 +5,12 @@ import Link from "next/link";
 import { EARNING_CARDS, BRAND_TAGLINE, BRAND_HERO_HEADLINE } from "@/lib/constants";
 import { EarningCard } from "@/components/cards/EarningCard";
 import { useAuth } from "@/components/providers/AuthProvider";
-import { Wallet, Clock, Flame, ArrowUpRight, ShieldCheck, Sparkles } from "lucide-react";
+import { Wallet, Clock, Flame, ShieldCheck, Sparkles, Search } from "lucide-react";
 
 export default function HomePage() {
   const { user } = useAuth();
   const [filterQuery, setFilterQuery] = useState("");
 
-  // Category earnings from user data (fallback to 0.00)
   const categoryEarnings: Record<string, number> = {
     hotels_restaurants: 450.0,
     apps_websites: 300.0,
@@ -34,31 +33,32 @@ export default function HomePage() {
 
   return (
     <div className="space-y-6">
-      {/* Hero Branding Header */}
-      <section className="relative rounded-[22px] bg-gradient-to-br from-emerald-950/70 via-[#0C1A33] to-[#08101E] border border-emerald-500/25 p-6 shadow-2xl overflow-hidden">
-        {/* Subtle decorative glow */}
-        <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
+      {/* Hero Branding Header (Royal Blue Gradient) */}
+      <section className="relative rounded-[24px] bg-gradient-to-br from-[#1E6FD9] via-[#165FC4] to-[#0B4FB3] p-6 sm:p-8 text-white shadow-[0_12px_36px_rgba(11,79,179,0.22)] overflow-hidden">
+        {/* Decorative blur glows */}
+        <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute -left-10 -bottom-10 w-48 h-48 bg-sky-300/15 rounded-full blur-2xl pointer-events-none" />
 
         <div className="relative z-10">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 text-xs font-semibold mb-3">
-            <Sparkles className="w-3.5 h-3.5" />
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/20 backdrop-blur-xs text-white text-xs font-semibold mb-3 border border-white/20">
+            <Sparkles className="w-3.5 h-3.5 text-sky-200" />
             <span>{BRAND_TAGLINE}</span>
           </div>
 
-          <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight leading-tight max-w-xl">
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight leading-tight max-w-xl">
             {BRAND_HERO_HEADLINE}
           </h1>
 
-          <p className="text-xs sm:text-sm text-slate-300 mt-2 max-w-lg leading-relaxed">
+          <p className="text-xs sm:text-sm text-blue-100 mt-2 max-w-lg leading-relaxed">
             Get rewarded for genuine, first-hand reviews of Kenyan restaurants, mobile apps, local businesses, telcos, and products. Verified payouts directly to your M-Pesa.
           </p>
 
-          {/* Quick User Balance Card */}
+          {/* Quick User Balance Cards */}
           {user && (
-            <div className="mt-5 grid grid-cols-3 gap-2.5 pt-4 border-t border-slate-700/60">
-              <div className="bg-slate-900/70 dark:bg-slate-950/70 p-3 rounded-2xl border border-slate-700/40">
-                <div className="flex items-center gap-1.5 text-slate-400 text-[10px] font-semibold">
-                  <Wallet className="w-3 h-3 text-emerald-400" />
+            <div className="mt-6 grid grid-cols-3 gap-2.5 pt-5 border-t border-white/20">
+              <div className="bg-white/10 backdrop-blur-xs p-3 rounded-[16px] border border-white/15">
+                <div className="flex items-center gap-1.5 text-blue-100 text-[10px] font-semibold">
+                  <Wallet className="w-3 h-3 text-emerald-300" />
                   <span>Available</span>
                 </div>
                 <p className="text-sm sm:text-base font-extrabold text-white mt-0.5 numeral-bold">
@@ -66,9 +66,9 @@ export default function HomePage() {
                 </p>
               </div>
 
-              <div className="bg-slate-900/70 dark:bg-slate-950/70 p-3 rounded-2xl border border-slate-700/40">
-                <div className="flex items-center gap-1.5 text-slate-400 text-[10px] font-semibold">
-                  <Clock className="w-3 h-3 text-amber-400" />
+              <div className="bg-white/10 backdrop-blur-xs p-3 rounded-[16px] border border-white/15">
+                <div className="flex items-center gap-1.5 text-blue-100 text-[10px] font-semibold">
+                  <Clock className="w-3 h-3 text-amber-300" />
                   <span>Pending</span>
                 </div>
                 <p className="text-sm sm:text-base font-extrabold text-amber-300 mt-0.5 numeral-bold">
@@ -76,12 +76,12 @@ export default function HomePage() {
                 </p>
               </div>
 
-              <div className="bg-slate-900/70 dark:bg-slate-950/70 p-3 rounded-2xl border border-slate-700/40">
-                <div className="flex items-center gap-1.5 text-slate-400 text-[10px] font-semibold">
-                  <Flame className="w-3 h-3 text-orange-400" />
+              <div className="bg-white/10 backdrop-blur-xs p-3 rounded-[16px] border border-white/15">
+                <div className="flex items-center gap-1.5 text-blue-100 text-[10px] font-semibold">
+                  <Flame className="w-3 h-3 text-orange-300" />
                   <span>Streak</span>
                 </div>
-                <p className="text-sm sm:text-base font-extrabold text-orange-400 mt-0.5">
+                <p className="text-sm sm:text-base font-extrabold text-orange-300 mt-0.5">
                   {user.streakDays} Days
                 </p>
               </div>
@@ -91,40 +91,42 @@ export default function HomePage() {
       </section>
 
       {/* Trust & Network Indicator */}
-      <div className="flex items-center justify-between px-2 text-xs text-slate-400 dark:text-slate-400">
+      <div className="flex items-center justify-between px-2 text-xs text-[#6B7A99]">
         <div className="flex items-center gap-2">
-          <ShieldCheck className="w-4 h-4 text-emerald-500" />
+          <ShieldCheck className="w-4 h-4 text-[#16A34A]" />
           <span>Safaricom Daraja B2C Verified Payouts</span>
         </div>
         <Link
           href="/earn"
-          className="text-emerald-500 hover:text-emerald-400 font-semibold flex items-center gap-1 hover:underline"
+          className="text-[#1E6FD9] font-bold hover:underline"
         >
-          <span>All Tasks</span>
-          <ArrowUpRight className="w-3.5 h-3.5" />
+          View all tasks →
         </Link>
       </div>
 
-      {/* Ten Earning Cards Vertical Stack */}
-      <section className="space-y-4">
-        <div className="flex items-center justify-between px-1">
-          <h2 className="font-extrabold text-lg text-slate-900 dark:text-white tracking-tight">
-            Earning Categories
-          </h2>
-          <span className="text-xs font-semibold text-slate-500">
-            {EARNING_CARDS.length} Active Tracks
-          </span>
+      {/* Search & Category Filter */}
+      <div className="relative flex items-center">
+        <div className="absolute left-3.5 flex items-center pointer-events-none text-[#6B7A99]">
+          <Search className="w-4 h-4" />
         </div>
+        <input
+          type="text"
+          value={filterQuery}
+          onChange={(e) => setFilterQuery(e.target.value)}
+          placeholder="Search categories (e.g. Restaurants, Apps, Telco)..."
+          className="w-full h-11 pl-10 pr-4 text-xs sm:text-sm rounded-[12px] bg-[#EEF3FF] border border-blue-100/70 text-[#0F1F3D] placeholder-[#6B7A99] focus:outline-hidden focus:bg-white focus:border-[#1E6FD9] focus:ring-2 focus:ring-[#1E6FD9]/20 transition-all"
+        />
+      </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {filteredCards.map((card) => (
-            <EarningCard
-              key={card.id}
-              card={card}
-              userEarnedKes={categoryEarnings[card.id] || 0}
-            />
-          ))}
-        </div>
+      {/* Categories Cards Grid */}
+      <section className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {filteredCards.map((card) => (
+          <EarningCard
+            key={card.id}
+            card={card}
+            userEarnedKes={categoryEarnings[card.id] || 0}
+          />
+        ))}
       </section>
     </div>
   );
