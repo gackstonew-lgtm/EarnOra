@@ -8,8 +8,8 @@ export default function TermsPage() {
   return (
     <div className="py-6 max-w-2xl mx-auto space-y-6">
       <div>
-        <Link href="/" className="text-xs font-semibold text-[#1E6FD9] hover:underline">
-          ← Back to Home
+        <Link href="/dashboard" className="text-xs font-semibold text-[var(--brand-blue)] hover:underline">
+          ← Back
         </Link>
         <h1 className="text-2xl font-black text-[#0F1F3D] tracking-tight mt-2">
           EarnOra Terms of Service & Earning Rules

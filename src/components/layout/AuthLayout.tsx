@@ -40,7 +40,7 @@ export const AuthLayout: React.FC<AuthLayoutProps> = ({
               variant="light"
               size="lg"
               showTagline={false}
-              href="/"
+              href="/auth/login"
             />
             <p className="text-xs text-blue-100 max-w-xs mt-3 leading-relaxed">
               {pitch}
@@ -59,7 +59,7 @@ export const AuthLayout: React.FC<AuthLayoutProps> = ({
                   variant="light"
                   size="xl"
                   showTagline={false}
-                  href="/"
+                  href="/auth/login"
                 />
               </div>
               <p className="text-sm text-blue-100 leading-relaxed max-w-xs pt-4">
@@ -79,10 +79,12 @@ export const AuthLayout: React.FC<AuthLayoutProps> = ({
               </Link>
               <span>|</span>
               <Link
-                href="/"
-                className="transition-colors hover:text-white"
+                href="/auth/login"
+                className={`transition-colors hover:text-white ${
+                  activeTab === "login" ? "text-white underline underline-offset-4" : ""
+                }`}
               >
-                Discover
+                Sign In
               </Link>
             </div>
           </div>

@@ -4,6 +4,7 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 import { UserProfile } from "@/lib/types";
 import { getStoredUser, setStoredUser, updateStoredUser } from "@/lib/auth-service";
 import { INITIAL_USER } from "@/lib/mock-data";
+import { supabase } from "@/lib/supabase";
 
 interface AuthContextType {
   user: UserProfile | null;
@@ -40,6 +41,30 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const loaded = getStoredUser();
     setUser(loaded);
     setLoading(false);
+
+    try {
+      const isSupabaseConfigured =
+        process.env.NEXT_PUBLIC_SUPABASE_URL &&
+        process.env.NEXT_PUBLIC_SUPABASE_URL !== "https://your-project.supabase.co" &&
+        !process.env.NEXT_PUBLIC_SUPABASE_URL.includes("placeholder");
+
+      if (isSupabaseConfigured) {
+        const { data: authListener } = supabase.auth.onAuthStateChange((event) => {
+          if (event === "SIGNED_OUT") {
+            setUser(null);
+            setStoredUser(null);
+            if (typeof window !== "undefined" && !window.location.pathname.startsWith("/auth")) {
+              window.location.replace("/auth/login");
+            }
+          }
+        });
+        return () => {
+          authListener?.subscription?.unsubscribe();
+        };
+      }
+    } catch {
+      // Ignore
+    }
   }, []);
 
   const login = async (
@@ -142,11 +167,24 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     return { success: true, user: newUser };
   };
 
-  const logout = () => {
+  const logout = async () => {
+    try {
+      const isSupabaseConfigured =
+        process.env.NEXT_PUBLIC_SUPABASE_URL &&
+        process.env.NEXT_PUBLIC_SUPABASE_URL !== "https://your-project.supabase.co" &&
+        !process.env.NEXT_PUBLIC_SUPABASE_URL.includes("placeholder");
+
+      if (isSupabaseConfigured) {
+        await supabase.auth.signOut();
+      }
+    } catch (err) {
+      console.warn("Supabase signOut error:", err);
+    }
+
     setUser(null);
     setStoredUser(null);
     if (typeof window !== "undefined") {
-      window.location.replace("/");
+      window.location.replace("/auth/login");
     }
   };
 

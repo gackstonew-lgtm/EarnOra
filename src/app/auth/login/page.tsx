@@ -34,7 +34,7 @@ function LoginForm() {
     try {
       const res = await login(identifier, password);
       if (res.success) {
-        const nextParam = searchParams.get("next");
+        const nextParam = searchParams.get("redirectTo") || searchParams.get("next");
         // Validate internal redirect only
         const target = nextParam && nextParam.startsWith("/") && !nextParam.startsWith("//") ? nextParam : "/dashboard";
         router.push(target);

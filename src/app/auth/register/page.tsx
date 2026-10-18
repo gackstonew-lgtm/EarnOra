@@ -148,8 +148,10 @@ function RegisterContent() {
         // Redirect to OTP verification screen
         router.push(`/auth/verify-otp?phone=${encodeURIComponent(phoneValidation.normalized)}`);
       } else {
-        // Automatically verify phone and redirect directly to dashboard
-        router.push("/dashboard");
+        // Redirect to intended destination or dashboard
+        const redirectParam = searchParams.get("redirectTo") || searchParams.get("next");
+        const target = redirectParam && redirectParam.startsWith("/") && !redirectParam.startsWith("//") ? redirectParam : "/dashboard";
+        router.push(target);
       }
     } catch {
       setFormError("An unexpected error occurred. Please try again.");

@@ -10,17 +10,7 @@ import { PwaInstallBanner } from "@/components/ui/PwaInstallBanner";
 export const AppShell: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const pathname = usePathname();
 
-  const isLandingPage = pathname === "/";
-  const isAuthPage = pathname.startsWith("/auth");
-
-  if (isLandingPage) {
-    return (
-      <div className="min-h-screen flex flex-col bg-[var(--bg-page)] text-[var(--text-primary)] antialiased overflow-x-hidden selection:bg-[#1E6FD9] selection:text-white transition-colors duration-200">
-        <PwaInstallBanner />
-        {children}
-      </div>
-    );
-  }
+  const isAuthPage = pathname.startsWith("/auth") || pathname === "/";
 
   // App Pages (/dashboard, /earn, /wallet, /activity, /menu, /business, /admin, etc.)
   return (
