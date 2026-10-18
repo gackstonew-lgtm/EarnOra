@@ -47,8 +47,9 @@ const config: Config = {
         },
       },
       fontFamily: {
-        sans: ["var(--font-poppins)", "sans-serif"],
-        poppins: ["var(--font-poppins)", "sans-serif"],
+        display: ["var(--font-display)", "system-ui", "-apple-system", "sans-serif"],
+        body: ["var(--font-body)", "system-ui", "-apple-system", "sans-serif"],
+        sans: ["var(--font-body)", "system-ui", "-apple-system", "sans-serif"],
       },
       borderRadius: {
         "input": "12px",

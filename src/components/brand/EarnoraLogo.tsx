@@ -55,7 +55,7 @@ export const EarnoraLogo: React.FC<EarnoraLogoProps> = ({
 
       <div className={`flex flex-col ${layout === "vertical" ? "items-center" : "leading-none"}`}>
         <div className="flex items-center">
-          <span className={`font-bold tracking-tight font-sans ${textColor} ${textSizes[size]}`}>
+          <span className={`font-extrabold tracking-tight font-display ${textColor} ${textSizes[size]}`}>
             Earn<span className={accentColor}>Ora</span>
           </span>
           <span className={`ml-1 w-1.5 h-1.5 rounded-full ${isLight ? "bg-white" : "bg-[#1E6FD9]"} self-baseline mt-1`} />

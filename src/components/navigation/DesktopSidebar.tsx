@@ -120,7 +120,7 @@ export const DesktopSidebar: React.FC = () => {
           <EarnoraSymbol size={40} />
           {isExpanded && (
             <div className="flex flex-col leading-none animate-in fade-in duration-200">
-              <span className="font-bold text-xl tracking-tight text-[#0F1F3D]">
+              <span className="font-extrabold text-xl tracking-tight text-[#0F1F3D] font-display">
                 Earn<span className="text-[#1E6FD9]">Ora</span>
               </span>
               <span className="text-[9px] uppercase tracking-wider font-semibold text-[#6B7A99] mt-0.5">

@@ -3,6 +3,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { AuthProvider } from "@/components/providers/AuthProvider";
 import { AppShell } from "@/components/layout/AppShell";
+import { fontBody, fontDisplay } from "@/lib/fonts";
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"),
@@ -80,16 +81,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
-          rel="stylesheet"
-        />
-      </head>
-      <body className="antialiased min-h-screen bg-[#F8FAFC] text-[#0F1F3D] font-sans selection:bg-[#1E6FD9] selection:text-white">
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={`${fontBody.variable} ${fontDisplay.variable}`}
+    >
+      <body className="antialiased min-h-screen bg-[var(--bg-page)] text-[var(--text-primary)] font-body selection:bg-[#1E6FD9] selection:text-white">
         <ThemeProvider>
           <AuthProvider>
             <AppShell>{children}</AppShell>

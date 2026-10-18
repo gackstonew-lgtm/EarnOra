@@ -108,7 +108,7 @@ EarnOra/
 │   │   ├── privacy/         # Kenya Data Protection Act 2019 compliance
 │   │   ├── terms/           # Transparent earning model & anti-fraud terms
 │   │   ├── wallet/          # Available/pending balances & Daraja B2C withdrawals
-│   │   ├── globals.css      # Poppins typography, CSS variables, Tailwind tokens
+│   │   ├── globals.css      # Aveton display typography, Inter body, CSS variables, Tailwind tokens
 │   │   ├── layout.tsx       # Root layout with header, bottom nav, PWA banner
 │   │   └── page.tsx         # Responsive home screen with 10 Earning Cards
 │   ├── components/
