@@ -100,27 +100,27 @@ export const LandingNavbar: React.FC = () => {
 
       {/* Mobile Menu Dropdown */}
       {mobileMenuOpen && (
-        <div className="md:hidden bg-white border-b border-blue-100/80 px-4 pt-3 pb-6 space-y-3 shadow-xl animate-in slide-in-from-top duration-200">
+        <div className="md:hidden bg-[var(--bg-primary)] border-b border-[var(--border-subtle)] px-4 pt-3 pb-6 space-y-3 shadow-xl animate-in slide-in-from-top duration-200">
           <nav className="flex flex-col space-y-2">
             {navLinks.map((link) => (
               <a
                 key={link.label}
                 href={link.href}
                 onClick={() => setMobileMenuOpen(false)}
-                className="px-3 py-2 text-sm font-semibold text-[#0F1F3D] hover:bg-[#EEF3FF] rounded-[10px] transition-colors"
+                className="px-3 py-2 text-sm font-semibold text-[var(--text-primary)] hover:bg-[var(--bg-input)] rounded-[10px] transition-colors"
               >
                 {link.label}
               </a>
             ))}
           </nav>
-          <div className="pt-3 border-t border-slate-100 flex flex-col gap-2">
+          <div className="pt-3 border-t border-[var(--border-subtle)] flex flex-col gap-2">
             {isAuthenticated ? (
               <Link
                 href="/dashboard"
                 onClick={() => setMobileMenuOpen(false)}
                 className="w-full py-3 rounded-[12px] bg-gradient-to-r from-[#1E6FD9] to-[#0B4FB3] text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-blue-btn text-center"
               >
-                <span>Go to App</span>
+                <span>Go to Dashboard</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </Link>
             ) : (
@@ -128,7 +128,7 @@ export const LandingNavbar: React.FC = () => {
                 <Link
                   href="/auth/login"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="w-full py-2.5 rounded-[12px] text-xs font-bold text-[#0F1F3D] bg-[#EEF3FF] text-center"
+                  className="w-full py-2.5 rounded-[12px] text-xs font-bold text-[var(--text-primary)] bg-[var(--bg-input)] text-center"
                 >
                   Log In
                 </Link>

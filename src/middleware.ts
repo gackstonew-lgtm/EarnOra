@@ -38,9 +38,9 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(loginUrl);
   }
 
-  // If authenticated user visits auth login/register or landing page, redirect to dashboard:
+  // If authenticated user visits auth login/register, redirect to dashboard:
   if (isAuthenticated) {
-    if (pathname === "/" || pathname === "/auth/login" || pathname === "/auth/register") {
+    if (pathname === "/auth/login" || pathname === "/auth/register") {
       return NextResponse.redirect(new URL("/dashboard", request.url));
     }
   }

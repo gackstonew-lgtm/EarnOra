@@ -146,7 +146,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setUser(null);
     setStoredUser(null);
     if (typeof window !== "undefined") {
-      window.location.replace("/auth/login");
+      window.location.replace("/");
     }
   };
 
