@@ -34,35 +34,38 @@ export const EarnoraSymbol: React.FC<EarnoraSymbolProps> = ({
             <stop offset="0%" stopColor="#1E6FD9" />
             <stop offset="100%" stopColor="#0B4FB3" />
           </linearGradient>
-          <linearGradient id="earnora-star-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#38BDF8" />
-            <stop offset="100%" stopColor="#1E6FD9" />
+          <linearGradient id="earnora-green-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#16A34A" />
+            <stop offset="100%" stopColor="#00D26A" />
           </linearGradient>
         </defs>
 
-        {/* Outer Coin / Dialogue Ring */}
+        {/* Dual interlocking brand mark: Value circle + growth circle */}
         <circle
-          cx="24"
+          cx="20"
           cy="24"
-          r="20"
+          r="14"
           stroke="url(#earnora-blue-grad)"
           strokeWidth="3.5"
           className="drop-shadow-xs"
         />
 
-        {/* Dynamic verified opinion & earning checkmark / star motif */}
-        <path
-          d="M 16 24.5 L 21.5 30 L 32 18"
-          stroke="url(#earnora-blue-grad)"
-          strokeWidth="4"
-          strokeLinecap="round"
-          strokeLinejoin="round"
+        <circle
+          cx="28"
+          cy="24"
+          r="13"
+          stroke="url(#earnora-green-grad)"
+          strokeWidth="3.5"
+          className="drop-shadow-xs"
         />
 
-        {/* Mini Accent Sparkle / Coin Star */}
+        {/* Crisp checkmark verifying reviews */}
         <path
-          d="M 32 11 L 33 13.5 L 35.5 14.5 L 33 15.5 L 32 18 L 31 15.5 L 28.5 14.5 L 31 13.5 Z"
-          fill="url(#earnora-star-grad)"
+          d="M 18 24.5 L 23 29.5 L 32 17"
+          stroke="#16A34A"
+          strokeWidth="3"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         />
       </svg>
     </div>

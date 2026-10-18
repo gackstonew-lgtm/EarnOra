@@ -26,8 +26,8 @@ export const metadata: Metadata = {
   ],
   manifest: "/manifest.json",
   icons: {
-    icon: "/assets/earnora-logo-dark.jpg",
-    apple: "/assets/earnora-logo-dark.jpg",
+    icon: "/assets/logo.png",
+    apple: "/assets/logo.png",
   },
   openGraph: {
     type: "website",
