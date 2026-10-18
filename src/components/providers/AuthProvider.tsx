@@ -142,6 +142,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const logout = () => {
     setUser(null);
     setStoredUser(null);
+    if (typeof window !== "undefined") {
+      window.location.replace("/auth/login");
+    }
   };
 
   const refreshUser = () => {

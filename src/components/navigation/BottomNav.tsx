@@ -13,7 +13,7 @@ export const BottomNav: React.FC = () => {
       label: "Home",
       href: "/dashboard",
       icon: Home,
-      isActive: pathname === "/dashboard" || pathname === "/",
+      isActive: pathname === "/dashboard",
     },
     {
       label: "Earn",

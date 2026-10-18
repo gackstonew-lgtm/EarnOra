@@ -18,7 +18,7 @@ const STORAGE_KEY_OTP = "earnora_active_otp";
 const STORAGE_KEY_USERS_DB = "earnora_registered_users";
 
 // Fallback in-memory storage for SSR
-let memoryUser: UserProfile | null = INITIAL_USER;
+let memoryUser: UserProfile | null = null;
 let memoryOtp: OtpRecord | null = null;
 const memoryUsersDb: Map<string, { profile: UserProfile; passwordHash: string }> = new Map([
   [
@@ -44,13 +44,11 @@ export function getStoredUser(): UserProfile | null {
   try {
     const raw = localStorage.getItem(STORAGE_KEY_USER);
     if (!raw) {
-      // Seed with default demo user if empty
-      localStorage.setItem(STORAGE_KEY_USER, JSON.stringify(INITIAL_USER));
-      return INITIAL_USER;
+      return null;
     }
     return JSON.parse(raw);
   } catch (err) {
-    return memoryUser;
+    return null;
   }
 }
 
@@ -59,8 +57,12 @@ export function setStoredUser(user: UserProfile | null): void {
   if (typeof window !== "undefined") {
     if (user) {
       localStorage.setItem(STORAGE_KEY_USER, JSON.stringify(user));
+      // Set earnora_session cookie for Next.js middleware protection
+      document.cookie = "earnora_session=1; path=/; max-age=2592000; SameSite=Lax";
     } else {
       localStorage.removeItem(STORAGE_KEY_USER);
+      // Remove cookie on logout
+      document.cookie = "earnora_session=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; SameSite=Lax";
     }
   }
 }

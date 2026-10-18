@@ -2,7 +2,7 @@
   "name": "Earnora — Review. Earn. Grow.",
   "short_name": "Earnora",
   "description": "Turn your honest opinions into real M-Pesa earnings. Review verified hotels, apps, local services, and fintechs.",
-  "start_url": "/",
+  "start_url": "/dashboard",
   "display": "standalone",
   "background_color": "#070C18",
   "theme_color": "#070C18",

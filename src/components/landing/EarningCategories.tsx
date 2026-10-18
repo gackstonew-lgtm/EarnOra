@@ -10,7 +10,9 @@ import {
   Building2,
   ClipboardCheck,
   PackageCheck,
-  Mic,
+  PlayCircle,
+  Flame,
+  Users,
   ArrowRight,
   Sparkles,
 } from "lucide-react";
@@ -81,13 +83,31 @@ export const EarningCategories: React.FC = () => {
       href: "/earn?category=product_testing",
     },
     {
-      id: "voice",
-      title: "Voice Reviews",
-      maxBounty: "Up to KES 400",
-      tag: "Audio Bounties",
-      description: "Record 60-second authentic audio impressions in Sheng, Swahili, or English with background nuance.",
-      icon: Mic,
+      id: "watch_answer",
+      title: "Watch & Answer",
+      maxBounty: "Up to KES 100",
+      tag: "Quick Wins",
+      description: "Watch brief sponsored video demos or ads and answer 3 quick verification questions.",
+      icon: PlayCircle,
       href: "/earn?category=watch_answer",
+    },
+    {
+      id: "daily_checkin",
+      title: "Daily Check-in",
+      maxBounty: "Streak Multipliers",
+      tag: "Multipliers",
+      description: "Claim your daily bonus and maintain your active streak for multiplier rewards.",
+      icon: Flame,
+      href: "/activity#daily-checkin",
+    },
+    {
+      id: "refer_earn",
+      title: "Refer & Earn",
+      maxBounty: "KES 150 / Friend",
+      tag: "One-Level Bonus",
+      description: "Share your code. Earn KES 150 when your referred friend completes their first verified review.",
+      icon: Users,
+      href: "/activity#referrals",
     },
   ];
 
@@ -97,7 +117,7 @@ export const EarningCategories: React.FC = () => {
         <div className="text-center max-w-2xl mx-auto space-y-3 mb-14">
           <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#EAF3FF] border border-blue-200/70 text-[#1E6FD9] text-xs font-bold uppercase tracking-wider">
             <Sparkles className="w-3.5 h-3.5" />
-            <span>8 Active Earning Tracks</span>
+            <span>10 Active Earning Tracks</span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-[#0F1F3D] tracking-tight">
             Ways to Earn on EarnOra

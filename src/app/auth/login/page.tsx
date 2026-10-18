@@ -1,15 +1,16 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, Suspense } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Eye, EyeOff, User, Lock, AlertCircle, ArrowRight } from "lucide-react";
 import { useAuth } from "@/components/providers/AuthProvider";
 import { AuthLayout } from "@/components/layout/AuthLayout";
 import { Button, SocialSignInRow } from "@/components/ui";
 
-export default function LoginPage() {
+function LoginForm() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const { login } = useAuth();
 
   const [identifier, setIdentifier] = useState("");
@@ -33,7 +34,10 @@ export default function LoginPage() {
     try {
       const res = await login(identifier, password);
       if (res.success) {
-        router.push("/dashboard");
+        const nextParam = searchParams.get("next");
+        // Validate internal redirect only
+        const target = nextParam && nextParam.startsWith("/") && !nextParam.startsWith("//") ? nextParam : "/dashboard";
+        router.push(target);
       } else {
         setErrorMsg(res.error || "Invalid credentials. Please check and try again.");
       }
@@ -157,5 +161,13 @@ export default function LoginPage() {
         </p>
       </div>
     </AuthLayout>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center text-xs text-[#6B7A99]">Loading...</div>}>
+      <LoginForm />
+    </Suspense>
   );
 }
