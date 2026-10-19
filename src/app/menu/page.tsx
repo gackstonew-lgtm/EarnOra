@@ -12,13 +12,18 @@ import {
   ChevronRight,
   Wallet,
   Settings,
+  Download,
+  Headphones,
 } from "lucide-react";
 import { useAuth } from "@/components/providers/AuthProvider";
+import { useInstall } from "@/components/providers/InstallProvider";
+import { openSupportChat } from "@/components/support/SupportChatModal";
 import { isAdsEnabled } from "@/lib/ads/config";
 import { UserRole } from "@/lib/types";
 
 export default function MenuPage() {
   const { user, logout, isAuthenticated, updateProfile } = useAuth();
+  const { canInstall, isInstalled, promptInstall } = useInstall();
 
   return (
     <div className="space-y-6">
@@ -166,6 +171,52 @@ export default function MenuPage() {
           </div>
           <ChevronRight className="w-4 h-4 text-[#6B7A99]" />
         </Link>
+
+        {/* One-Tap Install App Button (shown when installable and not already installed) */}
+        {canInstall && !isInstalled && (
+          <button
+            type="button"
+            onClick={promptInstall}
+            className="w-full flex items-center justify-between p-3.5 rounded-[12px] hover:bg-[#EEF3FF] transition-colors text-left cursor-pointer"
+          >
+            <div className="flex items-center gap-3">
+              <div className="w-9 h-9 rounded-[10px] bg-emerald-50 text-[#16A34A] flex items-center justify-center">
+                <Download className="w-4 h-4" />
+              </div>
+              <div>
+                <p className="text-xs font-bold text-[#0F1F3D]">
+                  Install Earnora App
+                </p>
+                <p className="text-xs text-[#475569]">
+                  One-tap install to your home screen for instant access
+                </p>
+              </div>
+            </div>
+            <ChevronRight className="w-4 h-4 text-[#6B7A99]" />
+          </button>
+        )}
+
+        {/* AI Support Assistant Trigger */}
+        <button
+          type="button"
+          onClick={openSupportChat}
+          className="w-full flex items-center justify-between p-3.5 rounded-[12px] hover:bg-[#EEF3FF] transition-colors text-left cursor-pointer"
+        >
+          <div className="flex items-center gap-3">
+            <div className="w-9 h-9 rounded-[10px] bg-[#EEF3FF] text-[#1E6FD9] flex items-center justify-center">
+              <Headphones className="w-4 h-4" />
+            </div>
+            <div>
+              <p className="text-xs font-bold text-[#0F1F3D]">
+                Need Help? Support Assistant
+              </p>
+              <p className="text-xs text-[#475569]">
+                Instant help with M-Pesa payouts, tasks, points, and video ads
+              </p>
+            </div>
+          </div>
+          <ChevronRight className="w-4 h-4 text-[#6B7A99]" />
+        </button>
       </div>
 
       {/* Navigation Group 2: Compliance & Legal */}

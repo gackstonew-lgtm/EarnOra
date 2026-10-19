@@ -76,7 +76,7 @@ export default function DashboardPage() {
       .then((res) => (res.ok ? res.json() : null))
       .then((data) => {
         if (data) {
-          setAdsWatchedToday(data.watchedTodayCount ?? 0);
+          setAdsWatchedToday(data.watchedToday ?? data.watchedTodayCount ?? 0);
           setAdsDailyLimit(data.dailyLimit ?? 10);
         }
       })
@@ -372,10 +372,10 @@ export default function DashboardPage() {
                     <span className="font-bold text-xs sm:text-sm text-[var(--text-primary)] leading-tight truncate w-full">
                       {cat.name}
                     </span>
-                    <span className="text-[10px] text-[var(--text-muted)] mt-0.5 truncate w-full">
+                    <span className="text-xs text-[var(--text-secondary)] mt-0.5 truncate w-full">
                       {cat.subtext}
                     </span>
-                    <span className="text-[10px] font-bold text-[var(--brand-blue)] mt-2 group-hover:underline flex items-center gap-0.5">
+                    <span className="text-xs font-bold text-[var(--brand-blue)] mt-2 group-hover:underline flex items-center gap-0.5">
                       Start Earning →
                     </span>
                   </Link>
@@ -405,30 +405,30 @@ export default function DashboardPage() {
                   <div className="space-y-2">
                     {/* Category Tag */}
                     <div className="flex items-center justify-between">
-                      <span className="text-[10px] font-bold uppercase tracking-wider text-[var(--brand-blue)] bg-[var(--brand-blue)]/10 px-2 py-0.5 rounded-md border border-[var(--brand-blue)]/20">
+                      <span className="text-xs font-bold uppercase tracking-wider bg-blue-100 text-blue-900 dark:bg-blue-950/90 dark:text-blue-200 px-2.5 py-1 rounded-md border border-blue-500/40 whitespace-nowrap">
                         {task.categoryTag}
                       </span>
                     </div>
 
                     {/* Task Title & Description */}
-                    <h3 className="font-bold text-sm sm:text-base text-[var(--text-primary)] font-display leading-snug">
+                    <h3 className="font-bold text-base text-[var(--text-primary)] font-display leading-snug">
                       {task.title}
                     </h3>
-                    <p className="text-xs text-[var(--text-secondary)] line-clamp-2 leading-relaxed">
+                    <p className="text-sm text-[var(--text-secondary)] line-clamp-2 leading-relaxed">
                       {task.description}
                     </p>
                   </div>
 
                   {/* Reward & Action */}
-                  <div className="mt-4 pt-3 border-t border-[var(--border-subtle)] flex items-center justify-between">
-                    <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[var(--accent-green)]/15 text-[var(--accent-green)] border border-[var(--accent-green)]/30 text-xs font-bold numeral-bold">
-                      <Wallet className="w-3.5 h-3.5" />
+                  <div className="mt-4 pt-3 border-t border-[var(--border-subtle)] flex items-center justify-between gap-2">
+                    <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-100 text-emerald-900 dark:bg-emerald-950/90 dark:text-emerald-200 border border-emerald-500/40 text-xs sm:text-sm font-bold numeral-bold whitespace-nowrap">
+                      <Wallet className="w-3.5 h-3.5 shrink-0" />
                       <span>KES {task.rewardKes}</span>
                     </div>
 
                     <Link
                       href={`/earn/submit?task=${task.id}`}
-                      className="w-9 h-9 rounded-full bg-[var(--bg-card-elevated)] border border-[var(--border-subtle)] text-[var(--brand-blue)] hover:bg-[var(--brand-blue)] hover:text-white flex items-center justify-center transition-colors cursor-pointer"
+                      className="w-11 h-11 rounded-full bg-[var(--bg-card-elevated)] border border-[var(--border-subtle)] text-[var(--brand-blue)] hover:bg-[var(--brand-blue)] hover:text-white flex items-center justify-center transition-colors cursor-pointer shrink-0"
                       title="Start Task"
                       aria-label={`Start task ${task.title}`}
                     >

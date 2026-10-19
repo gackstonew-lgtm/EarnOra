@@ -16,10 +16,14 @@ import {
   Sun,
   Moon,
   Monitor,
+  Headphones,
+  Download,
 } from "lucide-react";
 import { EarnoraLogo } from "../brand/EarnoraLogo";
 import { useAuth } from "../providers/AuthProvider";
 import { useTheme, Theme } from "../providers/ThemeProvider";
+import { useInstall } from "../providers/InstallProvider";
+import { openSupportChat } from "../support/SupportChatModal";
 
 interface NotificationItem {
   id: string;
@@ -34,6 +38,7 @@ export const AppHeader: React.FC = () => {
   const router = useRouter();
   const { user, logout, isAuthenticated } = useAuth();
   const { theme, setTheme } = useTheme();
+  const { canInstall, isInstalled, promptInstall } = useInstall();
   const [showNotifications, setShowNotifications] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [headerSearch, setHeaderSearch] = useState("");
@@ -132,7 +137,21 @@ export const AppHeader: React.FC = () => {
         </form>
 
         {/* Right Action Controls */}
-        <div className="flex items-center gap-3 shrink-0">
+        <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+          {/* Mobile/Header Support Trigger (replaces floating bottom-right button so it never overlaps cards or bottom nav) */}
+          <button
+            type="button"
+            onClick={openSupportChat}
+            aria-label="Need Help? Contact Support"
+            title="Support Assistant"
+            className="min-w-[44px] min-h-[44px] px-3 rounded-full flex items-center justify-center gap-1.5 bg-[var(--bg-card-elevated)] text-[var(--text-primary)] hover:bg-[var(--bg-card)] border border-[var(--border-subtle)] transition-colors cursor-pointer"
+          >
+            <Headphones className="w-4 h-4 text-[var(--brand-blue)] shrink-0" />
+            <span className="text-xs font-bold text-[var(--text-primary)] hidden sm:inline">
+              Support
+            </span>
+          </button>
+
           {/* Notifications Bell */}
           <div className="relative" ref={notifRef}>
             <button
@@ -141,11 +160,11 @@ export const AppHeader: React.FC = () => {
                 setShowUserMenu(false);
               }}
               aria-label="View notifications"
-              className="relative min-w-[44px] min-h-[44px] w-10 h-10 rounded-full flex items-center justify-center bg-[var(--bg-card-elevated)] text-[var(--text-primary)] hover:bg-[var(--bg-card)] border border-[var(--border-subtle)] transition-colors cursor-pointer"
+              className="relative min-w-[44px] min-h-[44px] w-11 h-11 rounded-full flex items-center justify-center bg-[var(--bg-card-elevated)] text-[var(--text-primary)] hover:bg-[var(--bg-card)] border border-[var(--border-subtle)] transition-colors cursor-pointer"
             >
               <Bell className="w-4.5 h-4.5 text-[var(--text-secondary)]" />
               {unreadCount > 0 && (
-                <span className="absolute top-1 right-1 w-2.5 h-2.5 bg-[var(--accent-red)] rounded-full ring-2 ring-[var(--bg-sidebar)]" />
+                <span className="absolute top-1.5 right-1.5 w-2.5 h-2.5 bg-[var(--accent-red)] rounded-full ring-2 ring-[var(--bg-sidebar)]" />
               )}
             </button>
 
@@ -158,7 +177,7 @@ export const AppHeader: React.FC = () => {
                       Notifications
                     </span>
                     {unreadCount > 0 && (
-                      <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-[var(--brand-blue)]/15 text-[var(--brand-blue)]">
+                      <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-blue-100 text-blue-900 dark:bg-blue-950 dark:text-blue-200">
                         {unreadCount} new
                       </span>
                     )}
@@ -188,7 +207,7 @@ export const AppHeader: React.FC = () => {
                         <p className="text-xs font-bold text-[var(--text-primary)]">
                           {notif.title}
                         </p>
-                        <span className="text-[10px] text-[var(--text-muted)] shrink-0">
+                        <span className="text-xs text-[var(--text-muted)] shrink-0">
                           {notif.timestamp}
                         </span>
                       </div>
@@ -220,7 +239,7 @@ export const AppHeader: React.FC = () => {
                   setShowUserMenu(!showUserMenu);
                   setShowNotifications(false);
                 }}
-                className="flex items-center gap-2.5 p-1 sm:pr-3 rounded-full bg-[var(--bg-card-elevated)] border border-[var(--border-subtle)] hover:bg-[var(--bg-card)] transition-all text-left cursor-pointer"
+                className="min-h-[44px] flex items-center gap-2.5 p-1.5 sm:pr-3 rounded-full bg-[var(--bg-card-elevated)] border border-[var(--border-subtle)] hover:bg-[var(--bg-card)] transition-all text-left cursor-pointer"
               >
                 <div className="w-8 h-8 rounded-full bg-[var(--brand-blue)] text-white font-bold text-xs flex items-center justify-center shrink-0 shadow-xs">
                   {getInitials(user.username)}
@@ -233,7 +252,7 @@ export const AppHeader: React.FC = () => {
             ) : (
               <Link
                 href="/auth/login"
-                className="px-4 py-2 rounded-[12px] text-xs font-bold bg-[var(--brand-blue)] text-white hover:opacity-90 transition-all"
+                className="min-h-[44px] inline-flex items-center px-4 py-2 rounded-[12px] text-xs font-bold bg-[var(--brand-blue)] text-white hover:opacity-90 transition-all"
               >
                 Sign In
               </Link>
@@ -243,15 +262,15 @@ export const AppHeader: React.FC = () => {
             {showUserMenu && user && (
               <div className="absolute right-0 mt-2 w-72 rounded-[18px] bg-[var(--bg-card)] border border-[var(--border-subtle)] shadow-xl p-3 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
                 <div className="p-3 bg-[var(--bg-card-elevated)] rounded-[14px] mb-2 border border-[var(--border-subtle)]">
-                  <p className="text-xs font-bold text-[var(--text-primary)] truncate">
+                  <p className="text-sm font-bold text-[var(--text-primary)] truncate">
                     {user.username || "Gackstone Wafula"}
                   </p>
-                  <p className="text-[11px] text-[var(--text-muted)] mt-0.5 truncate">
+                  <p className="text-xs text-[var(--text-secondary)] mt-0.5 truncate">
                     {user.phoneNumber}
                   </p>
                   <div className="flex items-center gap-1.5 mt-2">
                     <span className="w-2 h-2 rounded-full bg-[var(--accent-green)]" />
-                    <span className="text-[10px] font-bold text-[var(--accent-green)]">
+                    <span className="text-xs font-bold text-[var(--accent-green)]">
                       M-Pesa Verified
                     </span>
                   </div>
@@ -261,10 +280,10 @@ export const AppHeader: React.FC = () => {
                   <Link
                     href="/wallet"
                     onClick={() => setShowUserMenu(false)}
-                    className="flex items-center gap-2.5 px-3 py-2 rounded-[10px] text-xs font-medium text-[var(--text-primary)] hover:bg-[var(--bg-card-elevated)] transition-colors"
+                    className="min-h-[44px] flex items-center gap-2.5 px-3 py-2 rounded-[10px] text-xs font-semibold text-[var(--text-primary)] hover:bg-[var(--bg-card-elevated)] transition-colors"
                   >
                     <Wallet className="w-4 h-4 text-[var(--accent-green)]" />
-                    <span>Wallet & Payouts</span>
+                    <span>Wallet &amp; Payouts</span>
                     <span className="ml-auto font-bold text-[var(--accent-green)] text-xs numeral-bold">
                       KES {(user.availableBalance ?? 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                     </span>
@@ -273,11 +292,26 @@ export const AppHeader: React.FC = () => {
                   <Link
                     href="/settings"
                     onClick={() => setShowUserMenu(false)}
-                    className="flex items-center gap-2.5 px-3 py-2 rounded-[10px] text-xs font-medium text-[var(--text-primary)] hover:bg-[var(--bg-card-elevated)] transition-colors"
+                    className="min-h-[44px] flex items-center gap-2.5 px-3 py-2 rounded-[10px] text-xs font-semibold text-[var(--text-primary)] hover:bg-[var(--bg-card-elevated)] transition-colors"
                   >
                     <Settings className="w-4 h-4 text-[var(--text-muted)]" />
                     <span>Account Settings</span>
                   </Link>
+
+                  {/* One-Tap Install App Option (shown only when installable and not already installed) */}
+                  {canInstall && !isInstalled && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setShowUserMenu(false);
+                        promptInstall();
+                      }}
+                      className="w-full min-h-[44px] flex items-center gap-2.5 px-3 py-2 rounded-[10px] text-xs font-bold text-[var(--brand-blue)] hover:bg-[var(--bg-card-elevated)] transition-colors cursor-pointer text-left"
+                    >
+                      <Download className="w-4 h-4 shrink-0" />
+                      <span>Install App</span>
+                    </button>
+                  )}
 
                   {/* Theme Row (placed between Account Settings and Sign Out) */}
                   <div
@@ -285,10 +319,10 @@ export const AppHeader: React.FC = () => {
                     className="px-3 py-2 rounded-[10px] text-xs font-medium text-[var(--text-primary)]"
                   >
                     <div className="flex items-center justify-between gap-2 mb-1.5">
-                      <span className="text-xs font-medium text-[var(--text-primary)]">
+                      <span className="text-xs font-semibold text-[var(--text-primary)]">
                         Theme
                       </span>
-                      <span className="text-[10px] font-bold uppercase tracking-wider text-[var(--text-muted)]">
+                      <span className="text-xs font-bold uppercase tracking-wider text-[var(--text-secondary)]">
                         {theme}
                       </span>
                     </div>
@@ -315,7 +349,7 @@ export const AppHeader: React.FC = () => {
                               setTheme(opt.id);
                             }}
                             aria-pressed={active}
-                            className={`min-h-[34px] px-2 py-1 rounded-[8px] flex items-center justify-center gap-1 text-[11px] font-bold transition-all cursor-pointer ${
+                            className={`min-h-[38px] px-2 py-1.5 rounded-[8px] flex items-center justify-center gap-1 text-xs font-bold transition-all cursor-pointer ${
                               active
                                 ? "bg-[var(--brand-blue)] text-white shadow-xs"
                                 : "text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-card)]"
@@ -334,7 +368,7 @@ export const AppHeader: React.FC = () => {
                       setShowUserMenu(false);
                       logout();
                     }}
-                    className="w-full flex items-center gap-2.5 px-3 py-2 rounded-[10px] text-xs font-medium text-[var(--accent-red)] hover:bg-[var(--accent-red)]/10 transition-colors cursor-pointer text-left"
+                    className="w-full min-h-[44px] flex items-center gap-2.5 px-3 py-2 rounded-[10px] text-xs font-semibold text-[var(--accent-red)] hover:bg-[var(--accent-red)]/10 transition-colors cursor-pointer text-left"
                   >
                     <LogOut className="w-4 h-4" />
                     <span>Sign Out</span>

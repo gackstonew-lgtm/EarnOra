@@ -93,9 +93,72 @@ export default function CreateCampaignPage() {
   const [requireScreenshot, setRequireScreenshot] = useState(false);
   const [requireReceipt, setRequireReceipt] = useState(false);
 
+  // Optional Video Ad attachment (for /earn/ads)
+  const [includeVideoAd, setIncludeVideoAd] = useState(false);
+  const [videoType, setVideoType] = useState<"hosted" | "embedded">("hosted");
+  const [videoUrl, setVideoUrl] = useState("/videos/earnora-promo-1.mp4");
+  const [thumbnailUrl, setThumbnailUrl] = useState("/videos/thumb-1.svg");
+  const [videoDurationSeconds, setVideoDurationSeconds] = useState(15);
+  const [videoFileName, setVideoFileName] = useState("");
+  const [ctaUrl, setCtaUrl] = useState("");
+  const [ownsVideoRights, setOwnsVideoRights] = useState(false);
+
   // Submission state
   const [errorMsg, setErrorMsg] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleVideoFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setErrorMsg("");
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const validTypes = ["video/mp4", "video/webm"];
+    if (!validTypes.includes(file.type)) {
+      setErrorMsg("Invalid video format. Only MP4 and WebM files are allowed.");
+      return;
+    }
+
+    const maxBytes = 50 * 1024 * 1024; // 50 MB
+    if (file.size > maxBytes) {
+      setErrorMsg("Video file exceeds the 50MB maximum size limit.");
+      return;
+    }
+
+    const objectUrl = URL.createObjectURL(file);
+    const tempVideo = document.createElement("video");
+    tempVideo.preload = "metadata";
+    tempVideo.muted = true;
+    tempVideo.playsInline = true;
+    tempVideo.src = objectUrl;
+
+    tempVideo.onloadedmetadata = () => {
+      const dur = Math.ceil(tempVideo.duration || 15);
+      if (dur > 60) {
+        setErrorMsg("Video duration cannot exceed 60 seconds.");
+        URL.revokeObjectURL(objectUrl);
+        return;
+      }
+      setVideoDurationSeconds(Math.max(5, Math.min(60, dur)));
+      setVideoFileName(file.name);
+      setVideoUrl(objectUrl);
+      tempVideo.currentTime = Math.min(1, dur / 2);
+    };
+
+    tempVideo.onseeked = () => {
+      try {
+        const canvas = document.createElement("canvas");
+        canvas.width = 480;
+        canvas.height = 270;
+        const ctx = canvas.getContext("2d");
+        if (ctx) {
+          ctx.drawImage(tempVideo, 0, 0, canvas.width, canvas.height);
+          setThumbnailUrl(canvas.toDataURL("image/jpeg", 0.78));
+        }
+      } catch {
+        // Keep default SVG poster if canvas capture is restricted
+      }
+    };
+  };
 
   useEffect(() => {
     const state = getAdsState();
@@ -137,6 +200,22 @@ export default function CreateCampaignPage() {
       if (!description.trim() || description.trim().length < 15) {
         setErrorMsg("Please provide a clear description (at least 15 characters).");
         return false;
+      }
+      if (includeVideoAd) {
+        if (!videoUrl.trim()) {
+          setErrorMsg("Please upload an MP4/WebM video or provide a valid video URL.");
+          return false;
+        }
+        if (videoDurationSeconds > 60) {
+          setErrorMsg("Video ad duration cannot exceed 60 seconds.");
+          return false;
+        }
+        if (!ownsVideoRights) {
+          setErrorMsg(
+            "You must confirm that your business owns all copyright and distribution rights to this video."
+          );
+          return false;
+        }
       }
     }
     if (step === 2) {
@@ -197,6 +276,31 @@ export default function CreateCampaignPage() {
         startDate: new Date().toISOString(),
         endDate: endDate ? new Date(endDate).toISOString() : undefined,
       });
+
+      if (includeVideoAd) {
+        await fetch("/api/ads/watch", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            action: "create_ad",
+            title,
+            advertiserName: advertiser.businessName,
+            description,
+            category: getCampaignTypeTag(campaignType),
+            videoUrl,
+            videoType,
+            thumbnailUrl,
+            durationSeconds: videoDurationSeconds,
+            minWatchSeconds: Math.max(5, Math.min(30, videoDurationSeconds - 2)),
+            rewardKes: Math.max(5, Math.min(50, Math.round(rewardInt / 10))),
+            rewardPoints: 2,
+            ctaLabel: "Visit Advertiser",
+            ctaUrl: ctaUrl.trim() || advertiser.website || "/earn",
+            ownsVideoRights,
+            autoApprove: false,
+          }),
+        }).catch(() => null);
+      }
 
       router.push("/advertiser/campaigns?created=1");
     } catch (err) {
@@ -362,6 +466,134 @@ export default function CreateCampaignPage() {
                     className="w-full h-11 px-3 text-xs sm:text-sm rounded-[12px] bg-[var(--bg-card-elevated)] border border-[var(--border-subtle)] text-[var(--text-primary)] font-medium"
                   />
                 </div>
+              </div>
+
+              {/* Optional Video Ad Upload for /earn/ads */}
+              <div className="p-4 rounded-[14px] bg-[var(--bg-card-elevated)] border border-[var(--border-subtle)] space-y-4">
+                <label className="flex items-start gap-2.5 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={includeVideoAd}
+                    onChange={(e) => setIncludeVideoAd(e.target.checked)}
+                    className="mt-1 rounded accent-[var(--brand-blue)]"
+                  />
+                  <div>
+                    <span className="text-sm font-bold text-[var(--text-primary)] block">
+                      Include Sponsored Video Ad on &ldquo;Watch &amp; Earn&rdquo; (/earn/ads)
+                    </span>
+                    <span className="text-xs text-[var(--text-secondary)]">
+                      Upload a short promotional video (MP4/WebM, max 50MB, up to 60s) or link your owned YouTube/Vimeo video. Submitted videos enter pending-approval moderation.
+                    </span>
+                  </div>
+                </label>
+
+                {includeVideoAd && (
+                  <div className="space-y-3 pt-2 border-t border-[var(--border-subtle)]">
+                    <div className="flex flex-wrap gap-2">
+                      <button
+                        type="button"
+                        onClick={() => setVideoType("hosted")}
+                        className={`px-3.5 py-2 rounded-lg text-xs font-bold border transition-colors ${
+                          videoType === "hosted"
+                            ? "bg-[var(--brand-blue)] text-white border-[var(--brand-blue)]"
+                            : "bg-[var(--bg-card)] text-[var(--text-secondary)] border-[var(--border-subtle)]"
+                        }`}
+                      >
+                        Hosted Video (MP4 / WebM Upload)
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setVideoType("embedded");
+                          setVideoUrl("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
+                        }}
+                        className={`px-3.5 py-2 rounded-lg text-xs font-bold border transition-colors ${
+                          videoType === "embedded"
+                            ? "bg-[var(--brand-blue)] text-white border-[var(--brand-blue)]"
+                            : "bg-[var(--bg-card)] text-[var(--text-secondary)] border-[var(--border-subtle)]"
+                        }`}
+                      >
+                        Embedded Video (Owned YouTube / Vimeo)
+                      </button>
+                    </div>
+
+                    {videoType === "hosted" ? (
+                      <div className="space-y-2">
+                        <label className="block text-xs font-semibold text-[var(--text-primary)]">
+                          Upload Video File (MP4 or WebM, max 50MB, max 60 seconds)
+                        </label>
+                        <input
+                          type="file"
+                          accept="video/mp4,video/webm"
+                          onChange={handleVideoFileChange}
+                          className="w-full text-xs text-[var(--text-secondary)] file:mr-3 file:py-2 file:px-3.5 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-[var(--brand-blue)] file:text-white hover:file:opacity-90"
+                        />
+                        {videoFileName && (
+                          <p className="text-xs font-semibold text-emerald-700 dark:text-emerald-300">
+                            Selected: {videoFileName} ({videoDurationSeconds}s) — Thumbnail generated automatically
+                          </p>
+                        )}
+                      </div>
+                    ) : (
+                      <div className="space-y-2">
+                        <label className="block text-xs font-semibold text-[var(--text-primary)]">
+                          YouTube or Vimeo Video URL (Must be owned by your business)
+                        </label>
+                        <input
+                          type="url"
+                          value={videoUrl}
+                          onChange={(e) => setVideoUrl(e.target.value)}
+                          placeholder="https://www.youtube.com/watch?v=... or https://vimeo.com/..."
+                          className="w-full h-11 px-3.5 text-sm rounded-[12px] bg-[var(--bg-card)] border border-[var(--border-subtle)] text-[var(--text-primary)]"
+                        />
+                      </div>
+                    )}
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      <div>
+                        <label className="block text-xs font-semibold text-[var(--text-primary)] mb-1">
+                          Duration (Seconds, max 60s)
+                        </label>
+                        <input
+                          type="number"
+                          min={5}
+                          max={60}
+                          value={videoDurationSeconds}
+                          onChange={(e) =>
+                            setVideoDurationSeconds(
+                              Math.max(5, Math.min(60, Number(e.target.value) || 15))
+                            )
+                          }
+                          className="w-full h-11 px-3 text-sm rounded-[12px] bg-[var(--bg-card)] border border-[var(--border-subtle)] text-[var(--text-primary)]"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-xs font-semibold text-[var(--text-primary)] mb-1">
+                          Destination Website URL (Optional)
+                        </label>
+                        <input
+                          type="url"
+                          value={ctaUrl}
+                          onChange={(e) => setCtaUrl(e.target.value)}
+                          placeholder="https://yourbusiness.co.ke"
+                          className="w-full h-11 px-3 text-sm rounded-[12px] bg-[var(--bg-card)] border border-[var(--border-subtle)] text-[var(--text-primary)]"
+                        />
+                      </div>
+                    </div>
+
+                    <label className="flex items-start gap-2.5 p-3 rounded-lg bg-amber-100/70 dark:bg-amber-950/60 border border-amber-500/40 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={ownsVideoRights}
+                        onChange={(e) => setOwnsVideoRights(e.target.checked)}
+                        className="mt-1 rounded accent-[var(--brand-blue)]"
+                      />
+                      <span className="text-xs font-semibold text-amber-950 dark:text-amber-200 leading-relaxed">
+                        I confirm that our business owns full copyright and commercial distribution rights to this video, and that it contains no third-party copyrighted material.
+                      </span>
+                    </label>
+                  </div>
+                )}
               </div>
             </div>
 

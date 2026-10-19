@@ -3,22 +3,51 @@
   "short_name": "Earnora",
   "description": "Turn your honest opinions into real M-Pesa earnings. Review verified hotels, apps, local services, and fintechs.",
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
   "background_color": "#070C18",
-  "theme_color": "#070C18",
+  "theme_color": "#1E6FD9",
   "orientation": "portrait-primary",
   "icons": [
     {
-      "src": "/assets/logo.png",
+      "src": "/assets/icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
     },
     {
-      "src": "/assets/logo.png",
+      "src": "/assets/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/assets/icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/assets/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Earnora Mobile Dashboard"
+    },
+    {
+      "src": "/assets/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Earnora Desktop Dashboard"
     }
   ]
 }

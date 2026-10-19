@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450">
+  <defs>
+    <linearGradient id="bg3" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0F1F3D" />
+      <stop offset="50%" stop-color="#1E6FD9" />
+      <stop offset="100%" stop-color="#D97706" />
+    </linearGradient>
+  </defs>
+  <rect width="800" height="450" fill="url(#bg3)" />
+  <circle cx="670" cy="120" r="150" fill="#FFFFFF" opacity="0.1" />
+  <rect x="48" y="42" width="146" height="34" rx="17" fill="#FFFFFF" opacity="0.18" stroke="#FFFFFF" stroke-width="1.5" />
+  <text x="121" y="64" font-family="system-ui, sans-serif" font-size="13" font-weight="800" fill="#FFFFFF" text-anchor="middle" letter-spacing="1">SPONSORED AD</text>
+  <text x="48" y="155" font-family="system-ui, sans-serif" font-size="38" font-weight="800" fill="#FFFFFF">EarnOra Official Promo</text>
+  <text x="48" y="202" font-family="system-ui, sans-serif" font-size="22" font-weight="600" fill="#FDE68A">How Points, Tiers &amp; M-Pesa Payouts Work</text>
+  <text x="48" y="248" font-family="system-ui, sans-serif" font-size="16" font-weight="500" fill="#F8FAFC">Review. Earn. Grow. • Raise your daily withdrawal limits</text>
+  <circle cx="400" cy="340" r="40" fill="#D97706" stroke="#FFFFFF" stroke-width="3" />
+  <polygon points="392,324 392,356 418,340" fill="#FFFFFF" />
+</svg>

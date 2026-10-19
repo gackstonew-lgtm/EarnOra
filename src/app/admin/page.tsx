@@ -50,11 +50,30 @@ interface QueuedReview {
 type AdminTab =
   | "moderation"
   | "campaigns"
+  | "video_ads"
   | "advertisers"
   | "flagged"
   | "revenue"
   | "audits"
   | "settings";
+
+interface AdminVideoAdItem {
+  id: string;
+  title: string;
+  advertiserName: string;
+  description: string;
+  category: string;
+  videoUrl: string;
+  videoType: "hosted" | "embedded";
+  thumbnailUrl?: string;
+  durationSeconds: number;
+  minWatchSeconds: number;
+  rewardKes: number;
+  rewardPoints: number;
+  status: "draft" | "pending_approval" | "active" | "paused" | "completed" | "rejected";
+  isDemoData?: boolean;
+  ownsVideoRights?: boolean;
+}
 
 export default function AdminPage() {
   const [reviews, setReviews] = useState<QueuedReview[]>([
@@ -94,6 +113,7 @@ export default function AdminPage() {
 
   // Ads Portal Admin State
   const [campaigns, setCampaigns] = useState<SponsoredCampaign[]>([]);
+  const [videoAds, setVideoAds] = useState<AdminVideoAdItem[]>([]);
   const [advertisers, setAdvertisers] = useState<AdvertiserProfile[]>([]);
   const [submissions, setSubmissions] = useState<CampaignSubmission[]>([]);
   const [auditLogs, setAuditLogs] = useState<AuditLogEntry[]>([]);
@@ -114,6 +134,18 @@ export default function AdminPage() {
   const [minRewardInput, setMinRewardInput] = useState("50");
   const [minTasksInput, setMinTasksInput] = useState("5");
 
+  const loadVideoAds = async () => {
+    try {
+      const res = await fetch("/api/ads/watch?scope=admin", { cache: "no-store" });
+      if (res.ok) {
+        const json = await res.json();
+        setVideoAds(json.ads || []);
+      }
+    } catch {
+      // Ignore transient error
+    }
+  };
+
   const loadAdminData = () => {
     if (!isAdsEnabled()) return;
     const state = getAdsState();
@@ -126,6 +158,39 @@ export default function AdminPage() {
     setDailyLimitInput(String(state.settings.dailyUserSubmissionLimit));
     setMinRewardInput(String(state.settings.minRewardPerTaskKes));
     setMinTasksInput(String(state.settings.minCampaignTasks));
+    loadVideoAds();
+  };
+
+  const handleVideoAdStatus = async (adId: string, status: "active" | "rejected" | "paused") => {
+    try {
+      const res = await fetch("/api/ads/watch", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action: "update_status", adId, status }),
+      });
+      if (res.ok) {
+        setAdminFeedback(`Video ad ${adId} status updated to ${status.toUpperCase()}.`);
+        await loadVideoAds();
+      }
+    } catch {
+      // Ignore
+    }
+  };
+
+  const handleDeleteVideoAd = async (adId: string, title: string) => {
+    try {
+      const res = await fetch("/api/ads/watch", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action: "delete_ad", adId }),
+      });
+      if (res.ok) {
+        setAdminFeedback(`Deleted video ad "${title}".`);
+        await loadVideoAds();
+      }
+    } catch {
+      // Ignore
+    }
   };
 
   useEffect(() => {
@@ -293,6 +358,18 @@ export default function AdminPage() {
                 Campaign Approvals (
                 {campaigns.filter((c) => c.status === "pending_approval").length})
               </span>
+            </button>
+
+            <button
+              onClick={() => setActiveTab("video_ads")}
+              className={`px-3.5 py-2 rounded-[10px] whitespace-nowrap transition-colors cursor-pointer flex items-center gap-1.5 ${
+                activeTab === "video_ads"
+                  ? "bg-[var(--brand-blue)] text-white shadow-xs"
+                  : "text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-card-elevated)]"
+              }`}
+            >
+              <ShieldCheck className="w-3.5 h-3.5" />
+              <span>Video Ads ({videoAds.length})</span>
             </button>
 
             <button
@@ -864,6 +941,79 @@ export default function AdminPage() {
             </div>
           </form>
         </Card>
+      )}
+
+      {/* TAB 8: VIDEO ADS MODERATION & SAMPLE DEMO ADS MANAGEMENT */}
+      {activeTab === "video_ads" && (
+        <div className="space-y-4">
+          <div className="p-4 rounded-[14px] bg-amber-100/80 dark:bg-amber-950/70 border border-amber-500/40 text-xs sm:text-sm font-semibold text-amber-950 dark:text-amber-200 flex items-start gap-2.5">
+            <ShieldCheck className="w-5 h-5 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" />
+            <div>
+              <p className="font-bold">Copyright &amp; Video Rights Compliance Notice</p>
+              <p className="mt-0.5 leading-relaxed">
+                Advertisers must own full copyright and distribution rights to all videos they upload or embed (YouTube/Vimeo). Do not approve copyrighted third-party videos. Seeded sample ads below are marked as <strong>Demo Data</strong> and can be deleted with one tap.
+              </p>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 gap-4">
+            {videoAds.map((ad) => (
+              <Card key={ad.id} padding="md" className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div className="space-y-1.5">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className="px-2.5 py-0.5 rounded-md bg-blue-100 text-blue-900 dark:bg-blue-950 dark:text-blue-200 text-xs font-bold">
+                      {ad.videoType.toUpperCase()} ({ad.durationSeconds}s)
+                    </span>
+                    <span className="px-2.5 py-0.5 rounded-md bg-emerald-100 text-emerald-900 dark:bg-emerald-950 dark:text-emerald-200 text-xs font-bold">
+                      +KES {ad.rewardKes} / +{ad.rewardPoints} pts
+                    </span>
+                    <span className="px-2.5 py-0.5 rounded-md bg-slate-200 text-slate-900 dark:bg-slate-800 dark:text-slate-200 text-xs font-bold uppercase">
+                      {ad.status}
+                    </span>
+                    {ad.isDemoData && (
+                      <span className="px-2.5 py-0.5 rounded-md bg-purple-100 text-purple-900 dark:bg-purple-950 dark:text-purple-200 border border-purple-400/40 text-xs font-bold">
+                        Demo Sample Ad
+                      </span>
+                    )}
+                  </div>
+                  <h3 className="text-base font-bold text-[var(--text-primary)]">
+                    {ad.title} — <span className="text-sm font-semibold text-[var(--text-secondary)]">{ad.advertiserName}</span>
+                  </h3>
+                  <p className="text-xs text-[var(--text-secondary)]">{ad.description}</p>
+                  <p className="text-xs font-mono text-[var(--text-muted)]">Source: {ad.videoUrl}</p>
+                </div>
+
+                <div className="flex flex-wrap items-center gap-2 shrink-0">
+                  {ad.status !== "active" && (
+                    <Button
+                      size="sm"
+                      variant="primary"
+                      onClick={() => handleVideoAdStatus(ad.id, "active")}
+                    >
+                      Approve
+                    </Button>
+                  )}
+                  {ad.status === "active" && (
+                    <Button
+                      size="sm"
+                      variant="secondary"
+                      onClick={() => handleVideoAdStatus(ad.id, "paused")}
+                    >
+                      Pause
+                    </Button>
+                  )}
+                  <Button
+                    size="sm"
+                    variant="danger"
+                    onClick={() => handleDeleteVideoAd(ad.id, ad.title)}
+                  >
+                    {ad.isDemoData ? "Delete Demo Ad" : "Delete"}
+                  </Button>
+                </div>
+              </Card>
+            ))}
+          </div>
+        </div>
       )}
     </div>
   );

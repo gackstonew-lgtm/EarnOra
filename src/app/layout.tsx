@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { AuthProvider } from "@/components/providers/AuthProvider";
+import { InstallProvider } from "@/components/providers/InstallProvider";
 import { AppShell } from "@/components/layout/AppShell";
 import { fontBody, fontDisplay } from "@/lib/fonts";
 
@@ -25,10 +26,10 @@ export const metadata: Metadata = {
     "App Reviews Kenya",
     "Make Money Online Kenya",
   ],
-  manifest: "/manifest.json",
+  manifest: "/manifest.webmanifest",
   icons: {
-    icon: "/assets/logo.png",
-    apple: "/assets/logo.png",
+    icon: "/assets/icon-192.png",
+    apple: "/assets/icon-192.png",
   },
   openGraph: {
     type: "website",
@@ -105,7 +106,9 @@ export default function RootLayout({
       <body className="antialiased min-h-screen bg-[var(--bg-page)] text-[var(--text-primary)] font-body selection:bg-[#1E6FD9] selection:text-white">
         <ThemeProvider>
           <AuthProvider>
-            <AppShell>{children}</AppShell>
+            <InstallProvider>
+              <AppShell>{children}</AppShell>
+            </InstallProvider>
           </AuthProvider>
         </ThemeProvider>
       </body>
