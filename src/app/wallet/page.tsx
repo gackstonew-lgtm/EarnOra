@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Wallet,
   Clock,
@@ -11,11 +11,16 @@ import {
   CheckCircle2,
   Phone,
   FileText,
+  Award,
+  Info,
 } from "lucide-react";
 import { useAuth } from "@/components/providers/AuthProvider";
 import { INITIAL_TRANSACTIONS } from "@/lib/mock-data";
 import { WalletTransaction } from "@/lib/types";
 import { Button } from "@/components/ui";
+import { HowPointsWorkModal, TierBadge } from "@/components/points/HowPointsWorkModal";
+import { TIER_LEVELS_CONFIG } from "@/lib/points/config";
+import { UserPointsSummary } from "@/lib/points/types";
 
 export default function WalletPage() {
   const { user, updateProfile } = useAuth();
@@ -24,12 +29,41 @@ export default function WalletPage() {
   const [isProcessing, setIsProcessing] = useState(false);
   const [successMsg, setSuccessMsg] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
+  const [showPointsModal, setShowPointsModal] = useState(false);
+  const [pointsSummary, setPointsSummary] = useState<UserPointsSummary>({
+    userId: user?.id || "usr_demo_ke_01",
+    totalPoints: 0,
+    currentTier: TIER_LEVELS_CONFIG[0],
+    nextTier: TIER_LEVELS_CONFIG[1],
+    pointsToNextTier: TIER_LEVELS_CONFIG[1].minPoints,
+    progressPercent: 0,
+    ledger: [],
+  });
+  const [remainingDailyKes, setRemainingDailyKes] = useState<number>(
+    TIER_LEVELS_CONFIG[0].dailyWithdrawalLimitKes
+  );
+
   const isMockAllowed = process.env.NEXT_PUBLIC_USE_MOCK_DATA === "true";
   const isDemoUser = isMockAllowed && user?.id === "usr_demo_ke_01";
 
   const [transactions, setTransactions] = useState<WalletTransaction[]>(() => {
     return isDemoUser ? INITIAL_TRANSACTIONS : [];
   });
+
+  useEffect(() => {
+    const uid = user?.id || "usr_demo_ke_01";
+    fetch(`/api/points?userId=${encodeURIComponent(uid)}`)
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        if (data?.summary) {
+          setPointsSummary(data.summary);
+        }
+        if (typeof data?.limits?.remainingDailyLimitKes === "number") {
+          setRemainingDailyKes(data.limits.remainingDailyLimitKes);
+        }
+      })
+      .catch(() => {});
+  }, [user?.id]);
 
   const availableBalance = user?.availableBalance ?? (isDemoUser ? 850 : 0);
   const pendingBalance = user?.pendingBalance ?? (isDemoUser ? 600 : 0);
@@ -60,6 +94,35 @@ export default function WalletPage() {
     }
 
     setIsProcessing(true);
+
+    // Server-side tier withdrawal limit check (additive hook)
+    try {
+      const checkRes = await fetch("/api/wallet/withdraw-check", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          amountKes: amount,
+          commit: true,
+          userId: user.id,
+        }),
+      });
+      const checkData = await checkRes.json();
+      if (!checkRes.ok || !checkData.allowed) {
+        setIsProcessing(false);
+        setErrorMsg(
+          checkData.error ||
+            "Withdrawal exceeds your current tier limit. Earn more points to raise your daily limit."
+        );
+        return;
+      }
+      if (typeof checkData?.check?.remainingDailyLimitKes === "number") {
+        setRemainingDailyKes(checkData.check.remainingDailyLimitKes);
+      }
+    } catch {
+      setIsProcessing(false);
+      setErrorMsg("Unable to verify withdrawal limits right now. Please try again.");
+      return;
+    }
 
     setTimeout(() => {
       const newTx: WalletTransaction = {
@@ -145,12 +208,54 @@ export default function WalletPage() {
 
       {/* Withdrawal Form Card */}
       <section className="rounded-[20px] bg-[var(--bg-card)] border border-[var(--border-subtle)] p-6 sm:p-7 shadow-xs">
-        <h2 className="text-base sm:text-lg font-bold text-[var(--text-primary)] font-display">
-          Request M-Pesa Payout
-        </h2>
-        <p className="text-xs text-[var(--text-muted)] mt-0.5">
-          Disbursements are sent via Safaricom Daraja B2C directly to your registered line within 60 seconds.
-        </p>
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <div>
+            <h2 className="text-base sm:text-lg font-bold text-[var(--text-primary)] font-display">
+              Request M-Pesa Payout
+            </h2>
+            <p className="text-xs text-[var(--text-muted)] mt-0.5">
+              Disbursements are sent via Safaricom Daraja B2C directly to your registered line within 60 seconds.
+            </p>
+          </div>
+          <div className="flex items-center gap-2">
+            <TierBadge level={pointsSummary.currentTier.name} size="sm" />
+            <button
+              type="button"
+              onClick={() => setShowPointsModal(true)}
+              className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-[var(--bg-card-elevated)] border border-[var(--border-subtle)] text-xs font-bold text-[var(--brand-blue)] hover:border-[var(--brand-blue)] transition-colors cursor-pointer"
+            >
+              <Info className="w-3.5 h-3.5" />
+              <span>How points work</span>
+            </button>
+          </div>
+        </div>
+
+        {/* Tier Withdrawal Limit Info Bar */}
+        <div className="mt-4 p-3.5 rounded-[14px] bg-[var(--bg-card-elevated)] border border-[var(--border-subtle)] flex flex-wrap items-center justify-between gap-3 text-xs">
+          <div className="flex items-center gap-2">
+            <Award className="w-4 h-4 text-[var(--brand-blue)] shrink-0" />
+            <span className="text-[var(--text-secondary)]">
+              <strong className="text-[var(--text-primary)]">
+                {pointsSummary.currentTier.name} Tier ({pointsSummary.totalPoints.toLocaleString()} pts):
+              </strong>{" "}
+              Up to{" "}
+              <strong className="text-[var(--text-primary)] numeral-bold">
+                KES {pointsSummary.currentTier.maxPerWithdrawalKes.toLocaleString()}
+              </strong>{" "}
+              per tx •{" "}
+              <strong className="text-[var(--accent-green)] numeral-bold">
+                KES {remainingDailyKes.toLocaleString()}
+              </strong>{" "}
+              of KES {pointsSummary.currentTier.dailyWithdrawalLimitKes.toLocaleString()} daily limit remaining
+            </span>
+          </div>
+          {pointsSummary.nextTier && (
+            <span className="text-[11px] font-bold text-[var(--brand-blue)]">
+              Next ({pointsSummary.nextTier.name} at {pointsSummary.nextTier.minPoints.toLocaleString()} pts): KES{" "}
+              {pointsSummary.nextTier.dailyWithdrawalLimitKes.toLocaleString()}/day
+            </span>
+          )}
+        </div>
 
         {errorMsg && (
           <div className="mt-4 p-3.5 rounded-[12px] bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-800 text-xs text-red-600 dark:text-red-400 flex items-start gap-2">
@@ -310,6 +415,13 @@ export default function WalletPage() {
           })}
         </div>
       </section>
+
+      <HowPointsWorkModal
+        isOpen={showPointsModal}
+        onClose={() => setShowPointsModal(false)}
+        currentPoints={pointsSummary.totalPoints}
+        currentLevel={pointsSummary.currentTier.name}
+      />
     </div>
   );
 }

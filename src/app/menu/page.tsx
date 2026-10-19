@@ -14,9 +14,11 @@ import {
   Settings,
 } from "lucide-react";
 import { useAuth } from "@/components/providers/AuthProvider";
+import { isAdsEnabled } from "@/lib/ads/config";
+import { UserRole } from "@/lib/types";
 
 export default function MenuPage() {
-  const { user, logout, isAuthenticated } = useAuth();
+  const { user, logout, isAuthenticated, updateProfile } = useAuth();
 
   return (
     <div className="space-y-6">
@@ -82,6 +84,28 @@ export default function MenuPage() {
           </div>
           <ChevronRight className="w-4 h-4 text-[#6B7A99]" />
         </Link>
+
+        {isAdsEnabled() && (
+          <Link
+            href="/advertiser"
+            className="flex items-center justify-between p-3.5 rounded-[12px] hover:bg-[#EEF3FF] transition-colors"
+          >
+            <div className="flex items-center gap-3">
+              <div className="w-9 h-9 rounded-[10px] bg-emerald-50 text-[#16A34A] flex items-center justify-center">
+                <Building2 className="w-4 h-4" />
+              </div>
+              <div>
+                <p className="text-xs font-bold text-[#0F1F3D]">
+                  Advertiser Portal & Campaign Wallet
+                </p>
+                <p className="text-[11px] text-[#6B7A99]">
+                  Fund KES escrow wallet, launch sponsored tasks, and download invoices
+                </p>
+              </div>
+            </div>
+            <ChevronRight className="w-4 h-4 text-[#6B7A99]" />
+          </Link>
+        )}
 
         <Link
           href="/business"
@@ -175,7 +199,101 @@ export default function MenuPage() {
           </div>
           <ChevronRight className="w-4 h-4 text-[#6B7A99]" />
         </Link>
+
+        {isAdsEnabled() && (
+          <>
+            <Link
+              href="/for-businesses"
+              className="flex items-center justify-between p-3.5 rounded-[12px] hover:bg-[#EEF3FF] transition-colors"
+            >
+              <div className="flex items-center gap-3">
+                <div className="w-9 h-9 rounded-[10px] bg-[#EEF3FF] text-[#1E6FD9] flex items-center justify-center">
+                  <Building2 className="w-4 h-4" />
+                </div>
+                <p className="text-xs font-bold text-[#0F1F3D]">
+                  For Businesses (Sponsor Tasks)
+                </p>
+              </div>
+              <ChevronRight className="w-4 h-4 text-[#6B7A99]" />
+            </Link>
+
+            <Link
+              href="/advertiser-terms"
+              className="flex items-center justify-between p-3.5 rounded-[12px] hover:bg-[#EEF3FF] transition-colors"
+            >
+              <div className="flex items-center gap-3">
+                <div className="w-9 h-9 rounded-[10px] bg-[#EEF3FF] text-[#6B7A99] flex items-center justify-center">
+                  <FileText className="w-4 h-4" />
+                </div>
+                <p className="text-xs font-bold text-[#0F1F3D]">
+                  Advertiser Terms of Service
+                </p>
+              </div>
+              <ChevronRight className="w-4 h-4 text-[#6B7A99]" />
+            </Link>
+
+            <Link
+              href="/ad-review-policy"
+              className="flex items-center justify-between p-3.5 rounded-[12px] hover:bg-[#EEF3FF] transition-colors"
+            >
+              <div className="flex items-center gap-3">
+                <div className="w-9 h-9 rounded-[10px] bg-[#EEF3FF] text-[#16A34A] flex items-center justify-center">
+                  <ShieldCheck className="w-4 h-4" />
+                </div>
+                <p className="text-xs font-bold text-[#0F1F3D]">
+                  Sponsored Ad & Honest Review Policy
+                </p>
+              </div>
+              <ChevronRight className="w-4 h-4 text-[#6B7A99]" />
+            </Link>
+
+            <Link
+              href="/contact"
+              className="flex items-center justify-between p-3.5 rounded-[12px] hover:bg-[#EEF3FF] transition-colors"
+            >
+              <div className="flex items-center gap-3">
+                <div className="w-9 h-9 rounded-[10px] bg-[#EEF3FF] text-[#1E6FD9] flex items-center justify-center">
+                  <HelpCircle className="w-4 h-4" />
+                </div>
+                <p className="text-xs font-bold text-[#0F1F3D]">
+                  Contact & Support Desk
+                </p>
+              </div>
+              <ChevronRight className="w-4 h-4 text-[#6B7A99]" />
+            </Link>
+          </>
+        )}
       </div>
+
+      {/* Sandbox Role Switcher for Testing Protected Portals */}
+      {isAdsEnabled() && user && (
+        <div className="rounded-[20px] bg-[var(--bg-card)] border border-[var(--border-subtle)] p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+          <div>
+            <span className="font-bold text-[var(--text-primary)] block">
+              Active Session Role: <span className="uppercase text-[var(--brand-blue)]">{user.role}</span>
+            </span>
+            <span className="text-[11px] text-[var(--text-muted)]">
+              Sandbox role selector for testing middleware access on /advertiser and /admin
+            </span>
+          </div>
+          <div className="flex items-center gap-1.5">
+            {(["user", "advertiser", "admin"] as UserRole[]).map((r) => (
+              <button
+                key={r}
+                type="button"
+                onClick={() => updateProfile({ role: r })}
+                className={`px-3 py-1.5 rounded-[10px] font-bold uppercase text-[11px] cursor-pointer transition-colors ${
+                  user.role === r
+                    ? "bg-[var(--brand-blue)] text-white"
+                    : "bg-[var(--bg-card-elevated)] text-[var(--text-secondary)] border border-[var(--border-subtle)]"
+                }`}
+              >
+                {r}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* Sign Out Action */}
       {isAuthenticated && (

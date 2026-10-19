@@ -13,10 +13,13 @@ import {
   CheckCheck,
   Settings,
   Search,
+  Sun,
+  Moon,
+  Monitor,
 } from "lucide-react";
 import { EarnoraLogo } from "../brand/EarnoraLogo";
-import { ThemeToggle } from "../brand/ThemeToggle";
 import { useAuth } from "../providers/AuthProvider";
+import { useTheme, Theme } from "../providers/ThemeProvider";
 
 interface NotificationItem {
   id: string;
@@ -30,6 +33,7 @@ interface NotificationItem {
 export const AppHeader: React.FC = () => {
   const router = useRouter();
   const { user, logout, isAuthenticated } = useAuth();
+  const { theme, setTheme } = useTheme();
   const [showNotifications, setShowNotifications] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [headerSearch, setHeaderSearch] = useState("");
@@ -129,9 +133,6 @@ export const AppHeader: React.FC = () => {
 
         {/* Right Action Controls */}
         <div className="flex items-center gap-3 shrink-0">
-          {/* Theme Toggle Button */}
-          <ThemeToggle />
-
           {/* Notifications Bell */}
           <div className="relative" ref={notifRef}>
             <button
@@ -240,7 +241,7 @@ export const AppHeader: React.FC = () => {
 
             {/* Profile Dropdown */}
             {showUserMenu && user && (
-              <div className="absolute right-0 mt-2 w-64 rounded-[18px] bg-[var(--bg-card)] border border-[var(--border-subtle)] shadow-xl p-3 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
+              <div className="absolute right-0 mt-2 w-72 rounded-[18px] bg-[var(--bg-card)] border border-[var(--border-subtle)] shadow-xl p-3 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
                 <div className="p-3 bg-[var(--bg-card-elevated)] rounded-[14px] mb-2 border border-[var(--border-subtle)]">
                   <p className="text-xs font-bold text-[var(--text-primary)] truncate">
                     {user.username || "Gackstone Wafula"}
@@ -277,6 +278,56 @@ export const AppHeader: React.FC = () => {
                     <Settings className="w-4 h-4 text-[var(--text-muted)]" />
                     <span>Account Settings</span>
                   </Link>
+
+                  {/* Theme Row (placed between Account Settings and Sign Out) */}
+                  <div
+                    onClick={(e) => e.stopPropagation()}
+                    className="px-3 py-2 rounded-[10px] text-xs font-medium text-[var(--text-primary)]"
+                  >
+                    <div className="flex items-center justify-between gap-2 mb-1.5">
+                      <span className="text-xs font-medium text-[var(--text-primary)]">
+                        Theme
+                      </span>
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-[var(--text-muted)]">
+                        {theme}
+                      </span>
+                    </div>
+                    <div
+                      role="group"
+                      aria-label="Select theme"
+                      className="grid grid-cols-3 gap-1 p-1 rounded-[10px] bg-[var(--bg-card-elevated)] border border-[var(--border-subtle)]"
+                    >
+                      {(
+                        [
+                          { id: "light" as Theme, label: "Light", icon: Sun },
+                          { id: "dark" as Theme, label: "Dark", icon: Moon },
+                          { id: "system" as Theme, label: "System", icon: Monitor },
+                        ] as const
+                      ).map((opt) => {
+                        const Icon = opt.icon;
+                        const active = theme === opt.id;
+                        return (
+                          <button
+                            key={opt.id}
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setTheme(opt.id);
+                            }}
+                            aria-pressed={active}
+                            className={`min-h-[34px] px-2 py-1 rounded-[8px] flex items-center justify-center gap-1 text-[11px] font-bold transition-all cursor-pointer ${
+                              active
+                                ? "bg-[var(--brand-blue)] text-white shadow-xs"
+                                : "text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-card)]"
+                            }`}
+                          >
+                            <Icon className="w-3.5 h-3.5 shrink-0" />
+                            <span>{opt.label}</span>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
 
                   <button
                     onClick={() => {

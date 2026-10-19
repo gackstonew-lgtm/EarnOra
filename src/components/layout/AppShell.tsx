@@ -6,6 +6,8 @@ import { AppHeader } from "@/components/navigation/AppHeader";
 import { BottomNav } from "@/components/navigation/BottomNav";
 import { DesktopSidebar } from "@/components/navigation/DesktopSidebar";
 import { PwaInstallBanner } from "@/components/ui/PwaInstallBanner";
+import { SupportChatModal, openSupportChat } from "@/components/support/SupportChatModal";
+import { Headphones } from "lucide-react";
 
 export const AppShell: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const pathname = usePathname();
@@ -29,6 +31,20 @@ export const AppShell: React.FC<{ children: React.ReactNode }> = ({ children }) 
         <main className="flex-1 w-full">
           {children}
         </main>
+      )}
+      {!isAuthPage && (
+        <>
+          <button
+            type="button"
+            onClick={openSupportChat}
+            aria-label="Need Help? Contact Support"
+            className="md:hidden fixed bottom-20 right-4 z-30 flex items-center gap-1.5 px-3.5 py-2.5 rounded-full bg-[var(--brand-blue)] text-white text-xs font-extrabold shadow-lg hover:opacity-95 transition-all cursor-pointer"
+          >
+            <Headphones className="w-4 h-4" />
+            <span>Support</span>
+          </button>
+          <SupportChatModal />
+        </>
       )}
       {!isAuthPage && <BottomNav />}
     </div>

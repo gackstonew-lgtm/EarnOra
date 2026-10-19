@@ -211,15 +211,38 @@ export const DesktopSidebar: React.FC = () => {
                 <span className="text-xs font-bold text-[var(--text-primary)]">Need Help?</span>
               </div>
               <p className="text-[11px] text-[var(--text-muted)] leading-tight">
-                Our support team is here for you 24/7.
+                Our AI & human support team is here for you 24/7.
               </p>
-              <Link
-                href="/settings"
-                className="mt-2.5 block text-center py-1.5 px-3 rounded-[10px] text-xs font-bold border border-[var(--border-subtle)] text-[var(--text-primary)] hover:bg-[var(--bg-card-elevated)] transition-colors"
+              <button
+                type="button"
+                onClick={() => {
+                  if (typeof window !== "undefined") {
+                    window.dispatchEvent(new CustomEvent("earnora:open-support"));
+                  }
+                }}
+                className="mt-2.5 w-full block text-center py-1.5 px-3 rounded-[10px] text-xs font-bold border border-[var(--border-subtle)] text-[var(--text-primary)] hover:bg-[var(--bg-card-elevated)] hover:border-[var(--brand-blue)] transition-colors cursor-pointer"
               >
                 Contact Support
-              </Link>
+              </button>
             </div>
+          </div>
+        )}
+
+        {!isExpanded && (
+          <div className="pt-2 flex justify-center">
+            <button
+              type="button"
+              onClick={() => {
+                if (typeof window !== "undefined") {
+                  window.dispatchEvent(new CustomEvent("earnora:open-support"));
+                }
+              }}
+              title="Need Help? Contact Support"
+              aria-label="Need Help? Contact Support"
+              className="w-10 h-10 rounded-[12px] bg-[var(--bg-card)] border border-[var(--border-subtle)] flex items-center justify-center text-[var(--brand-blue)] hover:bg-[var(--bg-card-elevated)] transition-colors cursor-pointer"
+            >
+              <Headphones className="w-4.5 h-4.5" />
+            </button>
           </div>
         )}
       </div>

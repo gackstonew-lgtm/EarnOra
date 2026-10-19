@@ -147,6 +147,33 @@ input:not([type="checkbox"]):not([type="radio"]), select, textarea {
   outline-offset: 2px;
 }
 
+@keyframes earnora-shimmer {
+  0% {
+    transform: translateX(-120%) skewX(-18deg);
+  }
+  50%, 100% {
+    transform: translateX(220%) skewX(-18deg);
+  }
+}
+
+.watch-ads-shimmer::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 45%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(245, 158, 11, 0.12),
+    rgba(30, 111, 217, 0.14),
+    transparent
+  );
+  pointer-events: none;
+  animation: earnora-shimmer 6s ease-in-out infinite;
+}
+
 /* Accessibility: Respect prefers-reduced-motion */
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -156,5 +183,9 @@ input:not([type="checkbox"]):not([type="radio"]), select, textarea {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+  .watch-ads-shimmer::after {
+    animation: none !important;
+    display: none !important;
   }
 }

@@ -8,7 +8,7 @@ export type CountryCode = {
   example: string;
 };
 
-export type UserRole = "user" | "business" | "admin";
+export type UserRole = "user" | "advertiser" | "business" | "admin";
 
 export interface UserProfile {
   id: string;

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Users,
   Flame,
@@ -16,6 +16,9 @@ import {
 import { useAuth } from "@/components/providers/AuthProvider";
 import { LEADERBOARD_USERS } from "@/lib/mock-data";
 import { Button } from "@/components/ui";
+import { isAdsEnabled } from "@/lib/ads/config";
+import { getAdsState } from "@/lib/ads/store";
+import { CampaignSubmission } from "@/lib/ads/types";
 
 export default function ActivityPage() {
   const { user, updateProfile } = useAuth();
@@ -23,6 +26,24 @@ export default function ActivityPage() {
   const [activeTab, setActiveTab] = useState<"referrals" | "streak" | "leaderboard">("referrals");
   const [copiedLink, setCopiedLink] = useState(false);
   const [streakClaimed, setStreakClaimed] = useState(false);
+  const [userSubmissions, setUserSubmissions] = useState<CampaignSubmission[]>([]);
+
+  useEffect(() => {
+    if (!isAdsEnabled()) return;
+    const loadSubs = () => {
+      const state = getAdsState();
+      const mySubs = state.submissions.filter(
+        (s) =>
+          !user ||
+          s.userProfileId === user.id ||
+          s.username.toLowerCase() === user.username.toLowerCase()
+      );
+      setUserSubmissions(mySubs);
+    };
+    loadSubs();
+    window.addEventListener("earnora_ads_state_updated", loadSubs);
+    return () => window.removeEventListener("earnora_ads_state_updated", loadSubs);
+  }, [user]);
 
   const refCode = user?.referralCode || "EARN-KE-88";
   const shareLink = `http://localhost:3000/auth/register?ref=${refCode}`;
@@ -294,6 +315,69 @@ export default function ActivityPage() {
                 );
               })}
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* Sponsored Task Submissions Status (Additive, Feature-Flagged) */}
+      {isAdsEnabled() && userSubmissions.length > 0 && (
+        <div className="rounded-[20px] bg-[var(--bg-card)] border border-[var(--border-subtle)] p-6 shadow-xs space-y-3">
+          <div className="flex items-center justify-between">
+            <h3 className="font-bold text-sm text-[var(--text-primary)] font-display">
+              Sponsored Task Submissions
+            </h3>
+            <span className="text-[11px] text-[var(--text-muted)]">
+              {userSubmissions.length} Submitted
+            </span>
+          </div>
+
+          <div className="divide-y divide-[var(--border-subtle)] text-xs">
+            {userSubmissions.map((sub) => (
+              <div
+                key={sub.id}
+                className="py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2"
+              >
+                <div>
+                  <div className="flex items-center gap-2">
+                    <p className="font-bold text-[var(--text-primary)]">
+                      {sub.campaignTitle}
+                    </p>
+                    <span className="text-[10px] font-bold uppercase px-2 py-0.5 rounded-full bg-emerald-500/10 text-[var(--accent-green)] border border-emerald-500/20">
+                      Sponsored
+                    </span>
+                  </div>
+                  <p className="text-[11px] text-[var(--text-muted)] mt-0.5">
+                    {sub.headline} • {new Date(sub.createdAt).toLocaleDateString()}
+                  </p>
+                  {sub.reviewerNotes && (
+                    <p className="text-[11px] text-[var(--text-secondary)] mt-1">
+                      Note: {sub.reviewerNotes}
+                    </p>
+                  )}
+                </div>
+
+                <div className="flex sm:flex-col items-center sm:items-end justify-between gap-1 shrink-0">
+                  <span className="font-extrabold text-[var(--accent-green)] numeral-bold">
+                    KES {sub.rewardKes}
+                  </span>
+                  <span
+                    className={`text-[10px] font-bold uppercase px-2.5 py-0.5 rounded-full ${
+                      sub.status === "approved"
+                        ? "bg-emerald-50 text-[#16A34A] border border-emerald-200"
+                        : sub.status === "rejected"
+                        ? "bg-red-50 text-red-600 border border-red-200"
+                        : "bg-amber-50 text-amber-700 border border-amber-200"
+                    }`}
+                  >
+                    {sub.status === "pending"
+                      ? "Pending"
+                      : sub.status === "approved"
+                      ? "Approved"
+                      : "Rejected"}
+                  </span>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       )}

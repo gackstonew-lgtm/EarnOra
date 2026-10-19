@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import {
   Wallet,
@@ -15,17 +15,73 @@ import {
   Radio,
   Package,
   ArrowRight,
-  Gift,
-  Crown,
+  Award,
+  Info,
+  Play,
   Sparkles,
+  Tv,
 } from "lucide-react";
 import Image from "next/image";
 import { useAuth } from "@/components/providers/AuthProvider";
 import { INITIAL_TASKS } from "@/lib/mock-data";
+import { HowPointsWorkModal, TierBadge } from "@/components/points/HowPointsWorkModal";
+import { TIER_LEVELS_CONFIG } from "@/lib/points/config";
+import { UserPointsSummary } from "@/lib/points/types";
 
 export default function DashboardPage() {
   const { user } = useAuth();
   const [searchQuery, setSearchQuery] = useState("");
+  const [showPointsModal, setShowPointsModal] = useState(false);
+
+  // Server-loaded Points & Tier state
+  const [pointsSummary, setPointsSummary] = useState<UserPointsSummary>({
+    userId: user?.id || "usr_demo_ke_01",
+    totalPoints: 0,
+    currentTier: TIER_LEVELS_CONFIG[0],
+    nextTier: TIER_LEVELS_CONFIG[1],
+    pointsToNextTier: TIER_LEVELS_CONFIG[1].minPoints,
+    progressPercent: 0,
+    ledger: [],
+  });
+
+  // Server-loaded Watch Ads progress
+  const [adsWatchedToday, setAdsWatchedToday] = useState(0);
+  const [adsDailyLimit, setAdsDailyLimit] = useState(10);
+
+  useEffect(() => {
+    const uid = user?.id || "usr_demo_ke_01";
+
+    // 1. Trigger server-side daily login check-in & load points summary
+    fetch("/api/points", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ action: "daily_login" }),
+    })
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        if (data?.summary) {
+          setPointsSummary(data.summary);
+        } else {
+          return fetch(`/api/points?userId=${encodeURIComponent(uid)}`)
+            .then((r) => (r.ok ? r.json() : null))
+            .then((d) => {
+              if (d?.summary) setPointsSummary(d.summary);
+            });
+        }
+      })
+      .catch(() => {});
+
+    // 2. Load today's watched ads progress from server
+    fetch(`/api/ads/watch?userId=${encodeURIComponent(uid)}`)
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        if (data) {
+          setAdsWatchedToday(data.watchedTodayCount ?? 0);
+          setAdsDailyLimit(data.dailyLimit ?? 10);
+        }
+      })
+      .catch(() => {});
+  }, [user?.id]);
 
   const isDarajaProduction =
     process.env.NEXT_PUBLIC_DARAJA_ENV === "production" ||
@@ -387,12 +443,15 @@ export default function DashboardPage() {
 
         {/* Right Information Panel (Desktop Sidebar Column - Cols 9 to 12) */}
         <aside className="lg:col-span-4 space-y-5">
-          {/* Quick Stats Panel */}
+          {/* Wallet & Points Card (Replaced Quick Stats) */}
           <div className="rounded-[20px] bg-[var(--bg-card)] border border-[var(--border-subtle)] p-4 sm:p-5 space-y-4">
             <div className="flex items-center justify-between">
-              <h3 className="font-bold text-base text-[var(--text-primary)] font-display">
-                Quick Stats
-              </h3>
+              <div className="flex items-center gap-2">
+                <h3 className="font-bold text-base text-[var(--text-primary)] font-display">
+                  Wallet & Points
+                </h3>
+                <TierBadge level={pointsSummary.currentTier.name} size="sm" />
+              </div>
               <Link
                 href="/wallet"
                 className="text-xs font-bold text-[var(--brand-blue)] hover:underline flex items-center gap-0.5"
@@ -402,57 +461,132 @@ export default function DashboardPage() {
               </Link>
             </div>
 
-            <div className="space-y-3">
+            {/* Available & Pending Balances Grid */}
+            <div className="grid grid-cols-2 gap-2.5">
               {/* Available Balance */}
-              <div className="flex items-center justify-between p-3 rounded-[14px] bg-[var(--bg-card-elevated)] border border-[var(--border-subtle)]">
-                <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-full bg-emerald-500/15 text-[var(--accent-green)] flex items-center justify-center shrink-0">
-                    <Wallet className="w-4 h-4" />
-                  </div>
-                  <div>
-                    <span className="text-[11px] font-semibold text-[var(--text-muted)] block">
-                      Available Balance
-                    </span>
-                    <span className="text-sm font-extrabold text-[var(--text-primary)] numeral-bold">
-                      KES {availableBal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-                    </span>
-                  </div>
+              <div className="p-3 rounded-[14px] bg-[var(--bg-card-elevated)] border border-[var(--border-subtle)]">
+                <div className="flex items-center gap-1.5 text-[var(--accent-green)] mb-1">
+                  <Wallet className="w-3.5 h-3.5 shrink-0" />
+                  <span className="text-[11px] font-semibold text-[var(--text-muted)] truncate">
+                    Available
+                  </span>
                 </div>
+                <span className="text-sm font-extrabold text-[var(--text-primary)] numeral-bold block">
+                  KES {availableBal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                </span>
               </div>
 
               {/* Pending Earnings */}
-              <div className="flex items-center justify-between p-3 rounded-[14px] bg-[var(--bg-card-elevated)] border border-[var(--border-subtle)]">
-                <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-full bg-amber-500/15 text-[var(--accent-gold)] flex items-center justify-center shrink-0">
-                    <Clock className="w-4 h-4" />
+              <div className="p-3 rounded-[14px] bg-[var(--bg-card-elevated)] border border-[var(--border-subtle)]">
+                <div className="flex items-center gap-1.5 text-[var(--accent-gold)] mb-1">
+                  <Clock className="w-3.5 h-3.5 shrink-0" />
+                  <span className="text-[11px] font-semibold text-[var(--text-muted)] truncate">
+                    Pending
+                  </span>
+                </div>
+                <span className="text-sm font-extrabold text-[var(--text-primary)] numeral-bold block">
+                  KES {pendingBal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                </span>
+              </div>
+            </div>
+
+            {/* Points & Tier Progress Block */}
+            <div className="p-3.5 rounded-[14px] bg-[var(--bg-card-elevated)] border border-[var(--border-subtle)] space-y-2.5">
+              <div className="flex items-center justify-between gap-2">
+                <div className="flex items-center gap-2">
+                  <div className="w-8 h-8 rounded-full bg-[var(--brand-blue)]/15 text-[var(--brand-blue)] flex items-center justify-center shrink-0">
+                    <Award className="w-4 h-4" />
                   </div>
                   <div>
                     <span className="text-[11px] font-semibold text-[var(--text-muted)] block">
-                      Pending Earnings
+                      Total Points • {pointsSummary.currentTier.name} Tier
                     </span>
                     <span className="text-sm font-extrabold text-[var(--text-primary)] numeral-bold">
-                      KES {pendingBal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                      {pointsSummary.totalPoints.toLocaleString()} pts
                     </span>
                   </div>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => setShowPointsModal(true)}
+                  className="inline-flex items-center gap-1 px-2 py-1 rounded-lg text-[11px] font-bold text-[var(--brand-blue)] hover:bg-[var(--brand-blue)]/10 transition-colors cursor-pointer"
+                >
+                  <Info className="w-3.5 h-3.5" />
+                  <span>How points work</span>
+                </button>
+              </div>
+
+              {/* Progress Bar to Next Tier */}
+              <div className="space-y-1">
+                <div className="flex items-center justify-between text-[11px]">
+                  <span className="font-semibold text-[var(--text-secondary)]">
+                    {pointsSummary.nextTier
+                      ? `${pointsSummary.pointsToNextTier.toLocaleString()} pts to ${pointsSummary.nextTier.name}`
+                      : "Maximum Tier Reached"}
+                  </span>
+                  <span className="font-bold text-[var(--brand-blue)] numeral-bold">
+                    {pointsSummary.progressPercent}%
+                  </span>
+                </div>
+                <div className="w-full h-2 rounded-full bg-[var(--bg-card)] overflow-hidden border border-[var(--border-subtle)]">
+                  <div
+                    className="h-full bg-[var(--brand-blue)] rounded-full transition-all duration-300"
+                    style={{ width: `${pointsSummary.progressPercent}%` }}
+                  />
                 </div>
               </div>
 
-              {/* Current Streak */}
-              <div className="flex items-center justify-between p-3 rounded-[14px] bg-[var(--bg-card-elevated)] border border-[var(--border-subtle)]">
-                <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-full bg-blue-500/15 text-[var(--brand-blue)] flex items-center justify-center shrink-0">
-                    <Flame className="w-4 h-4" />
-                  </div>
-                  <div>
-                    <span className="text-[11px] font-semibold text-[var(--text-muted)] block">
-                      Current Streak
-                    </span>
-                    <span className="text-sm font-extrabold text-[var(--text-primary)]">
-                      {streakCount} {streakCount === 1 ? "Day" : "Days"}
-                    </span>
-                  </div>
+              {/* Withdrawal Limits Row */}
+              <div className="pt-2 border-t border-[var(--border-subtle)] flex items-center justify-between text-[11px] gap-2">
+                <div>
+                  <span className="text-[var(--text-muted)] block">Current Daily Limit</span>
+                  <span className="font-extrabold text-[var(--text-primary)] numeral-bold">
+                    KES {pointsSummary.currentTier.dailyWithdrawalLimitKes.toLocaleString()}/day
+                  </span>
+                </div>
+                <div className="text-right">
+                  <span className="text-[var(--text-muted)] block">
+                    {pointsSummary.nextTier
+                      ? `Next (${pointsSummary.nextTier.name}) Limit`
+                      : "Max Per Withdrawal"}
+                  </span>
+                  <span className="font-extrabold text-[var(--accent-green)] numeral-bold">
+                    {pointsSummary.nextTier
+                      ? `KES ${pointsSummary.nextTier.dailyWithdrawalLimitKes.toLocaleString()}/day`
+                      : `KES ${pointsSummary.currentTier.maxPerWithdrawalKes.toLocaleString()}`}
+                  </span>
                 </div>
               </div>
+            </div>
+
+            {/* Secondary Streak Row */}
+            <div className="flex items-center justify-between px-3 py-2 rounded-[12px] bg-[var(--bg-card-elevated)] border border-[var(--border-subtle)] text-xs">
+              <div className="flex items-center gap-2 text-[var(--text-secondary)] font-medium">
+                <Flame className="w-3.5 h-3.5 text-[var(--brand-blue)]" />
+                <span>Current Streak</span>
+              </div>
+              <span className="font-extrabold text-[var(--text-primary)]">
+                {streakCount} {streakCount === 1 ? "Day" : "Days"}
+              </span>
+            </div>
+
+            {/* Action Buttons: Withdraw & View Wallet */}
+            <div className="grid grid-cols-2 gap-2.5 pt-1">
+              <Link
+                href="/wallet"
+                className="inline-flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-[12px] bg-[var(--brand-blue)] text-white text-xs font-extrabold hover:opacity-95 transition-all shadow-xs"
+              >
+                <Wallet className="w-3.5 h-3.5" />
+                <span>Withdraw</span>
+              </Link>
+              <Link
+                href="/wallet"
+                className="inline-flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-[12px] bg-[var(--bg-card-elevated)] border border-[var(--border-subtle)] text-[var(--text-primary)] hover:border-[var(--brand-blue)] text-xs font-extrabold transition-all"
+              >
+                <span>View Wallet</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
             </div>
           </div>
 
@@ -506,32 +640,67 @@ export default function DashboardPage() {
             </div>
           </div>
 
-          {/* Earn More, Get Higher Rewards Card */}
-          <div className="rounded-[20px] bg-[var(--bg-card)] border border-[var(--border-subtle)] p-4 sm:p-5 space-y-3">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <Crown className="w-5 h-5 text-[var(--brand-blue)]" />
-                <h4 className="font-bold text-xs sm:text-sm text-[var(--text-primary)]">
-                  Earn More, Get Higher Rewards
-                </h4>
+          {/* Watch Ads, Earn Banner (Replaced "Earn More, Get Higher Rewards") */}
+          <div className="relative overflow-hidden rounded-[20px] bg-gradient-to-br from-[var(--bg-card)] via-[var(--bg-card-elevated)] to-[var(--brand-blue)]/10 border border-[var(--brand-blue)]/30 p-4 sm:p-5 space-y-3.5 shadow-xs watch-ads-shimmer">
+            <div className="flex items-center justify-between gap-2 relative z-10">
+              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider bg-amber-500/15 text-[var(--accent-gold)] border border-amber-500/30">
+                <Sparkles className="w-3 h-3" />
+                <span>Sponsored Rewards</span>
+              </span>
+              <div className="w-8 h-8 rounded-full bg-[var(--brand-blue)]/15 text-[var(--brand-blue)] flex items-center justify-center shrink-0">
+                <Tv className="w-4 h-4" />
               </div>
-              <Gift className="w-6 h-6 text-[var(--brand-blue)] shrink-0" />
             </div>
 
-            <p className="text-xs text-[var(--text-secondary)] leading-relaxed">
-              Complete more tasks, maintain your streak, and unlock better earning opportunities!
-            </p>
+            <div className="space-y-1 relative z-10">
+              <h4 className="font-extrabold text-sm sm:text-base text-[var(--text-primary)] font-display">
+                Watch Ads. Earn Rewards.
+              </h4>
+              <p className="text-xs text-[var(--text-secondary)] leading-relaxed">
+                Watch short sponsored ads and collect points and cash rewards.
+              </p>
+            </div>
+
+            {/* Daily Ads Progress Line */}
+            <div className="space-y-1.5 relative z-10">
+              <div className="flex items-center justify-between text-[11px] font-bold">
+                <span className="text-[var(--text-secondary)]">
+                  {adsWatchedToday} of {adsDailyLimit} ads watched today
+                </span>
+                <span className="text-[var(--accent-gold)]">+KES & +2 pts/ad</span>
+              </div>
+              <div className="w-full h-1.5 rounded-full bg-[var(--bg-card)] overflow-hidden border border-[var(--border-subtle)]">
+                <div
+                  className="h-full bg-gradient-to-r from-[var(--brand-blue)] to-[var(--accent-gold)] rounded-full transition-all duration-300"
+                  style={{
+                    width: `${Math.min(
+                      100,
+                      Math.round((adsWatchedToday / Math.max(1, adsDailyLimit)) * 100)
+                    )}%`,
+                  }}
+                />
+              </div>
+            </div>
 
             <Link
-              href="/activity"
-              className="inline-flex items-center justify-center gap-1.5 w-full py-2.5 px-4 rounded-[12px] bg-[var(--brand-blue)] text-white text-xs font-extrabold hover:opacity-95 transition-all shadow-xs"
+              href="/earn/ads"
+              className="relative z-10 inline-flex items-center justify-center gap-1.5 w-full py-2.5 px-4 rounded-[12px] bg-[var(--brand-blue)] text-white text-xs font-extrabold hover:opacity-95 transition-all shadow-xs"
             >
-              <span>View Rewards</span>
+              <Play className="w-3.5 h-3.5 fill-current" />
+              <span>Watch & Earn</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </Link>
           </div>
         </aside>
       </div>
+
+      {/* How Points Work Modal */}
+      <HowPointsWorkModal
+        isOpen={showPointsModal}
+        onClose={() => setShowPointsModal(false)}
+        currentPoints={pointsSummary.totalPoints}
+        currentLevel={pointsSummary.currentTier.name}
+      />
     </div>
   );
 }

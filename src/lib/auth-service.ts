@@ -57,14 +57,59 @@ export function setStoredUser(user: UserProfile | null): void {
   if (typeof window !== "undefined") {
     if (user) {
       localStorage.setItem(STORAGE_KEY_USER, JSON.stringify(user));
-      // Set earnora_session cookie for Next.js middleware protection
+      // Set earnora_session, earnora_role, and earnora_user_ctx cookies for Next.js middleware & server API routes
       document.cookie = "earnora_session=1; path=/; max-age=2592000; SameSite=Lax";
+      document.cookie = `earnora_role=${encodeURIComponent(user.role || "user")}; path=/; max-age=2592000; SameSite=Lax`;
+      const safeSnapshot = {
+        id: user.id,
+        username: user.username,
+        phoneNumber: user.phoneNumber,
+        role: user.role || "user",
+        isPhoneVerified: user.isPhoneVerified,
+        streakDays: user.streakDays,
+        availableBalance: user.availableBalance,
+        pendingBalance: user.pendingBalance,
+        totalEarned: user.totalEarned,
+        totalWithdrawn: user.totalWithdrawn,
+      };
+      document.cookie = `earnora_user_ctx=${encodeURIComponent(JSON.stringify(safeSnapshot))}; path=/; max-age=2592000; SameSite=Lax`;
     } else {
       localStorage.removeItem(STORAGE_KEY_USER);
-      // Remove cookie on logout
+      // Remove cookies on logout
       document.cookie = "earnora_session=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; SameSite=Lax";
+      document.cookie = "earnora_role=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; SameSite=Lax";
+      document.cookie = "earnora_user_ctx=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; SameSite=Lax";
     }
   }
+}
+
+export function getServerSessionUserFromCookie(rawCookieValue?: string): UserProfile | null {
+  if (rawCookieValue) {
+    try {
+      const parsed = JSON.parse(decodeURIComponent(rawCookieValue)) as Partial<UserProfile>;
+      if (parsed && typeof parsed.id === "string") {
+        return {
+          id: parsed.id,
+          username: parsed.username || "EarnOra Member",
+          phoneNumber: parsed.phoneNumber || "+254700000000",
+          country: parsed.country || "Kenya",
+          callingCode: parsed.callingCode || "+254",
+          role: parsed.role || "user",
+          isPhoneVerified: Boolean(parsed.isPhoneVerified),
+          referralCode: parsed.referralCode || "EARN-KE",
+          joinedAt: parsed.joinedAt || new Date().toISOString(),
+          streakDays: Number(parsed.streakDays ?? 1),
+          totalEarned: Number(parsed.totalEarned ?? 0),
+          availableBalance: Number(parsed.availableBalance ?? 0),
+          pendingBalance: Number(parsed.pendingBalance ?? 0),
+          totalWithdrawn: Number(parsed.totalWithdrawn ?? 0),
+        };
+      }
+    } catch {
+      // ignore malformed cookie
+    }
+  }
+  return memoryUser;
 }
 
 export function updateStoredUser(updates: Partial<UserProfile>): UserProfile | null {

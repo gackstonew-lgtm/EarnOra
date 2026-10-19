@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, Suspense } from "react";
+import React, { useState, useEffect, Suspense } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import {
@@ -15,6 +15,8 @@ import { INITIAL_TASKS } from "@/lib/mock-data";
 import { EARNING_CARDS } from "@/lib/constants";
 import { ReviewTask } from "@/lib/types";
 import { Button } from "@/components/ui";
+import { isAdsEnabled } from "@/lib/ads/config";
+import { getActiveSponsoredTasksForEarnPage } from "@/lib/ads/store";
 
 function EarnContent() {
   const searchParams = useSearchParams();
@@ -24,8 +26,24 @@ function EarnContent() {
   const [searchQuery, setSearchQuery] = useState("");
   const [minReward, setMinReward] = useState<number>(0);
   const [activeTaskModal, setActiveTaskModal] = useState<ReviewTask | null>(null);
+  const [sponsoredTasks, setSponsoredTasks] = useState<ReviewTask[]>([]);
 
-  const filteredTasks = INITIAL_TASKS.filter((task) => {
+  useEffect(() => {
+    if (!isAdsEnabled()) return;
+    const loadSponsored = () => setSponsoredTasks(getActiveSponsoredTasksForEarnPage());
+    loadSponsored();
+    window.addEventListener("earnora_ads_state_updated", loadSponsored);
+    return () => window.removeEventListener("earnora_ads_state_updated", loadSponsored);
+  }, []);
+
+  const allTasks = isAdsEnabled()
+    ? [
+        ...sponsoredTasks,
+        ...INITIAL_TASKS.filter((t) => !sponsoredTasks.some((s) => s.id === t.id)),
+      ]
+    : INITIAL_TASKS;
+
+  const filteredTasks = allTasks.filter((task) => {
     const matchesCategory =
       selectedCategory === "all" || task.categoryId === selectedCategory;
     const matchesSearch =
@@ -86,7 +104,7 @@ function EarnContent() {
               : "bg-[var(--bg-card)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] border border-[var(--border-subtle)]"
           }`}
         >
-          All ({INITIAL_TASKS.length})
+          All ({allTasks.length})
         </button>
         {EARNING_CARDS.map((cat) => (
           <button

@@ -16,6 +16,13 @@ import {
 import { INITIAL_TASKS } from "@/lib/mock-data";
 import { useAuth } from "@/components/providers/AuthProvider";
 import { Button } from "@/components/ui";
+import { isAdsEnabled } from "@/lib/ads/config";
+import {
+  getActiveSponsoredTasksForEarnPage,
+  getAdsState,
+  submitSponsoredTaskProof,
+} from "@/lib/ads/store";
+import { validateProofFile } from "@/lib/ads/validation";
 
 function SubmitReviewContent() {
   const router = useRouter();
@@ -23,7 +30,11 @@ function SubmitReviewContent() {
   const taskId = searchParams.get("task") || "task-hotel-01";
   const { user, updateProfile } = useAuth();
 
-  const task = INITIAL_TASKS.find((t) => t.id === taskId) || INITIAL_TASKS[0];
+  const allAvailableTasks = isAdsEnabled()
+    ? [...getActiveSponsoredTasksForEarnPage(), ...INITIAL_TASKS]
+    : INITIAL_TASKS;
+
+  const task = allAvailableTasks.find((t) => t.id === taskId) || INITIAL_TASKS[0];
 
   const [rating, setRating] = useState(5);
   const [hoverRating, setHoverRating] = useState(0);
@@ -31,8 +42,14 @@ function SubmitReviewContent() {
   const [content, setContent] = useState("");
   const [pros, setPros] = useState("");
   const [cons, setCons] = useState("");
-  const [hasPhoto, setHasPhoto] = useState(false);
+  const [hasPhoto, setHasPhoto] = useState(task.requirements.requirePhoto);
   const [photoAttestation, setPhotoAttestation] = useState(false);
+  const [proofFileData, setProofFileData] = useState<{
+    name: string;
+    type: string;
+    size: number;
+    dataUrlOrContent?: string;
+  } | null>(null);
 
   const [errorMsg, setErrorMsg] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -40,6 +57,37 @@ function SubmitReviewContent() {
 
   const wordCount = content.trim() ? content.trim().split(/\s+/).length : 0;
   const minWordsRequired = task.requirements.minWords || 50;
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setErrorMsg("");
+    const file = e.target.files?.[0];
+    if (!file) {
+      setProofFileData(null);
+      return;
+    }
+    const validation = validateProofFile({
+      name: file.name,
+      type: file.type,
+      size: file.size,
+    });
+    if (!validation.valid) {
+      setErrorMsg(validation.error || "Invalid proof file.");
+      e.target.value = "";
+      setProofFileData(null);
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      setProofFileData({
+        name: file.name,
+        type: file.type,
+        size: file.size,
+        dataUrlOrContent: typeof reader.result === "string" ? reader.result : undefined,
+      });
+    };
+    reader.readAsDataURL(file);
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -62,11 +110,40 @@ function SubmitReviewContent() {
       return;
     }
 
+    if (task.requirements.requirePhoto && !hasPhoto) {
+      setErrorMsg("This campaign requires attaching a screenshot or receipt proof.");
+      return;
+    }
+
     if (hasPhoto && !photoAttestation) {
       setErrorMsg(
         "You must check 'I took this photo myself' to attest copyright ownership."
       );
       return;
+    }
+
+    const isAdvertiserCampaign =
+      isAdsEnabled() &&
+      getAdsState().campaigns.some((c) => c.id === task.id);
+
+    if (isAdvertiserCampaign) {
+      try {
+        submitSponsoredTaskProof({
+          campaignId: task.id,
+          userProfileId: user?.id || "usr_ke_98721",
+          username: user?.username || "Baraka_Ke",
+          userPhone: user?.phoneNumber || "+254712345678",
+          rating,
+          headline: title,
+          reviewText: content,
+          pros,
+          cons,
+          proofFile: proofFileData || undefined,
+        });
+      } catch (err) {
+        setErrorMsg(err instanceof Error ? err.message : "Failed to submit task proof.");
+        return;
+      }
     }
 
     setIsSubmitting(true);
@@ -79,7 +156,7 @@ function SubmitReviewContent() {
       }
       setIsSubmitting(false);
       setSubmittedSuccess(true);
-    }, 1200);
+    }, 800);
   };
 
   if (submittedSuccess) {
@@ -288,15 +365,23 @@ function SubmitReviewContent() {
 
           {hasPhoto && (
             <div className="pt-2 border-t border-blue-100 space-y-2 animate-in fade-in duration-150">
-              <div className="border-2 border-dashed border-blue-200 rounded-[12px] p-4 text-center bg-white">
+              <label className="block border-2 border-dashed border-blue-200 rounded-[12px] p-4 text-center bg-white cursor-pointer hover:border-[#1E6FD9] transition-colors">
+                <input
+                  type="file"
+                  accept="image/jpeg,image/png,image/webp,application/pdf"
+                  onChange={handleFileChange}
+                  className="sr-only"
+                />
                 <Camera className="w-6 h-6 text-[#1E6FD9] mx-auto mb-1" />
                 <p className="text-xs font-semibold text-[#0F1F3D]">
-                  Tap to attach receipt or photo
+                  {proofFileData
+                    ? `Attached: ${proofFileData.name} (${Math.round(proofFileData.size / 1024)} KB)`
+                    : "Tap to attach receipt, screenshot or photo"}
                 </p>
                 <p className="text-[10px] text-[#6B7A99]">
-                  JPEG or PNG up to 5MB. Original image only.
+                  JPEG, PNG, WEBP or PDF up to 5MB. Original proof only.
                 </p>
-              </div>
+              </label>
 
               <label className="flex items-start gap-2 cursor-pointer pt-1">
                 <input
