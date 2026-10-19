@@ -7,7 +7,6 @@ import {
   Sun,
   Laptop,
   Wifi,
-  Sparkles,
   Database,
   Bell,
   User,

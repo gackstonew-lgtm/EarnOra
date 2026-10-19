@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
   Home,
-  Sparkles,
+  Compass,
   Wallet,
   History,
   User as UserIcon,
@@ -62,7 +62,7 @@ export const DesktopSidebar: React.FC = () => {
     {
       label: "Earn",
       href: "/earn",
-      icon: Sparkles,
+      icon: Compass,
       isActive: pathname.startsWith("/earn"),
     },
     {

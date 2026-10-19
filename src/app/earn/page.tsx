@@ -6,7 +6,7 @@ import { useSearchParams } from "next/navigation";
 import {
   Search,
   Clock,
-  Sparkles,
+  Compass,
   ChevronRight,
   CheckCircle,
   X,
@@ -125,7 +125,7 @@ function EarnContent() {
       <div className="space-y-3.5">
         {filteredTasks.length === 0 ? (
           <div className="text-center py-12 rounded-[20px] bg-white border border-blue-100/70 p-6 shadow-xs">
-            <Sparkles className="w-8 h-8 text-[#1E6FD9] mx-auto mb-2" />
+            <Compass className="w-8 h-8 text-[#1E6FD9] mx-auto mb-2" />
             <h3 className="font-bold text-sm text-[#0F1F3D]">
               No matching tasks found
             </h3>

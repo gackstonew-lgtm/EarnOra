@@ -14,7 +14,6 @@ import {
   Play,
   RefreshCw,
   ShieldCheck,
-  Sparkles,
   Tv,
   Volume2,
   VolumeX,
@@ -377,7 +376,7 @@ export default function WatchAdsEarnPage() {
                 Watch Video Ads &amp; Earn
               </h1>
               <span className="inline-flex items-center gap-1 rounded-full bg-amber-100 text-amber-900 dark:bg-amber-950/90 dark:text-amber-200 border border-amber-500/40 px-3 py-1 text-xs font-bold uppercase tracking-wider whitespace-nowrap">
-                <Sparkles className="h-3.5 w-3.5" />
+                <ShieldCheck className="h-3.5 w-3.5" />
                 Sponsored
               </span>
             </div>

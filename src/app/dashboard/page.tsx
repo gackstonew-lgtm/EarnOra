@@ -18,7 +18,6 @@ import {
   Award,
   Info,
   Play,
-  Sparkles,
   Tv,
 } from "lucide-react";
 import { useAuth } from "@/components/providers/AuthProvider";
@@ -635,7 +634,7 @@ export default function DashboardPage() {
           <div className="relative overflow-hidden rounded-[20px] bg-gradient-to-br from-[var(--bg-card)] via-[var(--bg-card-elevated)] to-[var(--brand-blue)]/10 border border-[var(--brand-blue)]/30 p-4 sm:p-5 space-y-3.5 shadow-xs watch-ads-shimmer">
             <div className="flex items-center justify-between gap-2 relative z-10">
               <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider bg-amber-500/15 text-[var(--accent-gold)] border border-amber-500/30">
-                <Sparkles className="w-3 h-3" />
+                <ShieldCheck className="w-3 h-3" />
                 <span>Sponsored Rewards</span>
               </span>
               <div className="w-8 h-8 rounded-full bg-[var(--brand-blue)]/15 text-[var(--brand-blue)] flex items-center justify-center shrink-0">

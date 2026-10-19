@@ -9,7 +9,6 @@ import {
   Info,
   PlayCircle,
   ShieldCheck,
-  Sparkles,
   X,
 } from "lucide-react";
 import { POINT_AWARD_VALUES, TIER_LEVELS_CONFIG } from "@/lib/points/config";
@@ -66,7 +65,7 @@ export const HowPointsWorkModal: React.FC<HowPointsWorkModalProps> = ({
     {
       label: "Approved First-Hand Review",
       points: `+${POINT_AWARD_VALUES.approved_review} pts`,
-      icon: Sparkles,
+      icon: ShieldCheck,
       sub: "Awarded when your restaurant or business review is verified",
     },
     {

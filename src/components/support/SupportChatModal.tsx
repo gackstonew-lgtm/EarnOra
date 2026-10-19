@@ -2,7 +2,6 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import {
-  Bot,
   CheckCircle2,
   Headphones,
   Loader2,
@@ -10,7 +9,6 @@ import {
   MessageSquare,
   Send,
   ShieldCheck,
-  Sparkles,
   User,
   X,
 } from "lucide-react";
@@ -251,7 +249,7 @@ export const SupportChatModal: React.FC = () => {
           <div className="flex items-center justify-between gap-2">
             <div className="flex items-center gap-2.5">
               <div className="w-9 h-9 rounded-full bg-[var(--brand-blue)] text-white flex items-center justify-center shrink-0 shadow-xs">
-                <Bot className="w-5 h-5" />
+                <Headphones className="w-5 h-5" />
               </div>
               <div>
                 <div className="flex items-center gap-1.5">
@@ -305,7 +303,7 @@ export const SupportChatModal: React.FC = () => {
                       : "bg-[var(--bg-card-elevated)] border border-[var(--border-subtle)] text-[var(--brand-blue)]"
                   }`}
                 >
-                  {isUser ? <User className="w-3.5 h-3.5" /> : <Sparkles className="w-3.5 h-3.5" />}
+                  {isUser ? <User className="w-3.5 h-3.5" /> : <ShieldCheck className="w-3.5 h-3.5" />}
                 </div>
 
                 <div

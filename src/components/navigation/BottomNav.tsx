@@ -3,7 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, Sparkles, Wallet, History, Menu } from "lucide-react";
+import { Home, Compass, Wallet, History, Menu } from "lucide-react";
 
 export const BottomNav: React.FC = () => {
   const pathname = usePathname();
@@ -18,7 +18,7 @@ export const BottomNav: React.FC = () => {
     {
       label: "Earn",
       href: "/earn",
-      icon: Sparkles,
+      icon: Compass,
       isActive: pathname.startsWith("/earn"),
     },
     {
