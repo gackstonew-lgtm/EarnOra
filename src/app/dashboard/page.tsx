@@ -21,10 +21,10 @@ import {
   Sparkles,
   Tv,
 } from "lucide-react";
-import Image from "next/image";
 import { useAuth } from "@/components/providers/AuthProvider";
 import { INITIAL_TASKS } from "@/lib/mock-data";
 import { HowPointsWorkModal, TierBadge } from "@/components/points/HowPointsWorkModal";
+import { HeroImageRotator } from "@/components/dashboard/HeroImageRotator";
 import { TIER_LEVELS_CONFIG } from "@/lib/points/config";
 import { UserPointsSummary } from "@/lib/points/types";
 
@@ -227,18 +227,9 @@ export default function DashboardPage() {
                 </p>
               </div>
 
-              {/* Right/Bottom Column: Happy user with cash and phone, sitting flush on the divider line */}
+              {/* Right/Bottom Column: Promotional hero rotator sitting flush on the divider line */}
               <div className="md:col-span-5 flex justify-center md:justify-end items-end w-full overflow-hidden mt-3 sm:mt-4 md:mt-0">
-                <div className="relative w-[85%] max-w-[280px] sm:max-w-[310px] md:max-w-[340px] flex justify-center items-end">
-                  <Image
-                    src="/images/dashboard-hero.png"
-                    alt="Happy Earnora user holding cash and the Earnora app on his phone"
-                    width={903}
-                    height={1024}
-                    priority
-                    className="w-full h-auto max-h-[270px] sm:max-h-[295px] md:max-h-[310px] object-contain object-bottom block select-none pointer-events-none -mb-[1px]"
-                  />
-                </div>
+                <HeroImageRotator />
               </div>
             </div>
 

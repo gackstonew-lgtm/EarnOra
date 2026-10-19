@@ -2,6 +2,7 @@
 -- Migration: 20261019000002_points_and_support.sql
 -- Purpose: Additive Points & Tier System (raising withdrawal limits),
 --          Server-verified Ad Watch Sessions, and AI Support Tickets.
+-- Safe to re-run. Idempotent.
 -- ==============================================================================
 
 -- 1. LEVELS CONFIG TABLE
@@ -18,6 +19,7 @@ CREATE TABLE IF NOT EXISTS public.levels (
 ALTER TABLE public.levels ENABLE ROW LEVEL SECURITY;
 
 -- Anyone authenticated can read level configurations
+DROP POLICY IF EXISTS "Authenticated users can read levels config" ON public.levels;
 CREATE POLICY "Authenticated users can read levels config"
   ON public.levels
   FOR SELECT
@@ -43,6 +45,7 @@ CREATE TABLE IF NOT EXISTS public.user_points (
 
 ALTER TABLE public.user_points ENABLE ROW LEVEL SECURITY;
 
+DROP POLICY IF EXISTS "Users can read only their own user_points" ON public.user_points;
 CREATE POLICY "Users can read only their own user_points"
   ON public.user_points
   FOR SELECT
@@ -64,6 +67,7 @@ CREATE INDEX IF NOT EXISTS idx_points_ledger_user_created
 
 ALTER TABLE public.points_ledger ENABLE ROW LEVEL SECURITY;
 
+DROP POLICY IF EXISTS "Users can read only their own points_ledger rows" ON public.points_ledger;
 CREATE POLICY "Users can read only their own points_ledger rows"
   ON public.points_ledger
   FOR SELECT
@@ -224,6 +228,7 @@ CREATE UNIQUE INDEX IF NOT EXISTS idx_ad_watch_once_per_user
 
 ALTER TABLE public.ad_watch_sessions ENABLE ROW LEVEL SECURITY;
 
+DROP POLICY IF EXISTS "Users can read only their own ad_watch_sessions" ON public.ad_watch_sessions;
 CREATE POLICY "Users can read only their own ad_watch_sessions"
   ON public.ad_watch_sessions
   FOR SELECT
@@ -244,6 +249,7 @@ CREATE TABLE IF NOT EXISTS public.support_tickets (
 
 ALTER TABLE public.support_tickets ENABLE ROW LEVEL SECURITY;
 
+DROP POLICY IF EXISTS "Users can read and create their own support tickets" ON public.support_tickets;
 CREATE POLICY "Users can read and create their own support tickets"
   ON public.support_tickets
   FOR ALL

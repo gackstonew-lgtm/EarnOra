@@ -2,6 +2,7 @@
 -- Migration: 20261019000003_video_ads_and_views.sql
 -- Purpose: Additive Video Ads columns on campaigns, video_ads table, and
 --          ad_views table with server-verified heartbeats and RLS.
+-- Safe to re-run. Idempotent.
 -- ==============================================================================
 
 -- 1. Extend campaigns table with video ad fields (additive)
@@ -40,6 +41,7 @@ CREATE TABLE IF NOT EXISTS public.video_ads (
 
 ALTER TABLE public.video_ads ENABLE ROW LEVEL SECURITY;
 
+DROP POLICY IF EXISTS "Users can read active video_ads" ON public.video_ads;
 CREATE POLICY "Users can read active video_ads"
   ON public.video_ads
   FOR SELECT
@@ -65,6 +67,7 @@ CREATE INDEX IF NOT EXISTS idx_ad_views_user_started
 
 ALTER TABLE public.ad_views ENABLE ROW LEVEL SECURITY;
 
+DROP POLICY IF EXISTS "Users can read only their own ad_views rows" ON public.ad_views;
 CREATE POLICY "Users can read only their own ad_views rows"
   ON public.ad_views
   FOR SELECT

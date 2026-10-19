@@ -1,8 +1,8 @@
 -- ============================================================================
 -- Earnora Additive Migration: Advertiser Portal & Campaign Wallet
--- Safe to run on top of existing schema. Enforces integer KES (BIGINT),
--- append-only ledger, Row Level Security (RLS) on every table, and
--- atomic Postgres transaction functions for all money movements.
+-- Safe to re-run. Idempotent.
+-- Enforces integer KES (BIGINT), append-only ledger, Row Level Security (RLS)
+-- on every table, and atomic Postgres transaction functions for money movements.
 -- ============================================================================
 
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
