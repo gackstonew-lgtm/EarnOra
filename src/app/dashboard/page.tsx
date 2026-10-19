@@ -18,6 +18,7 @@ import {
   Award,
   Info,
   Play,
+  SquarePlay,
   Tv,
 } from "lucide-react";
 import { useAuth } from "@/components/providers/AuthProvider";
@@ -91,7 +92,7 @@ export default function DashboardPage() {
   const pendingBal = user?.pendingBalance ?? 0;
   const streakCount = user?.streakDays ?? 1;
 
-  // The 5 Popular Categories from the design reference
+  // The 6 Popular Categories from the design reference
   const popularCategories = [
     {
       id: "hotels_restaurants",
@@ -119,6 +120,15 @@ export default function DashboardPage() {
       iconColor: "#A855F7", // Purple
       iconBg: "bg-purple-500/15",
       href: "/earn?category=local_services",
+    },
+    {
+      id: "watch_ads",
+      name: "Watch Ads",
+      subtext: "Watch short ads & earn",
+      icon: SquarePlay,
+      iconColor: "#22C55E", // Green
+      iconBg: "bg-green-500/15",
+      href: "/earn/ads",
     },
     {
       id: "telco_fintech",
@@ -345,19 +355,20 @@ export default function DashboardPage() {
               </Link>
             </div>
 
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
+            <div className="grid grid-cols-1 min-[300px]:grid-cols-2 sm:grid-cols-3 gap-3">
               {filteredCategories.map((cat) => {
                 const Icon = cat.icon;
                 return (
                   <Link
                     key={cat.id}
                     href={cat.href}
-                    className="group rounded-[18px] bg-[var(--bg-card)] border border-[var(--border-subtle)] p-3.5 flex flex-col items-center text-center hover:border-[var(--brand-blue)] transition-all"
+                    aria-label={`${cat.name} — ${cat.subtext}. Start Earning`}
+                    className="group rounded-[18px] bg-[var(--bg-card)] border border-[var(--border-subtle)] p-3.5 flex flex-col items-center text-center hover:border-[var(--brand-blue)] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--brand-blue)] transition-all"
                   >
                     <div
-                      className={`w-12 h-12 rounded-[14px] ${cat.iconBg} flex items-center justify-center mb-2.5 transition-transform group-hover:scale-105`}
+                      className={`w-12 h-12 rounded-[14px] ${cat.iconBg} flex items-center justify-center mb-2.5 transition-transform group-hover:scale-105 motion-reduce:transition-none motion-reduce:group-hover:scale-100`}
                     >
-                      <Icon className="w-6 h-6" style={{ color: cat.iconColor }} />
+                      <Icon className="w-6 h-6" style={{ color: cat.iconColor }} aria-hidden="true" />
                     </div>
                     <span className="font-bold text-xs sm:text-sm text-[var(--text-primary)] leading-tight truncate w-full">
                       {cat.name}
